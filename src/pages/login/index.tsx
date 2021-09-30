@@ -12,8 +12,8 @@ const login: React.FC = () => {
   const {
     colors: { gray, greenYellow },
   } = useTheme();
-  function handleSubmit() {
-    console.log('batatinhafrita?');
+  function handleSubmit(event: any) {
+    console.log(event);
   }
 
   return (

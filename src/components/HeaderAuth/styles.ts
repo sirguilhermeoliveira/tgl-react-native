@@ -3,16 +3,24 @@ import useTheme from '../../theme/index';
 
 const createStyles = () => {
   const {
-    colors: { gray, greenYellow },
-    fontSizes: { hl },
+    colors: { gray, greenYellow, white },
+    fontSizes: { xxl },
     margins: { baseMargin },
     paddings: { basePadding },
   } = useTheme();
 
   return StyleSheet.create({
-    header: {
+    homeRow: {
+      flexDirection: 'row',
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor: white,
+      padding: basePadding,
+    },
+    homeTitle: {
       color: gray,
-      fontSize: hl,
+      fontSize: xxl,
       fontStyle: 'italic',
       fontWeight: 'bold',
       borderBottomWidth: 6,
@@ -21,10 +29,10 @@ const createStyles = () => {
       borderTopRightRadius: 4,
       borderBottomLeftRadius: 4,
       borderBottomRightRadius: 4,
-      marginTop: baseMargin * 3,
       top: 0,
-      paddingLeft: basePadding * 1.5,
-      paddingRight: basePadding * 1.5,
+      paddingLeft: basePadding,
+      paddingRight: basePadding,
+      margin: baseMargin,
     },
   });
 };

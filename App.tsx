@@ -19,11 +19,11 @@ function MyStack() {
       <NavigationContainer>
         <StatusBar barStyle='dark-content' backgroundColor='white' />
         <Stack.Navigator
-          initialRouteName='Home'
+          initialRouteName='NewBet'
           screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name='NewBet' component={NewBet} />
+          <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name='Login' component={Login} />
           <Stack.Screen name='Registration' component={Registration} />
           <Stack.Screen name='Account' component={Account} />
