@@ -10,29 +10,43 @@ const newBet: React.FC = () => {
       <HeaderAuth />
       <View style={styles.newBetPadding}>
         <Text style={styles.newBetTitle}>new bet for lotomania</Text>
-        <Text>Choose a game</Text>
-        <View>
-          <Text>Lotofácil</Text>
-          <Text>Mega-Sena</Text>
-          <Text>Lotomania</Text>
+        <Text style={styles.newBetChooseGame}>Choose a game</Text>
+        <View style={styles.newBetRow}>
+          <Text style={styles.newBetGames}>Lotofácil</Text>
+          <Text style={styles.newBetGames}>Mega-Sena</Text>
+          <Text style={styles.newBetGames}>Lotomania</Text>
         </View>
-        <Text>Fill your bet</Text>
-        <Text>Mark as many numbers as you want up to a maximum of 50</Text>
-        <Text>
-          Win by hitting 15, 16, 17, 18, 19, 20 or none of the 20 numbers drawn
+        <Text style={styles.newBetFill}>Fill your bet</Text>
+        <Text style={styles.newBetFillDescription}>
+          Mark as{' '}
+          <Text style={styles.newBetFillDescriptionBold}>many numbers</Text> as
+          you want up to a{' '}
+          <Text style={styles.newBetFillDescriptionBold}>maximum of 50</Text>
         </Text>
-        <Text>___</Text>
-        <View>
-          <Text>01</Text>
-          <Text>02</Text>
-          <Text>03</Text>
-          <Text>04</Text>
-          <Text>05</Text>
-          <Text>06</Text>
-          <Text>07</Text>
-          <Text>08</Text>
-          <Text>09</Text>
-          <Text>10</Text>
+        <Text style={styles.newBetFillDescription}>
+          Win by hitting{' '}
+          <Text style={styles.newBetFillDescriptionBold}>
+            15, 16, 17, 18, 19, 20
+          </Text>{' '}
+          or <Text style={styles.newBetFillDescriptionBold}>none</Text> of the{' '}
+          <Text style={styles.newBetFillDescriptionBold}>
+            20 numbers drawn.
+          </Text>
+        </Text>
+        <View style={styles.newBetBottomLineCenter}>
+          <View style={styles.newBetBottomLine}></View>
+        </View>
+        <View style={styles.newBetRowNumbers}>
+          <Text style={styles.newBetNumbers}>01</Text>
+          <Text style={styles.newBetNumbers}>02</Text>
+          <Text style={styles.newBetNumbers}>03</Text>
+          <Text style={styles.newBetNumbers}>04</Text>
+          <Text style={styles.newBetNumbers}>05</Text>
+          <Text style={styles.newBetNumbers}>06</Text>
+          <Text style={styles.newBetNumbers}>07</Text>
+          <Text style={styles.newBetNumbers}>08</Text>
+          <Text style={styles.newBetNumbers}>09</Text>
+          <Text style={styles.newBetNumbers}>10</Text>
         </View>
       </View>
     </View>

@@ -9,6 +9,7 @@ const theme = {
     borderGray: '#DDDDDD',
     smoothGray: '#9D9D9D',
     ghostGray: '#C1C1C1',
+    almostGray: '#ADC0C4',
   },
   fontSizes: {
     xxs: 10,
