@@ -18,6 +18,12 @@ const createStyles = () => {
       backgroundColor: white,
       padding: basePadding,
     },
+    homeRowIcons: {
+      flexDirection: 'row',
+    },
+    homeArrow: {
+      marginLeft: 20,
+    },
     homeTitle: {
       color: gray,
       fontSize: xxl,

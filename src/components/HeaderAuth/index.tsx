@@ -7,12 +7,20 @@ import useTheme from '../../theme/index';
 const HeaderAuth: React.FC = () => {
   const styles = createStyles();
   const {
-    colors: { ghostGray },
+    colors: { ghostGray, greenYellow },
   } = useTheme();
   return (
     <View style={styles.homeRow}>
       <Text style={styles.homeTitle}>TGL</Text>
-      <Ionicons color={ghostGray} name='arrow-forward' size={35} />
+      <View style={styles.homeRowIcons}>
+        <Ionicons color={greenYellow} name='cart-outline' size={35} />
+        <Ionicons
+          style={styles.homeArrow}
+          color={ghostGray}
+          name='arrow-forward'
+          size={35}
+        />
+      </View>
     </View>
   );
 };
