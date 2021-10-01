@@ -1,93 +1,123 @@
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import createStyles from './styles';
-import HeaderAuth from '../../components/HeaderAuth/index';
-import { Ionicons } from '@expo/vector-icons';
-import useTheme from '../../theme/index';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 
-const newBet: React.FC = () => {
-  const styles = createStyles();
-  const {
-    colors: { white, greenYellow },
-  } = useTheme();
-  return (
-    <View style={styles.container}>
-      <HeaderAuth />
-      <Text>Tab Navigator faltando e modal de lado direito</Text>
-      <View style={styles.newBetPadding}>
-        <Text style={styles.newBetTitle}>new bet for lotomania</Text>
-        <Text style={styles.newBetChooseGame}>Choose a game</Text>
-        <View style={styles.newBetRowNumbers}>
-          <TouchableOpacity style={styles.newBetNumbersMin}>
-            <Text style={styles.newBetNumbersNumber}>01</Text>
-            <Ionicons
-              style={styles.newBetX}
-              color={white}
-              name='close-outline'
-              size={12}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.newBetButtonsContainer}>
-          <TouchableOpacity style={styles.newBetButtonsLeft}>
-            <Text style={styles.newBetButtons}>Complete game</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.newBetButtonsLeft}>
-            <Text style={styles.newBetButtons}>Clear game</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.newBetButtonsCart}>
-              <Ionicons color={white} name='cart-outline' size={18} />
-              <Text style={styles.newBetButtonsAddCart}>Add to cart</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.newBetRow}>
-          <TouchableOpacity style={styles.newBetGames}>
-            <Text style={styles.newBetText}>Lotofácil</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.newBetGames}>
-            <Text style={styles.newBetText}>Mega-Sena</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.newBetGames}>
-            <Text style={styles.newBetText}>Lotomania</Text>
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.newBetFill}>Fill your bet</Text>
-        <Text style={styles.newBetFillDescription}>
-          Mark as{' '}
-          <Text style={styles.newBetFillDescriptionBold}>many numbers</Text> as
-          you want up to a{' '}
-          <Text style={styles.newBetFillDescriptionBold}>maximum of 50</Text>
-        </Text>
-        <Text style={styles.newBetFillDescription}>
-          Win by hitting{' '}
-          <Text style={styles.newBetFillDescriptionBold}>
-            15, 16, 17, 18, 19, 20
-          </Text>{' '}
-          or <Text style={styles.newBetFillDescriptionBold}>none</Text> of the{' '}
-          <Text style={styles.newBetFillDescriptionBold}>
-            20 numbers drawn.
-          </Text>
-        </Text>
-        <View style={styles.newBetBottomLineCenter}>
-          <View style={styles.newBetBottomLine}></View>
-        </View>
-        <View style={styles.newBetRowNumbers}>
-          <Text style={styles.newBetNumbers}>01</Text>
-          <Text style={styles.newBetNumbers}>02</Text>
-          <Text style={styles.newBetNumbers}>03</Text>
-          <Text style={styles.newBetNumbers}>04</Text>
-          <Text style={styles.newBetNumbers}>05</Text>
-          <Text style={styles.newBetNumbers}>06</Text>
-          <Text style={styles.newBetNumbers}>07</Text>
-          <Text style={styles.newBetNumbers}>08</Text>
-          <Text style={styles.newBetNumbers}>09</Text>
-          <Text style={styles.newBetNumbers}>10</Text>
-        </View>
+import { DrawerLayout } from 'react-native-gesture-handler';
+
+const TYPES = ['front', 'back', 'back', 'slide'];
+const PARALLAX = [false, false, true, false];
+
+const NewBet = ({ openDrawer }: any) => (
+  <View>
+    <Text onPress={openDrawer}>Open drawer</Text>
+  </View>
+);
+
+export default class Example extends Component {
+  state = { fromLeft: true, type: 0 };
+  drawer: any;
+  renderParallaxDrawer: any;
+  renderDrawer = () => {
+    return (
+      <View>
+        <Text>I am in the drawer!</Text>
       </View>
-    </View>
-  );
-};
+    );
+  };
 
-export default newBet;
+  render() {
+    const drawerType = TYPES[this.state.type];
+    const parallax = PARALLAX[this.state.type];
+    return (
+      <View style={styles.container}>
+        <DrawerLayout
+          ref={(drawer) => {
+            this.drawer = drawer;
+          }}
+          drawerWidth={200}
+          keyboardDismissMode='on-drag'
+          drawerPosition='right'
+          drawerType='slide'
+          drawerBackgroundColor='#ddd'
+          overlayColor='front'
+          renderNavigationView={
+            parallax ? this.renderParallaxDrawer : this.renderDrawer
+          }
+          contentContainerStyle={
+            drawerType === 'front'
+              ? {}
+              : Platform.select({
+                  ios: {
+                    shadowColor: '#000',
+                    shadowOpacity: 0.5,
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowRadius: 60,
+                  },
+                  android: {
+                    elevation: 100,
+                    backgroundColor: '#000',
+                  },
+                })
+          }
+        >
+          <Text>Gangster's Paradise</Text>
+          <NewBet
+            type={drawerType}
+            fromLeft={this.state.fromLeft}
+            parallaxOn={parallax}
+            flipSide={() => this.setState({ fromLeft: !this.state.fromLeft })}
+            nextType={() =>
+              this.setState({ type: (this.state.type + 1) % TYPES.length })
+            }
+            openDrawer={() => this.drawer.openDrawer()}
+          />
+        </DrawerLayout>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  page: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
+    paddingTop: 40,
+    backgroundColor: 'gray',
+  },
+  pageText: {
+    fontSize: 21,
+    color: 'white',
+  },
+  rectButton: {
+    height: 60,
+    padding: 10,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    backgroundColor: 'white',
+  },
+  rectButtonText: {
+    backgroundColor: 'transparent',
+  },
+  drawerContainer: {
+    flex: 1,
+    paddingTop: 10,
+  },
+  pageInput: {
+    height: 60,
+    padding: 10,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    backgroundColor: '#eee',
+  },
+  drawerText: {
+    margin: 10,
+    fontSize: 15,
+    textAlign: 'left',
+  },
+});

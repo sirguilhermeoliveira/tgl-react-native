@@ -13,7 +13,6 @@ const HeaderAuth: React.FC = () => {
     <View style={styles.homeRow}>
       <Text style={styles.homeTitle}>TGL</Text>
       <View style={styles.homeRowIcons}>
-        <Ionicons color={greenYellow} name='cart-outline' size={35} />
         <Ionicons
           style={styles.homeArrow}
           color={ghostGray}
