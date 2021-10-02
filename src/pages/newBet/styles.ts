@@ -199,6 +199,41 @@ const createStyles = () => {
       paddingRight: basePadding,
       margin: baseMargin,
     },
+    pageText: {
+      fontSize: 21,
+      color: 'white',
+    },
+    rectButton: {
+      height: 60,
+      padding: 10,
+      alignSelf: 'stretch',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: 20,
+      backgroundColor: 'white',
+    },
+    rectButtonText: {
+      backgroundColor: 'transparent',
+    },
+    drawerContainer: {
+      flex: 1,
+      paddingTop: 10,
+      backgroundColor: white,
+    },
+    pageInput: {
+      height: 60,
+      padding: 10,
+      alignSelf: 'stretch',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: 20,
+      backgroundColor: '#eee',
+    },
+    drawerText: {
+      margin: 10,
+      fontSize: 15,
+      textAlign: 'left',
+    },
   });
 };
 
