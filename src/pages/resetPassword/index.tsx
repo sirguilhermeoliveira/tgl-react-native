@@ -64,7 +64,6 @@ const resetPassword: React.FC = () => {
         />
       </View>
       <Footer />
-      <Footer />
     </View>
   );
 };

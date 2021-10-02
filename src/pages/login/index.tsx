@@ -63,7 +63,6 @@ const login: React.FC = () => {
         />
       </View>
       <Footer />
-      <Footer />
     </View>
   );
 };

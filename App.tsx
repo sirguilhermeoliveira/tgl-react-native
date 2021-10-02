@@ -10,6 +10,8 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
 import { store } from './src/store/index';
+/* import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+const Tab = createBottomTabNavigator(); */
 
 const Stack = createStackNavigator();
 
@@ -19,14 +21,14 @@ function MyStack() {
       <NavigationContainer>
         <StatusBar barStyle='dark-content' backgroundColor='white' />
         <Stack.Navigator
-          initialRouteName='NewBet'
+          initialRouteName='Home'
           screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen name='NewBet' component={NewBet} />
           <Stack.Screen name='Home' component={Home} />
+          <Stack.Screen name='Account' component={Account} />
+          <Stack.Screen name='NewBet' component={NewBet} />
           <Stack.Screen name='Login' component={Login} />
           <Stack.Screen name='Registration' component={Registration} />
-          <Stack.Screen name='Account' component={Account} />
           <Stack.Screen name='ResetPassword' component={ResetPassword} />
         </Stack.Navigator>
       </NavigationContainer>

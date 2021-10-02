@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   Platform,
-  StyleSheet,
   Text,
   Animated,
   View,
@@ -80,7 +79,7 @@ const Page = ({ openDrawer }: any) => (
             </View>
           </TouchableOpacity>
         </View>
-        <View style={styles.newBetRow}>
+        <ScrollView horizontal={true} style={styles.newBetRow}>
           <TouchableOpacity style={styles.newBetGames}>
             <Text style={styles.newBetText}>Lotofácil</Text>
           </TouchableOpacity>
@@ -90,7 +89,7 @@ const Page = ({ openDrawer }: any) => (
           <TouchableOpacity style={styles.newBetGames}>
             <Text style={styles.newBetText}>Lotomania</Text>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
         <Text style={styles.newBetFill}>Fill your bet</Text>
         <Text style={styles.newBetFillDescription}>
           Mark as{' '}
@@ -131,52 +130,61 @@ const Page = ({ openDrawer }: any) => (
 export default class Example extends Component {
   state = { fromLeft: true, type: 0 };
   drawer: any;
-  renderParallaxDrawer = (progressValue: {
-    interpolate: (arg0: { inputRange: number[]; outputRange: number[] }) => any;
-  }) => {
-    const parallax = progressValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [this.state.fromLeft ? -50 : 50, 0],
-    });
-    const animatedStyles = {
-      transform: [{ translateX: parallax }],
-    };
-    return (
-      <Animated.View style={[styles.drawerContainer, animatedStyles]}>
-        <Text style={styles.drawerText}>I am in the drawer!</Text>
-        <Text style={styles.drawerText}>
-          Watch parallax animation while you pull the drawer!
-        </Text>
-      </Animated.View>
-    );
-  };
 
   renderDrawer = () => {
     return (
       <View style={styles.drawerContainer}>
-        <Text>X Ionicons</Text>
-        <View>
-          <Text>Cart Ionicons</Text>
-          <Text>cart</Text>
+        <View style={styles.drawerRowXToEnd}>
+          <Ionicons
+            style={styles.drawerXToEnd}
+            color={greenYellow}
+            name='close-outline'
+            size={30}
+          />
         </View>
-        <View>
-          <Text>
-            01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21, 22, 23, 24, 25, 27, 28,
-            29, 31, 36, 37, 38, 40, 42, 43, 44, 45, 46, 48, 50
-          </Text>
-          <View>
-            <Text>28/11/2020 - (R$ 2,50)</Text>
-            <Text>Trash Can Ionicons</Text>
+        <View style={styles.drawerRow}>
+          <Ionicons
+            style={styles.newBetX}
+            color={greenYellow}
+            name='cart-outline'
+            size={35}
+          />
+          <Text style={styles.drawerCart}>cart</Text>
+        </View>
+        <ScrollView>
+          <View style={styles.homeSideBar}>
+            <Text style={styles.homeListGameNumbers}>
+              01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21, 22, 23, 24, 25, 27,
+              28, 29, 31, 36, 37, 38, 40, 42, 43, 44, 45, 46, 48, 50
+            </Text>
+            <View style={styles.newBetRow}>
+              <Text style={styles.homeListGameData}>
+                28/11/2020 - (R$ 2,50)
+              </Text>
+              <Ionicons
+                style={styles.drawerBetX}
+                color={gray}
+                name='trash-outline'
+                size={15}
+              />
+            </View>
+            <Text style={styles.homeListGame}>Lotomania</Text>
           </View>
-          <Text>Lotomania</Text>
+        </ScrollView>
+        <View style={styles.drawerCartTotalBottom}>
+          <Text style={styles.drawerCartTotalText}>
+            <Text style={styles.drawerCartTotalTextBoldCart}>cart</Text> total:{' '}
+          </Text>
+          <Text style={styles.drawerCartTotalTextBoldCartPrice}>r$ 7,50</Text>
         </View>
-        <View>
-          <Text>cart total: </Text>
-          <Text>r$ 7,50</Text>
-        </View>
-        <View>
-          <Text>Save</Text>
-          <Text>ArrowRight</Text>
+        <View style={styles.drawerBottomSaveContainer}>
+          <Text style={styles.drawerBottomSave}>Save</Text>
+          <Ionicons
+            style={styles.drawerBottomSaveArrow}
+            color={greenYellow}
+            name='arrow-forward-outline'
+            size={35}
+          />
         </View>
       </View>
     );

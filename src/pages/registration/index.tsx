@@ -69,7 +69,6 @@ const registration: React.FC = () => {
         <Text style={styles.formSignUp}>Back</Text>
       </View>
       <Footer />
-      <Footer />
     </View>
   );
 };

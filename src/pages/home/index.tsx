@@ -6,13 +6,13 @@ import HeaderAuth from '../../components/HeaderAuth/index';
 const home: React.FC = () => {
   const styles = createStyles();
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <View>
         <HeaderAuth />
         <View style={styles.homePadding}>
           <Text style={styles.homeRecentGames}>recent games</Text>
           <Text style={styles.homeFilterTitle}>Filters</Text>
-          <View style={styles.homeGamesRow}>
+          <ScrollView horizontal={true} style={styles.homeGamesRow}>
             <TouchableOpacity>
               <Text style={styles.homeGame}>Lotofácil</Text>
             </TouchableOpacity>
@@ -22,7 +22,7 @@ const home: React.FC = () => {
             <TouchableOpacity>
               <Text style={styles.homeGame}>Lotomania</Text>
             </TouchableOpacity>
-          </View>
+          </ScrollView>
           <View style={styles.homeSideBar}>
             <Text style={styles.homeListGameNumbers}>
               01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21 ,22 ,23 ,24 ,25, 26,

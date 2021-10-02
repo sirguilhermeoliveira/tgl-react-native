@@ -19,6 +19,7 @@ const createStyles = () => {
     margins: { baseMargin },
     paddings: { basePadding },
   } = useTheme();
+
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -44,6 +45,52 @@ const createStyles = () => {
     },
     newBetRow: {
       flexDirection: 'row',
+      marginBottom: baseMargin,
+    },
+    drawerBetX: {
+      marginTop: 1,
+      marginLeft: 5,
+    },
+    drawerCartTotalBottom: {
+      marginBottom: baseMargin * 9,
+      flexDirection: 'row',
+      paddingTop: baseMargin * 2,
+    },
+    drawerCartTotalText: {
+      textTransform: 'uppercase',
+      color: silverWhite,
+      fontSize: md,
+    },
+    drawerCartTotalTextBoldCart: {
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+    },
+    drawerCartTotalTextBoldCartPrice: {
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+      textTransform: 'uppercase',
+      color: gray,
+      fontSize: md,
+    },
+    drawerBottomSaveContainer: {
+      bottom: 0,
+      flexDirection: 'row',
+      position: 'absolute',
+      backgroundColor: lightGray,
+      width: 200,
+      justifyContent: 'center',
+    },
+    drawerBottomSave: {
+      color: greenYellow,
+      fontSize: xxl,
+      padding: basePadding * 2,
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+      justifyContent: 'center',
+    },
+    drawerBottomSaveArrow: {
+      marginTop: baseMargin * 2.5,
+      marginLeft: baseMargin * -1.5,
     },
     newBetFill: {
       color: silverWhite,
@@ -215,9 +262,32 @@ const createStyles = () => {
     rectButtonText: {
       backgroundColor: 'transparent',
     },
+    drawerRowXToEnd: {
+      alignItems: 'flex-end',
+    },
+    drawerXToEnd: {
+      fontWeight: 'bold',
+    },
+    drawerRow: {
+      flexDirection: 'row',
+      marginBottom: baseMargin * 2,
+    },
+    drawerX: {
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    drawerCart: {
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+      textTransform: 'uppercase',
+      fontSize: xxg,
+      color: gray,
+      marginLeft: baseMargin * 1.5,
+      marginTop: -7,
+    },
     drawerContainer: {
       flex: 1,
-      paddingTop: 10,
+      padding: basePadding * 1.5,
       backgroundColor: white,
     },
     pageInput: {
@@ -233,6 +303,32 @@ const createStyles = () => {
       margin: 10,
       fontSize: 15,
       textAlign: 'left',
+    },
+    homeSideBar: {
+      borderLeftWidth: 7,
+      borderLeftColor: black,
+      borderTopLeftRadius: 4,
+      borderTopRightRadius: 4,
+      borderBottomLeftRadius: 4,
+      borderBottomRightRadius: 4,
+      paddingLeft: basePadding,
+      marginBottom: baseMargin * 2,
+    },
+    homeListGameNumbers: {
+      color: silverWhite,
+      fontSize: xs,
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+      marginBottom: baseMargin,
+    },
+    homeListGameData: {
+      fontSize: xs,
+      color: silverWhite,
+    },
+    homeListGame: {
+      fontSize: md,
+      fontWeight: 'bold',
+      fontStyle: 'italic',
     },
   });
 };
