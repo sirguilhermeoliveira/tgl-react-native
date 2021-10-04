@@ -11,7 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Tab = createBottomTabNavigator();
 const styles = createStyles();
 const {
-  colors: { greenYellow },
+  colors: { greenYellow, gray },
 } = useTheme();
 
 function LoggedStack() {
@@ -24,6 +24,10 @@ function LoggedStack() {
         name='Home'
         options={{
           tabBarLabel: 'Home',
+          tabBarStyle: {
+            borderTopRightRadius: 50,
+            borderTopLeftRadius: 50,
+          },
           tabBarIcon: () => (
             <Ionicons color={greenYellow} name='home-outline' size={25} />
           ),
@@ -48,6 +52,10 @@ function LoggedStack() {
       <Tab.Screen
         options={{
           tabBarLabel: 'Account',
+          tabBarStyle: {
+            borderTopLeftRadius: 50,
+            borderTopRightRadius: 50,
+          },
           tabBarIcon: () => (
             <Ionicons color={greenYellow} name='person-outline' size={25} />
           ),

@@ -6,25 +6,67 @@ import Header from '../../components/Header/index';
 import { Ionicons } from '@expo/vector-icons';
 import useTheme from '../../theme/index';
 import Footer from '../../components/Footer/index';
+import * as Yup from 'yup';
+import axios from 'axios';
 
-const registration: React.FC = () => {
+const registration: React.FC = ({ navigation }: any) => {
   const styles = createStyles();
   const {
     colors: { gray, greenYellow },
   } = useTheme();
-  function handleSubmit(event: any) {
-    console.log(event);
+
+  const submitHandler = (event: any) => {
+    let url = 'http://127.0.0.1:3333/users';
+
+    axios
+      .post(url, {
+        username: event.name,
+        email: event.email,
+        password: event.password,
+      })
+      .then((res: any) => {
+        event.email.current!.value = '';
+        event.name.current!.value = '';
+        event.password.current!.value = '';
+        alert('Congratulations, you are registred!');
+        setTimeout(() => {
+          navigation.navigate('Login');
+        }, 1000);
+      })
+      .catch((err: any) => {
+        alert('Email already exists on our database' + err);
+      });
+  };
+
+  function NavigateToLogin() {
+    navigation.goBack();
   }
+
+  const schema = Yup.object().shape({
+    name: Yup.string()
+      .min(4, 'Name Too Short, need 4 letters')
+      .max(50, 'Name Too Long')
+      .required('Name Required'),
+    email: Yup.string()
+      .max(50, 'Email Too Long')
+      .email('Invalid email')
+      .required('Email Required'),
+    password: Yup.string()
+      .min(6, 'Password Too Short')
+      .max(50, 'Password Too Long')
+      .required('Password Required'),
+  });
 
   return (
     <View style={styles.container}>
       <Header />
       <Text style={styles.formTitle}>Registration</Text>
       <Formik
+        validationSchema={schema}
         initialValues={{ name: '', email: '', password: '' }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => submitHandler(values)}
       >
-        {({ handleChange, handleBlur, values }: any) => (
+        {({ handleChange, handleBlur, values, errors }: any) => (
           <View style={styles.formContainer}>
             <TextInput
               style={styles.formInput}
@@ -47,7 +89,16 @@ const registration: React.FC = () => {
               value={values.password}
               placeholder='Password'
             />
-            <TouchableOpacity style={styles.formRow} onPress={handleSubmit}>
+            {errors.name ? (
+              <Text style={styles.formErrors}>{errors.name}</Text>
+            ) : null}
+            {errors.email ? (
+              <Text style={styles.formErrors}>{errors.email}</Text>
+            ) : null}
+            {errors.password ? (
+              <Text style={styles.formErrors}>{errors.password}</Text>
+            ) : null}
+            <TouchableOpacity style={styles.formRow} onPress={submitHandler}>
               <Text style={styles.formLogIn}>Register</Text>
               <Ionicons
                 style={styles.formArrowRight}
@@ -59,15 +110,17 @@ const registration: React.FC = () => {
           </View>
         )}
       </Formik>
-      <View style={styles.formRow}>
+      <TouchableOpacity onPress={NavigateToLogin} style={styles.formRow}>
         <Ionicons
           style={styles.formArrowRight}
           name='arrow-back'
           color={gray}
           size={35}
         />
-        <Text style={styles.formSignUp}>Back</Text>
-      </View>
+        <Text style={styles.formSignUp} onPress={NavigateToLogin}>
+          Back
+        </Text>
+      </TouchableOpacity>
       <Footer />
     </View>
   );

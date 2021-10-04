@@ -11,6 +11,7 @@ const theme = {
     ghostGray: '#C1C1C1',
     almostGray: '#ADC0C4',
     blue: 'blue',
+    red: 'red',
   },
   fontSizes: {
     xxs: 10,

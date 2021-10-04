@@ -3,7 +3,15 @@ import useTheme from '../../theme/index';
 
 const createStyles = () => {
   const {
-    colors: { gray, lightGray, greenYellow, white, borderGray, smoothGray },
+    colors: {
+      gray,
+      lightGray,
+      greenYellow,
+      white,
+      borderGray,
+      smoothGray,
+      red,
+    },
     fontSizes: { xxs, xs, sm, md, lg, xg, xl, xxg, xxl, lxs, hg, hl },
     margins: { baseMargin },
     paddings: { basePadding },
@@ -51,7 +59,14 @@ const createStyles = () => {
     formRow: {
       flexDirection: 'row',
       justifyContent: 'center',
-      marginTop: basePadding * 4,
+      marginTop: basePadding * 2,
+    },
+    formErrors: {
+      justifyContent: 'center',
+      fontSize: 15,
+      color: red,
+      marginTop: baseMargin,
+      marginLeft: baseMargin,
     },
     formLogIn: {
       color: greenYellow,

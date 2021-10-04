@@ -13,6 +13,7 @@ const createStyles = () => {
       smoothGray,
       silverWhite,
       blue,
+      red,
     },
     fontSizes: { xxs, xs, sm, md, lg, xg, xl, xxg, xxl, lxs, hg, hl },
     margins: { baseMargin },
@@ -28,6 +29,13 @@ const createStyles = () => {
       flex: 1,
       alignItems: 'center',
       opacity: 0.2,
+    },
+    formErrors: {
+      justifyContent: 'center',
+      fontSize: 15,
+      color: red,
+      marginTop: baseMargin,
+      marginLeft: baseMargin,
     },
     centeredView: {
       flex: 1,

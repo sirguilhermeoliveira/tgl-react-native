@@ -25,8 +25,8 @@ function MyStack() {
         >
           <Stack.Screen name='LoggedStack' component={LoggedStack} />
           <Stack.Screen name='Login' component={Login} />
-          <Stack.Screen name='Registration' component={Registration} />
           <Stack.Screen name='ResetPassword' component={ResetPassword} />
+          <Stack.Screen name='Registration' component={Registration} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
