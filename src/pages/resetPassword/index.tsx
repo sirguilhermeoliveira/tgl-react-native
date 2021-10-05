@@ -22,7 +22,7 @@ const resetPassword: React.FC = ({ navigation }: any) => {
   } = useTheme();
 
   const submitHandler = (event: any) => {
-    let url = 'http://127.0.0.1:3333/passwords';
+    let url = 'http://192.168.56.1:3333/passwords';
 
     axios
       .post(url, {
@@ -30,18 +30,21 @@ const resetPassword: React.FC = ({ navigation }: any) => {
         redirect_url: `http://192.168.56.1:3000/recoveryPassword/`,
       })
       .then((res: any) => {
-        if (res.status === 200) {
-          alert('Email send to:' + event.email);
-          event.email.current!.value = '';
-          setTimeout(() => {
-            navigation.navigate('Login');
-          }, 3000);
-        }
+        alert('Email send to:' + event.email);
+        navigation.navigate('Login');
+        return;
       })
       .catch((err: any) => {
         alert('Email doesnt exist on our database');
       });
   };
+
+  function NavigateToRegistration() {
+    navigation.navigate('Registration');
+  }
+  function NavigateBack() {
+    navigation.goBack();
+  }
 
   return (
     <KeyboardAvoidingView
@@ -85,10 +88,14 @@ const resetPassword: React.FC = ({ navigation }: any) => {
           color={gray}
           size={35}
         />
-        <Text style={styles.formSignUp}>Back</Text>
+        <Text style={styles.formSignUp} onPress={NavigateBack}>
+          Back
+        </Text>
       </View>
       <View style={styles.formRow}>
-        <Text style={styles.formSignUp}>Sign Up</Text>
+        <Text style={styles.formSignUp} onPress={NavigateToRegistration}>
+          Sign Up
+        </Text>
         <Ionicons
           style={styles.formArrowRight}
           name='arrow-forward'

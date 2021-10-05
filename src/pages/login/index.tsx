@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../store';
 import axios from 'axios';
 import * as Yup from 'yup';
+import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
 
 const login: React.FC = ({ navigation }: any) => {
   const styles = createStyles();
@@ -39,26 +40,23 @@ const login: React.FC = ({ navigation }: any) => {
   });
 
   const submitHandler = (event: any) => {
-    let url = 'http://127.0.0.1:3333/login';
+    let url = 'http://192.168.56.1:3333/login';
+    const emailInput = event.email;
+    const passwordInput = event.password;
+
     axios
       .post(url, {
-        email: event.email,
-        password: event.password,
+        email: emailInput,
+        password: passwordInput,
       })
       .then((res: any) => {
-        if (res.status === 200) {
-          if (res.data.token) {
-            alert('Logged In with sucess!');
-            setTimeout(() => {
-              dispatch(authActions.login(res.data.token));
-              dispatch(authActions.loginEmail(res.data.user_id));
-            }, 1000);
-            return;
-          }
-        }
+        alert('Logged in with sucess!');
+        navigation.navigate('LoggedStack');
+        dispatch(authActions.login(res.data.token));
+        dispatch(authActions.loginEmail(res.data.user_id));
       })
       .catch((err: any) => {
-        alert(err.message);
+        alert(err);
       });
   };
 

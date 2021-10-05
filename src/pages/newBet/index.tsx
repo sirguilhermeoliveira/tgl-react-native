@@ -11,6 +11,10 @@ import createStyles from './styles';
 import { DrawerLayout } from 'react-native-gesture-handler';
 import useTheme from '../../theme/index';
 import { Ionicons } from '@expo/vector-icons';
+import { authActions } from '../../store/auth';
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../../store';
+
 const styles = createStyles();
 const TYPES = ['front', 'back', 'back', 'slide'];
 const PARALLAX = [false, false, true, false];

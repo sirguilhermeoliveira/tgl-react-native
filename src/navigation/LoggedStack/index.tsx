@@ -18,7 +18,10 @@ function LoggedStack() {
   return (
     <Tab.Navigator
       initialRouteName='Home'
-      screenOptions={{ headerShown: false, tabBarActiveTintColor: greenYellow }}
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: greenYellow,
+      }}
     >
       <Tab.Screen
         name='Home'

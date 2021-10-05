@@ -23,7 +23,7 @@ const registration: React.FC = ({ navigation }: any) => {
   } = useTheme();
 
   const submitHandler = async (event: any) => {
-    let url = 'http://127.0.0.1:3333/users/';
+    let url = 'http://192.168.56.1:3333/users';
     const nameInput = event.name;
     const emailInput = event.email;
     const passwordInput = event.password;
@@ -35,13 +35,9 @@ const registration: React.FC = ({ navigation }: any) => {
         password: passwordInput,
       })
       .then((res: any) => {
-        event.email.current!.value = '';
-        event.name.current!.value = '';
-        event.password.current!.value = '';
         alert('Congratulations, you are registred!');
-        setTimeout(() => {
-          navigation.navigate('Login');
-        }, 1000);
+        navigation.navigate('Login');
+        return;
       })
       .catch((err: any) => {
         alert(err);
