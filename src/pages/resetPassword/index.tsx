@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { Formik } from 'formik';
 import createStyles from './styles';
 import Header from '../../components/Header/index';
@@ -37,7 +44,10 @@ const resetPassword: React.FC = ({ navigation }: any) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
       <Header />
       <Text style={styles.formTitle}>Reset password</Text>
       <Formik
@@ -87,7 +97,7 @@ const resetPassword: React.FC = ({ navigation }: any) => {
         />
       </View>
       <Footer />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -20,11 +20,11 @@ function MyStack() {
       <NavigationContainer>
         <StatusBar barStyle='dark-content' backgroundColor='white' />
         <Stack.Navigator
-          initialRouteName='LoggedStack'
+          initialRouteName='Login'
           screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen name='LoggedStack' component={LoggedStack} />
           <Stack.Screen name='Login' component={Login} />
+          <Stack.Screen name='LoggedStack' component={LoggedStack} />
           <Stack.Screen name='ResetPassword' component={ResetPassword} />
           <Stack.Screen name='Registration' component={Registration} />
         </Stack.Navigator>

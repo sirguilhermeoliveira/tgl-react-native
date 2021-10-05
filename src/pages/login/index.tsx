@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { Formik } from 'formik';
 import createStyles from './styles';
 import Header from '../../components/Header/index';
@@ -51,7 +58,7 @@ const login: React.FC = ({ navigation }: any) => {
         }
       })
       .catch((err: any) => {
-        alert('Email or Password wrong.');
+        alert(err.message);
       });
   };
 
@@ -63,7 +70,10 @@ const login: React.FC = ({ navigation }: any) => {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
       <Header />
       <Text style={styles.formTitle}>Authentication</Text>
       <Formik
@@ -124,7 +134,7 @@ const login: React.FC = ({ navigation }: any) => {
       </TouchableOpacity>
 
       <Footer />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

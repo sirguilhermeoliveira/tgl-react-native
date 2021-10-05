@@ -5,7 +5,9 @@ import {
   TouchableOpacity,
   Modal,
   Pressable,
+  Platform,
   TextInput,
+  KeyboardAvoidingView,
 } from 'react-native';
 import createStyles from './styles';
 import HeaderAuth from '../../components/HeaderAuth/index';
@@ -85,7 +87,8 @@ const Account: React.FC = () => {
   };
 
   return (
-    <View
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={modalVisible ? styles.containerBackgroundBlack : styles.container}
     >
       <Modal
@@ -204,7 +207,7 @@ const Account: React.FC = () => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

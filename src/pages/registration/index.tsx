@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import { Formik } from 'formik';
 import createStyles from './styles';
 import Header from '../../components/Header/index';
@@ -15,14 +22,17 @@ const registration: React.FC = ({ navigation }: any) => {
     colors: { gray, greenYellow },
   } = useTheme();
 
-  const submitHandler = (event: any) => {
-    let url = 'http://127.0.0.1:3333/users';
+  const submitHandler = async (event: any) => {
+    let url = 'http://127.0.0.1:3333/users/';
+    const nameInput = event.name;
+    const emailInput = event.email;
+    const passwordInput = event.password;
 
     axios
       .post(url, {
-        username: event.name,
-        email: event.email,
-        password: event.password,
+        username: nameInput,
+        email: emailInput,
+        password: passwordInput,
       })
       .then((res: any) => {
         event.email.current!.value = '';
@@ -34,7 +44,7 @@ const registration: React.FC = ({ navigation }: any) => {
         }, 1000);
       })
       .catch((err: any) => {
-        alert('Email already exists on our database' + err);
+        alert(err);
       });
   };
 
@@ -58,7 +68,10 @@ const registration: React.FC = ({ navigation }: any) => {
   });
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
       <Header />
       <Text style={styles.formTitle}>Registration</Text>
       <Formik
@@ -66,7 +79,7 @@ const registration: React.FC = ({ navigation }: any) => {
         initialValues={{ name: '', email: '', password: '' }}
         onSubmit={(values) => submitHandler(values)}
       >
-        {({ handleChange, handleBlur, values, errors }: any) => (
+        {({ handleChange, handleBlur, values, errors, handleSubmit }: any) => (
           <View style={styles.formContainer}>
             <TextInput
               style={styles.formInput}
@@ -98,7 +111,7 @@ const registration: React.FC = ({ navigation }: any) => {
             {errors.password ? (
               <Text style={styles.formErrors}>{errors.password}</Text>
             ) : null}
-            <TouchableOpacity style={styles.formRow} onPress={submitHandler}>
+            <TouchableOpacity style={styles.formRow} onPress={handleSubmit}>
               <Text style={styles.formLogIn}>Register</Text>
               <Ionicons
                 style={styles.formArrowRight}
@@ -122,7 +135,7 @@ const registration: React.FC = ({ navigation }: any) => {
         </Text>
       </TouchableOpacity>
       <Footer />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
