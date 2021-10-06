@@ -17,10 +17,14 @@ const {
 function LoggedStack() {
   return (
     <Tab.Navigator
-      initialRouteName='Home'
+      initialRouteName='NewBet'
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: greenYellow,
+        tabBarStyle: {
+          borderTopRightRadius: 50,
+          borderTopLeftRadius: 50,
+        },
       }}
     >
       <Tab.Screen

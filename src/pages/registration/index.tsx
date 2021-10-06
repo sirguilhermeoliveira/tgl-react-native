@@ -15,6 +15,7 @@ import useTheme from '../../theme/index';
 import Footer from '../../components/Footer/index';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { BASE_URL } from '../../utils/index';
 
 const registration: React.FC = ({ navigation }: any) => {
   const styles = createStyles();
@@ -23,7 +24,7 @@ const registration: React.FC = ({ navigation }: any) => {
   } = useTheme();
 
   const submitHandler = async (event: any) => {
-    let url = 'http://192.168.56.1:3333/users';
+    let url = BASE_URL + '/users';
     const nameInput = event.name;
     const emailInput = event.email;
     const passwordInput = event.password;

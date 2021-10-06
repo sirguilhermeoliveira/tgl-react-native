@@ -1,39 +1,107 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import createStyles from './styles';
+import {
+  Container,
+  HomeGamesRow,
+  HomeRecentGames,
+  HomePadding,
+  HomeFilterTitle,
+  HomeGame,
+} from './styles';
+
 import HeaderAuth from '../../components/HeaderAuth/index';
+import { BASE_URL } from '../../utils/index';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../store';
+import axios from 'axios';
+import CartRecentGames from '../../components/CartRecentGames/index';
 
 const home: React.FC = () => {
-  const styles = createStyles();
+  const [whichLoteriaIsVar, setWhichLoteriaIsVar] = useState('');
+  const user_id = useSelector((state: RootState) => state.auth.user_id);
+  const [page, setPage]: any = useState(1);
+  const [filter, setFilter]: any = useState(0);
+  const [getallTheGames, setallTheGames] = useState([]);
+  const [getHelperPagination, setHelperPagination]: any = useState([]);
+
+  const url_pagination =
+    BASE_URL +
+    '/users/' +
+    Number(user_id) +
+    '/bets?page=' +
+    page +
+    '&filter=' +
+    filter;
+
+  function changeGameFilter(event: any) {
+    let helper = 0;
+    helper = Number(event.target.id);
+    if (whichLoteriaIsVar === event.target.innerText) {
+      setPage(1);
+      setFilter(0);
+      setWhichLoteriaIsVar('');
+      return;
+    } else if (whichLoteriaIsVar !== event.target.innerText) {
+      setFilter(helper + 1);
+      setPage(1);
+      setWhichLoteriaIsVar(event.target.innerText);
+    } else {
+      alert('No games available');
+    }
+  }
+
+  useEffect(() => {
+    let url = BASE_URL + '/games';
+    axios
+      .get(url)
+      .then((res: any) => {
+        if (res.status === 200) {
+          const gamesHelper = res.data;
+          setallTheGames(gamesHelper.reverse());
+          return;
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+
+    axios
+      .get(url_pagination)
+      .then((res: any) => {
+        if (res.status === 200) {
+          setHelperPagination(res.data.meta);
+          return;
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  }, [url_pagination]);
+
+  /*    style={styles.whichLoteriaIsVar === item.type ? 'active' : ''} */
+  const getGames = getallTheGames.map((item: any, index: any) => (
+    <TouchableOpacity
+      /* id={index} */ key={item.type}
+      onPress={changeGameFilter}
+    >
+      <HomeGame color={item.color}>{item.type}</HomeGame>
+    </TouchableOpacity>
+  ));
+
   return (
-    <ScrollView style={styles.container}>
+    <Container>
       <View>
         <HeaderAuth />
-        <View style={styles.homePadding}>
-          <Text style={styles.homeRecentGames}>recent games</Text>
-          <Text style={styles.homeFilterTitle}>Filters</Text>
-          <ScrollView horizontal={true} style={styles.homeGamesRow}>
-            <TouchableOpacity>
-              <Text style={styles.homeGame}>Lotofácil</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.homeGame}>Mega-Sena</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.homeGame}>Lotomania</Text>
-            </TouchableOpacity>
+        <HomePadding>
+          <HomeRecentGames>recent games</HomeRecentGames>
+          <HomeFilterTitle>Filters</HomeFilterTitle>
+          <HomeGamesRow horizontal={true}>{getGames}</HomeGamesRow>
+          <ScrollView>
+            <CartRecentGames url_bets={url_pagination} />
           </ScrollView>
-          <View style={styles.homeSideBar}>
-            <Text style={styles.homeListGameNumbers}>
-              01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21 ,22 ,23 ,24 ,25, 26,
-              27, 28, 39, 31, 36, 37, 38, 40, 42, 43, 44, 45, 46, 48, 50
-            </Text>
-            <Text style={styles.homeListGameData}>27/11/2020 - (R$ 2,50)</Text>
-            <Text style={styles.homeListGame}>Lotomania</Text>
-          </View>
-        </View>
+        </HomePadding>
       </View>
-    </ScrollView>
+    </Container>
   );
 };
 

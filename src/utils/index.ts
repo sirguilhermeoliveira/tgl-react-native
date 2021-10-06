@@ -26,3 +26,5 @@ export const formatDate = (date: string) => {
   const yy = date[0] + date[1] + date[2] + date[3];
   return `${dd}/${mm}/${yy}`;
 };
+
+export const BASE_URL = 'http://192.168.56.1:3333';

@@ -1,9 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Account from '../pages/account/index';
-import Home from '../pages/home/index';
 import Login from '../pages/login/index';
-import NewBet from '../pages/newBet/index';
 import Registration from '../pages/registration/index';
 import ResetPassword from '../pages/resetPassword/index';
 import LoggedStack from './LoggedStack';
@@ -20,13 +17,13 @@ function MyStack() {
       <NavigationContainer>
         <StatusBar barStyle='dark-content' backgroundColor='white' />
         <Stack.Navigator
-          initialRouteName='Login'
+          initialRouteName='LoggedStack'
           screenOptions={{ headerShown: false }}
         >
+          <Stack.Screen name='LoggedStack' component={LoggedStack} />
           <Stack.Screen name='Login' component={Login} />
           <Stack.Screen name='ResetPassword' component={ResetPassword} />
           <Stack.Screen name='Registration' component={Registration} />
-          <Stack.Screen name='LoggedStack' component={LoggedStack} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

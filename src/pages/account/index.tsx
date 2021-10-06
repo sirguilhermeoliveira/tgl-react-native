@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import { BASE_URL } from '../../utils/index';
 
 const Account: React.FC = () => {
   const styles = createStyles();
@@ -45,7 +46,7 @@ const Account: React.FC = () => {
   }
 
   const submitNameHandler = (event: any) => {
-    let url = 'http://192.168.56.1:3333/users/' + userId;
+    let url = BASE_URL + userId;
 
     axios
       .put(url, {
@@ -64,7 +65,7 @@ const Account: React.FC = () => {
   };
 
   const submitPasswordHandler = (event: any) => {
-    let url = 'http://192.168.56.1:3333/users/' + userId;
+    let url = BASE_URL + '/users/' + userId;
 
     axios
       .put(url, {

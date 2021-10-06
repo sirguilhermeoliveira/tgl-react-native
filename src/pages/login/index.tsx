@@ -19,6 +19,7 @@ import type { AppDispatch } from '../../store';
 import axios from 'axios';
 import * as Yup from 'yup';
 import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
+import { BASE_URL } from '../../utils/index';
 
 const login: React.FC = ({ navigation }: any) => {
   const styles = createStyles();
@@ -40,7 +41,7 @@ const login: React.FC = ({ navigation }: any) => {
   });
 
   const submitHandler = (event: any) => {
-    let url = 'http://192.168.56.1:3333/login';
+    let url = BASE_URL + '/login';
     const emailInput = event.email;
     const passwordInput = event.password;
 

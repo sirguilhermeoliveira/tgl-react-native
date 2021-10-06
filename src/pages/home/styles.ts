@@ -1,116 +1,62 @@
-import { StyleSheet } from 'react-native';
 import useTheme from '../../theme/index';
+import styled from 'styled-components/native';
 
-const createStyles = () => {
-  const {
-    colors: {
-      gray,
-      lightGray,
-      greenYellow,
-      white,
-      black,
-      borderGray,
-      smoothGray,
-      silverWhite,
-    },
-    fontSizes: { xxs, xs, sm, md, lg, xg, xl, xxg, xxl, lxs, hg, hl },
-    margins: { baseMargin },
-    paddings: { basePadding },
-  } = useTheme();
+const {
+  colors: {
+    gray,
+    lightGray,
+    greenYellow,
+    white,
+    black,
+    borderGray,
+    smoothGray,
+    silverWhite,
+  },
+  fontSizes: { xxs, xs, sm, md, lg, xg, xl, xxg, xxl, lxs, hg, hl },
+  margins: { baseMargin },
+  paddings: { basePadding },
+} = useTheme();
 
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: lightGray,
-    },
-    homeRow: {
-      flexDirection: 'row',
-      width: '100%',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      backgroundColor: white,
-      padding: basePadding,
-    },
-    homeTitle: {
-      color: gray,
-      fontSize: xxl,
-      fontStyle: 'italic',
-      fontWeight: 'bold',
-      borderBottomWidth: 6,
-      borderBottomColor: greenYellow,
-      borderTopLeftRadius: 4,
-      borderTopRightRadius: 4,
-      borderBottomLeftRadius: 4,
-      borderBottomRightRadius: 4,
-      top: 0,
-      paddingLeft: basePadding,
-      paddingRight: basePadding,
-      margin: baseMargin,
-    },
-    homeRecentGames: {
-      color: gray,
-      fontSize: xl,
-      fontWeight: 'bold',
-      fontStyle: 'italic',
-      textTransform: 'uppercase',
-    },
-    homePadding: {
-      padding: basePadding * 2,
-    },
-    homeFilterTitle: {
-      color: silverWhite,
-      fontSize: lg,
-      marginTop: baseMargin,
-      marginBottom: baseMargin,
-      fontStyle: 'italic',
-    },
-    homeGamesRow: {
-      flexDirection: 'row',
-    },
-    homeGame: {
-      backgroundColor: white,
-      color: black,
-      flexGrow: 3,
-      fontWeight: 'bold',
-      fontStyle: 'italic',
-      fontSize: sm,
-      marginRight: baseMargin,
-      paddingLeft: basePadding * 1.7,
-      paddingRight: basePadding * 1.7,
-      paddingTop: basePadding * 0.5,
-      paddingBottom: basePadding * 0.5,
-      borderRadius: 15,
-      textAlign: 'center',
-      borderWidth: 1,
-      borderColor: black,
-    },
-    homeSideBar: {
-      borderLeftWidth: 7,
-      borderLeftColor: black,
-      borderTopLeftRadius: 4,
-      borderTopRightRadius: 4,
-      borderBottomLeftRadius: 4,
-      borderBottomRightRadius: 4,
-      paddingLeft: basePadding * 2,
-      marginTop: baseMargin * 3,
-      marginBottom: baseMargin * 3,
-    },
-    homeListGameNumbers: {
-      color: silverWhite,
-      fontSize: xs,
-      fontWeight: 'bold',
-      fontStyle: 'italic',
-    },
-    homeListGameData: {
-      fontSize: xs,
-      color: silverWhite,
-    },
-    homeListGame: {
-      fontSize: md,
-      fontWeight: 'bold',
-      fontStyle: 'italic',
-    },
-  });
-};
+export const Container = styled.ScrollView`
+  flex: 1;
+  background-color: ${lightGray};
+`;
 
-export default createStyles;
+export const HomeGamesRow = styled.ScrollView`
+  flex-direction: row;
+`;
+
+export const HomeRecentGames = styled.Text`
+  color: ${gray};
+  font-size: ${xl}px;
+  font-weight: bold;
+  font-style: italic;
+  text-transform: uppercase;
+`;
+export const HomePadding = styled.View`
+  padding: ${basePadding * 2}px;
+`;
+export const HomeFilterTitle = styled.Text`
+  color: ${silverWhite};
+  font-size: ${lg}px;
+  margin-top: ${baseMargin}px;
+  margin-bottom: ${baseMargin}px;
+  font-style: italic;
+`;
+export const HomeGame = styled.Text<{ color: string }>`
+  background-color: ${white};
+  color: ${(props) => props.color || '#000'};
+  flex-grow: 3;
+  font-weight: bold;
+  font-style: italic;
+  font-size: ${sm}px;
+  margin-right: ${baseMargin}px;
+  padding-left: ${basePadding * 1.7}px;
+  padding-right: ${basePadding * 1.7}px;
+  padding-top: ${basePadding * 0.5}px;
+  padding-bottom: ${basePadding * 0.5}px;
+  border-radius: 15px;
+  text-align: center;
+  border-width: 1px;
+  border-color: ${(props) => props.color || '#000'};
+`;

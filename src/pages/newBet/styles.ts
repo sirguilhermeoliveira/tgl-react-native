@@ -1,25 +1,25 @@
 import { StyleSheet } from 'react-native';
 import useTheme from '../../theme/index';
+import styled from 'styled-components/native';
 
+const {
+  colors: {
+    gray,
+    lightGray,
+    greenYellow,
+    white,
+    black,
+    borderGray,
+    smoothGray,
+    silverWhite,
+    ghostGray,
+    almostGray,
+  },
+  fontSizes: { xxs, xs, sm, md, lg, xg, xl, xxg, xxl, lxs, hg, hl },
+  margins: { baseMargin },
+  paddings: { basePadding },
+} = useTheme();
 const createStyles = () => {
-  const {
-    colors: {
-      gray,
-      lightGray,
-      greenYellow,
-      white,
-      black,
-      borderGray,
-      smoothGray,
-      silverWhite,
-      ghostGray,
-      almostGray,
-    },
-    fontSizes: { xxs, xs, sm, md, lg, xg, xl, xxg, xxl, lxs, hg, hl },
-    margins: { baseMargin },
-    paddings: { basePadding },
-  } = useTheme();
-
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -330,7 +330,39 @@ const createStyles = () => {
       fontWeight: 'bold',
       fontStyle: 'italic',
     },
+
+    navigationContainer: {
+      backgroundColor: '#ecf0f1',
+    },
+    paragraph: {
+      padding: 16,
+      fontSize: 15,
+      textAlign: 'center',
+    },
   });
 };
 
 export default createStyles;
+
+export const HomeGame = styled.Text<{ color: string }>`
+  background-color: ${white};
+  color: ${(props) => props.color || '#000'};
+  flex-grow: 3;
+  font-weight: bold;
+  font-style: italic;
+  font-size: ${sm};
+  margin-right: ${baseMargin};
+  padding-left: ${basePadding * 1.7}px;
+  padding-right: ${basePadding * 1.7}px;
+  padding-top: ${basePadding * 0.5}px;
+  padding-bottom: ${basePadding * 0.5}px;
+  border-radius: 15px;
+  text-align: center;
+  border-width: 1px;
+  border-color: ${(props) => props.color || '#000'};
+`;
+
+export const HomeGamesRow = styled.ScrollView`
+  flex-direction: row;
+  margin-bottom: ${baseMargin}px;
+`;

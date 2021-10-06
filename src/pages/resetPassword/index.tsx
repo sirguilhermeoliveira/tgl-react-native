@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import useTheme from '../../theme/index';
 import Footer from '../../components/Footer/index';
 import axios from 'axios';
+import { BASE_URL } from '../../utils/index';
 
 const resetPassword: React.FC = ({ navigation }: any) => {
   const styles = createStyles();
@@ -22,7 +23,7 @@ const resetPassword: React.FC = ({ navigation }: any) => {
   } = useTheme();
 
   const submitHandler = (event: any) => {
-    let url = 'http://192.168.56.1:3333/passwords';
+    let url = BASE_URL + '/passwords';
 
     axios
       .post(url, {

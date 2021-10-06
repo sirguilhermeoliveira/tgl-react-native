@@ -10,8 +10,8 @@ const theme = {
     smoothGray: '#9D9D9D',
     ghostGray: '#C1C1C1',
     almostGray: '#ADC0C4',
-    blue: 'blue',
-    red: 'red',
+    blue: '#0000ff',
+    red: '#ff0000',
   },
   fontSizes: {
     xxs: 10,
