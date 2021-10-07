@@ -11,8 +11,9 @@ import { cartActions } from '../../store/cart';
 import { HomeGame, HomeGamesRow } from './styles';
 import { types as gamesJson } from '../../database/games.json';
 import { formatNumber, formatNumberCartTotal } from '../../utils/index';
+import CartBet from '../../components/CartBet/index';
 
-const newBet: React.FC = () => {
+const newBet: React.FC = ({ navigation }: any) => {
   const styles = createStyles();
   const drawer = useRef<DrawerLayoutAndroid | null>(null);
   const {
@@ -71,16 +72,19 @@ const newBet: React.FC = () => {
         console.log(err);
       });
   }, []);
-  const [getallTheGames, setallTheGames] = useState([]);
+  const [getallTheGames, setallTheGames]: any = useState([]);
 
   /*    style={styles.whichLoteriaIsVar === item.type ? 'active' : ''} */
-  const getGames = getallTheGames.map((item: any, index: any) => (
-    <TouchableOpacity
-      /* id={index} */ key={item.type}
+
+  const getGames: any = getallTheGames.map((item: any, index: any) => (
+    <HomeGame
+      id={index}
+      key={item.type}
       onPress={changeGameColor}
+      color={item.color}
     >
-      <HomeGame color={item.color}>{item.type}</HomeGame>
-    </TouchableOpacity>
+      {item.type}
+    </HomeGame>
   ));
 
   const completeGame = () => {
@@ -200,22 +204,7 @@ const newBet: React.FC = () => {
         <Text style={styles.drawerCart}>cart</Text>
       </View>
       <ScrollView>
-        <View style={styles.homeSideBar}>
-          <Text style={styles.homeListGameNumbers}>
-            01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21, 22, 23, 24, 25, 27, 28,
-            29, 31, 36, 37, 38, 40, 42, 43, 44, 45, 46, 48, 50
-          </Text>
-          <View style={styles.newBetRow}>
-            <Text style={styles.homeListGameData}>28/11/2020 - (R$ 2,50)</Text>
-            <Ionicons
-              style={styles.drawerBetX}
-              color={gray}
-              name='trash-outline'
-              size={15}
-            />
-          </View>
-          <Text style={styles.homeListGame}>Lotomania</Text>
-        </View>
+        <CartBet />
       </ScrollView>
       <View style={styles.drawerCartTotalBottom}>
         <Text style={styles.drawerCartTotalText}>
@@ -250,6 +239,7 @@ const newBet: React.FC = () => {
           </TouchableOpacity>
           <TouchableOpacity>
             <Ionicons
+              onPress={() => navigation.replace('Login')}
               style={styles.homeArrow}
               color={ghostGray}
               name='arrow-forward'
@@ -276,13 +266,19 @@ const newBet: React.FC = () => {
               </TouchableOpacity>
             </View>
             <View style={styles.newBetButtonsContainer}>
-              <TouchableOpacity style={styles.newBetButtonsLeft}>
+              <TouchableOpacity
+                onPress={completeGame}
+                style={styles.newBetButtonsLeft}
+              >
                 <Text style={styles.newBetButtons}>Complete game</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.newBetButtonsLeft}>
+              <TouchableOpacity
+                onPress={clearGame}
+                style={styles.newBetButtonsLeft}
+              >
                 <Text style={styles.newBetButtons}>Clear game</Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={addCart}>
                 <View style={styles.newBetButtonsCart}>
                   <Ionicons color={white} name='cart-outline' size={18} />
                   <Text style={styles.newBetButtonsAddCart}>Add to cart</Text>
@@ -296,7 +292,7 @@ const newBet: React.FC = () => {
               <View style={styles.newBetBottomLine}></View>
             </View>
             <View style={styles.newBetRowNumbers}>
-              {numbersList.map((num) => (
+              {numbersList.map((num: any) => (
                 <TouchableOpacity onPress={changeButtonColor}>
                   <Text
                     style={styles.newBetNumbers}

@@ -52,9 +52,9 @@ const login: React.FC = ({ navigation }: any) => {
       })
       .then((res: any) => {
         alert('Logged in with sucess!');
-        navigation.navigate('LoggedStack');
         dispatch(authActions.login(res.data.token));
         dispatch(authActions.loginEmail(res.data.user_id));
+        navigation.navigate('LoggedStack');
       })
       .catch((err: any) => {
         alert(err);

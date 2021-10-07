@@ -36,6 +36,7 @@ function CartRecentGames({ url_bets }: UrlObject) {
       .then((res: any) => {
         if (res.status === 200) {
           setallTheBets(res.data.data);
+          console.log(getallTheBets.color);
           return;
         }
       })
@@ -46,8 +47,8 @@ function CartRecentGames({ url_bets }: UrlObject) {
   if (getallTheBets.length > 0) {
     games = getallTheBets.map((recentGames: IGame) => {
       return (
-        <HomeSideBar color={recentGames.color} key={recentGames.id}>
-          <HomeListGameNumbers color={recentGames.color}>
+        <HomeSideBar color={recentGames.game.color} key={recentGames.id}>
+          <HomeListGameNumbers color={recentGames.game.color}>
             {formatNumberCart(recentGames.game_numbers)}
           </HomeListGameNumbers>
           <HomeListGameData>
@@ -55,7 +56,7 @@ function CartRecentGames({ url_bets }: UrlObject) {
             {formatDate(recentGames.created_at)} - R${' '}
             {formatNumberCartTotal(Number(recentGames.game.price))}
           </HomeListGameData>
-          <HomeListGame color={recentGames.color}>
+          <HomeListGame color={recentGames.game.color}>
             {recentGames.game.type}
           </HomeListGame>
         </HomeSideBar>

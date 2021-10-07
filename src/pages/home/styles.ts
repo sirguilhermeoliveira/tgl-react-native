@@ -43,9 +43,14 @@ export const HomeFilterTitle = styled.Text`
   margin-bottom: ${baseMargin}px;
   font-style: italic;
 `;
-export const HomeGame = styled.Text<{ color: string }>`
-  background-color: ${white};
-  color: ${(props) => props.color || '#000'};
+export const HomeGame = styled.Text<{
+  color: string;
+  id: string;
+  backgroundColor: string;
+  borderColor: string;
+}>`
+  background-color: ${(props) => props.color || '#000'};
+  color: ${(props) => props.backgroundColor || '#000'};
   flex-grow: 3;
   font-weight: bold;
   font-style: italic;
@@ -58,5 +63,5 @@ export const HomeGame = styled.Text<{ color: string }>`
   border-radius: 15px;
   text-align: center;
   border-width: 1px;
-  border-color: ${(props) => props.color || '#000'};
+  border-color: ${(props) => props.borderColor || '#000'};
 `;

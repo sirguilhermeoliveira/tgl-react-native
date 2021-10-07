@@ -31,6 +31,8 @@ function LoggedStack() {
         name='Home'
         options={{
           tabBarLabel: 'Home',
+          unmountOnBlur: true,
+          tabBarHideOnKeyboard: true,
           tabBarStyle: {
             borderTopRightRadius: 50,
             borderTopLeftRadius: 50,
@@ -45,6 +47,8 @@ function LoggedStack() {
         name='NewBet'
         options={{
           tabBarLabel: '',
+          unmountOnBlur: true,
+          tabBarHideOnKeyboard: true,
           tabBarIcon: () => (
             <View style={styles.ImageNewBetCircle}>
               <Image
@@ -59,6 +63,8 @@ function LoggedStack() {
       <Tab.Screen
         options={{
           tabBarLabel: 'Account',
+          unmountOnBlur: true,
+          tabBarHideOnKeyboard: true,
           tabBarStyle: {
             borderTopLeftRadius: 50,
             borderTopRightRadius: 50,

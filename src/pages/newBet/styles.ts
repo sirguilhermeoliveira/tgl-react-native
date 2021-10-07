@@ -344,14 +344,14 @@ const createStyles = () => {
 
 export default createStyles;
 
-export const HomeGame = styled.Text<{ color: string }>`
+export const HomeGame = styled.Text<{ color: string; id: number }>`
   background-color: ${white};
   color: ${(props) => props.color || '#000'};
   flex-grow: 3;
   font-weight: bold;
   font-style: italic;
-  font-size: ${sm};
-  margin-right: ${baseMargin};
+  font-size: ${sm}px;
+  margin-right: ${baseMargin}px;
   padding-left: ${basePadding * 1.7}px;
   padding-right: ${basePadding * 1.7}px;
   padding-top: ${basePadding * 0.5}px;

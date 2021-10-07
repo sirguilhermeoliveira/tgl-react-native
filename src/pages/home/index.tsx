@@ -11,18 +11,39 @@ import {
 
 import HeaderAuth from '../../components/HeaderAuth/index';
 import { BASE_URL } from '../../utils/index';
-import { useSelector } from 'react-redux';
 import type { RootState } from '../../store';
 import axios from 'axios';
 import CartRecentGames from '../../components/CartRecentGames/index';
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../../store';
+import { gameActions } from '../../store/games';
+import { useSelector } from 'react-redux';
+
+interface IGame {
+  id: string;
+  type: string;
+  color: string;
+}
 
 const home: React.FC = () => {
+  const getallTheGames: any = useSelector(
+    (state: RootState) => state.games.games
+  );
   const [whichLoteriaIsVar, setWhichLoteriaIsVar] = useState('');
   const user_id = useSelector((state: RootState) => state.auth.user_id);
   const [page, setPage]: any = useState(1);
   const [filter, setFilter]: any = useState(0);
-  const [getallTheGames, setallTheGames] = useState([]);
+  const dispatch = useDispatch<AppDispatch>();
   const [getHelperPagination, setHelperPagination]: any = useState([]);
+  const [urlPagination, setUrlPagination]: any = useState(
+    BASE_URL +
+      '/users/' +
+      Number(user_id) +
+      '/bets?page=' +
+      page +
+      '&filter=' +
+      filter
+  );
 
   const url_pagination =
     BASE_URL +
@@ -33,21 +54,16 @@ const home: React.FC = () => {
     '&filter=' +
     filter;
 
-  function changeGameFilter(event: any) {
+  function changeGameFilter(id_game: any, type_game: any) {
     let helper = 0;
-    helper = Number(event.target.id);
-    if (whichLoteriaIsVar === event.target.innerText) {
-      setPage(1);
+    helper = id_game;
+    if (whichLoteriaIsVar === type_game) {
       setFilter(0);
       setWhichLoteriaIsVar('');
       return;
-    } else if (whichLoteriaIsVar !== event.target.innerText) {
-      setFilter(helper + 1);
-      setPage(1);
-      setWhichLoteriaIsVar(event.target.innerText);
-    } else {
-      alert('No games available');
     }
+    setFilter(helper);
+    setWhichLoteriaIsVar(type_game);
   }
 
   useEffect(() => {
@@ -56,8 +72,7 @@ const home: React.FC = () => {
       .get(url)
       .then((res: any) => {
         if (res.status === 200) {
-          const gamesHelper = res.data;
-          setallTheGames(gamesHelper.reverse());
+          dispatch(gameActions.getGames(res.data));
           return;
         }
       })
@@ -76,15 +91,26 @@ const home: React.FC = () => {
       .catch((err: any) => {
         console.log(err);
       });
-  }, [url_pagination]);
+  }, [urlPagination]);
 
   /*    style={styles.whichLoteriaIsVar === item.type ? 'active' : ''} */
-  const getGames = getallTheGames.map((item: any, index: any) => (
-    <TouchableOpacity
-      /* id={index} */ key={item.type}
-      onPress={changeGameFilter}
-    >
-      <HomeGame color={item.color}>{item.type}</HomeGame>
+
+  const getGames = getallTheGames.map((item: any) => (
+    <TouchableOpacity>
+      <HomeGame
+        id={item.id}
+        key={item.id}
+        onPress={changeGameFilter.bind(null, item.id, item.type)}
+        backgroundColor={
+          String(whichLoteriaIsVar) === item.type ? item.color : item.color
+        }
+        borderColor={
+          String(whichLoteriaIsVar) === item.type ? item.color : item.color
+        }
+        color={String(whichLoteriaIsVar) === item.type ? '#FFF' : '#FFF'}
+      >
+        {item.type}
+      </HomeGame>
     </TouchableOpacity>
   ));
 

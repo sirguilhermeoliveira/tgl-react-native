@@ -33,7 +33,7 @@ export const HomeListGame = styled.Text<{ color: string }>`
   font-size: ${md}px;
   font-weight: bold;
   font-style: italic;
-  font-color: ${(props: any) => props.color || '#000'};
+  color: ${(props: any) => props.color || '#000'};
 `;
 
 export const EmptyCart = styled.Text`
@@ -46,7 +46,7 @@ export const EmptyCart = styled.Text`
 
 export const HomeSideBar = styled.View<{ color: string }>`
   border-left-width: 7px;
-  border-left-color: ${(props: any) => props.color || '#000'};
+  border-color: ${(props) => props.color || '#000'};
   padding-left: ${basePadding * 1.5}px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;

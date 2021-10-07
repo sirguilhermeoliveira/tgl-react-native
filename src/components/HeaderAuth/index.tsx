@@ -26,6 +26,7 @@ const HeaderAuth: React.FC = ({ navigation }: any) => {
       <Text style={styles.homeTitle}>TGL</Text>
       <TouchableOpacity onPress={Loggout} style={styles.homeRowIcons}>
         <Ionicons
+          onPress={() => navigation.replace('Login')}
           style={styles.homeArrow}
           color={ghostGray}
           name='arrow-forward'
