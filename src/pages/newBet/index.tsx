@@ -38,7 +38,9 @@ const newBet: React.FC = ({ navigation }: any) => {
   const totalPrice = useSelector((state: RootState) => state.cart.totalPrice);
   const allBets = useSelector((state: RootState) => state.cart.games);
   const dispatch = useDispatch<AppDispatch>();
-  const [whichLoteriaIsVar, setWhichLoteriaIsVar] = useState<any>(0);
+  const [whichLoteriaIsVar, setWhichLoteriaIsVar] = useState<any>(
+    gamesJson.length - 1
+  );
   const user_id = useSelector((state: RootState) => state.auth.user_id);
   const [getDescription, setGetDescription] = useState(
     gamesJson[whichLoteriaIsVar].description

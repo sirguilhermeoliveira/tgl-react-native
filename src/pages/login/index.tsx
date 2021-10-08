@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Platform,
   KeyboardAvoidingView,
+  ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import { Formik } from 'formik';
 import createStyles from './styles';
@@ -24,7 +26,7 @@ import { BASE_URL } from '../../utils/index';
 const login: React.FC = ({ navigation }: any) => {
   const styles = createStyles();
   const dispatch = useDispatch<AppDispatch>();
-
+  const [loading, SetLoading]: any = useState(false);
   const {
     colors: { gray, greenYellow },
   } = useTheme();
@@ -41,6 +43,7 @@ const login: React.FC = ({ navigation }: any) => {
   });
 
   const submitHandler = (event: any) => {
+    SetLoading(true);
     let url = BASE_URL + '/login';
     const emailInput = event.email;
     const passwordInput = event.password;
@@ -51,88 +54,100 @@ const login: React.FC = ({ navigation }: any) => {
         password: passwordInput,
       })
       .then((res: any) => {
-        alert('Logged in with sucess!');
         dispatch(authActions.login(res.data.token));
         dispatch(authActions.loginEmail(res.data.user_id));
-        navigation.navigate('LoggedStack');
+        setTimeout(() => {
+          navigation.navigate('LoggedStack');
+          alert('Logged in with sucess!');
+          SetLoading(false);
+        }, 1000);
       })
       .catch((err: any) => {
         alert(err);
       });
   };
 
-  function NavigateToSignUp() {
-    navigation.navigate('Registration');
-  }
-  function NavigateToForgetPassword() {
-    navigation.navigate('ResetPassword');
-  }
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <Header />
-      <Text style={styles.formTitle}>Authentication</Text>
-      <Formik
-        validationSchema={schema}
-        initialValues={{ email: '', password: '' }}
-        onSubmit={(values) => submitHandler(values)}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values, errors }: any) => (
-          <View style={styles.formContainer}>
-            <TextInput
-              style={styles.formInput}
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-              placeholder='Email'
-            />
-            <TextInput
-              style={styles.formInput}
-              onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
-              value={values.password}
-              placeholder='Password'
-            />
-            {errors.email ? (
-              <Text style={styles.formErrors}>{errors.email}</Text>
-            ) : null}
-            {errors.password ? (
-              <Text style={styles.formErrors}>{errors.password}</Text>
-            ) : null}
+      {!loading ? (
+        <View style={styles.container}>
+          <Header />
+          <Text style={styles.formTitle}>Authentication</Text>
+          <Formik
+            validationSchema={schema}
+            initialValues={{ email: '', password: '' }}
+            onSubmit={(values) => submitHandler(values)}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+            }: any) => (
+              <View style={styles.formContainer}>
+                <TextInput
+                  style={styles.formInput}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                  placeholder='Email'
+                />
+                <TextInput
+                  style={styles.formInput}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  placeholder='Password'
+                />
+                {errors.email ? (
+                  <Text style={styles.formErrors}>{errors.email}</Text>
+                ) : null}
+                {errors.password ? (
+                  <Text style={styles.formErrors}>{errors.password}</Text>
+                ) : null}
+                <Text
+                  style={styles.formForgetPassword}
+                  onPress={() => navigation.navigate('ResetPassword')}
+                >
+                  I forget my password
+                </Text>
+                <TouchableOpacity style={styles.formRow} onPress={handleSubmit}>
+                  <Text style={styles.formLogIn}>Log In</Text>
+                  <Ionicons
+                    style={styles.formArrowRight}
+                    name='arrow-forward'
+                    color={greenYellow}
+                    size={35}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          </Formik>
+          <TouchableOpacity style={styles.formRow}>
             <Text
-              style={styles.formForgetPassword}
-              onPress={NavigateToForgetPassword}
+              style={styles.formSignUp}
+              onPress={() => navigation.navigate('Registration')}
             >
-              I forget my password
+              Sign Up
             </Text>
-            <TouchableOpacity style={styles.formRow} onPress={handleSubmit}>
-              <Text style={styles.formLogIn}>Log In</Text>
-              <Ionicons
-                style={styles.formArrowRight}
-                name='arrow-forward'
-                color={greenYellow}
-                size={35}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
-      </Formik>
-      <TouchableOpacity style={styles.formRow}>
-        <Text style={styles.formSignUp} onPress={NavigateToSignUp}>
-          Sign Up
-        </Text>
-        <Ionicons
-          style={styles.formArrowRight}
-          name='arrow-forward'
-          color={gray}
-          size={35}
-        />
-      </TouchableOpacity>
-
-      <Footer />
+            <Ionicons
+              style={styles.formArrowRight}
+              name='arrow-forward'
+              color={gray}
+              size={35}
+            />
+          </TouchableOpacity>
+          <Footer />
+        </View>
+      ) : (
+        <View style={styles.containerLoading}>
+          <ActivityIndicator size='large' color={greenYellow} />
+        </View>
+      )}
     </KeyboardAvoidingView>
   );
 };

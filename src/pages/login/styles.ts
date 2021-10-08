@@ -23,6 +23,10 @@ const createStyles = () => {
       alignItems: 'center',
       backgroundColor: lightGray,
     },
+    containerLoading: {
+      flex: 1,
+      justifyContent: 'center',
+    },
     formTitle: {
       color: gray,
       fontSize: lxs,

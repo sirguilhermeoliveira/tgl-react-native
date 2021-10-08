@@ -60,10 +60,26 @@ const home: React.FC = () => {
     if (whichLoteriaIsVar === type_game) {
       setFilter(0);
       setWhichLoteriaIsVar('');
+      getOldBets();
       return;
     }
     setFilter(helper);
     setWhichLoteriaIsVar(type_game);
+    getOldBets();
+  }
+
+  function getOldBets() {
+    axios
+      .get(url_pagination)
+      .then((res: any) => {
+        if (res.status === 200) {
+          setHelperPagination(res.data.meta);
+          return;
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
@@ -80,18 +96,8 @@ const home: React.FC = () => {
         console.log(err);
       });
 
-    axios
-      .get(url_pagination)
-      .then((res: any) => {
-        if (res.status === 200) {
-          setHelperPagination(res.data.meta);
-          return;
-        }
-      })
-      .catch((err: any) => {
-        console.log(err);
-      });
-  }, [urlPagination]);
+    getOldBets();
+  }, []);
 
   const getGames = getallTheGames.map((item: any) => (
     <TouchableOpacity>

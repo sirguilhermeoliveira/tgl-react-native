@@ -17,7 +17,7 @@ const {
 function LoggedStack() {
   return (
     <Tab.Navigator
-      initialRouteName='NewBet'
+      initialRouteName='Home'
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: greenYellow,
@@ -53,7 +53,7 @@ function LoggedStack() {
             <View style={styles.ImageNewBetCircle}>
               <Image
                 style={styles.ImageNewBet}
-                source={require('../../assets/newbeticon.png')}
+                source={require('../../assets/icons/newbeticon.png')}
               />
             </View>
           ),

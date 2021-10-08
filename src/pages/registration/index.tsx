@@ -120,14 +120,17 @@ const registration: React.FC = ({ navigation }: any) => {
           </View>
         )}
       </Formik>
-      <TouchableOpacity onPress={NavigateToLogin} style={styles.formRow}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Login')}
+        style={styles.formRow}
+      >
         <Ionicons
           style={styles.formArrowRight}
           name='arrow-back'
           color={gray}
           size={35}
         />
-        <Text style={styles.formSignUp} onPress={NavigateToLogin}>
+        <Text style={styles.formSignUp} onPress={() => navigation.goBack()}>
           Back
         </Text>
       </TouchableOpacity>

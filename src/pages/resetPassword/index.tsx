@@ -40,13 +40,6 @@ const resetPassword: React.FC = ({ navigation }: any) => {
       });
   };
 
-  function NavigateToRegistration() {
-    navigation.navigate('Registration');
-  }
-  function NavigateBack() {
-    navigation.goBack();
-  }
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -89,12 +82,15 @@ const resetPassword: React.FC = ({ navigation }: any) => {
           color={gray}
           size={35}
         />
-        <Text style={styles.formSignUp} onPress={NavigateBack}>
+        <Text style={styles.formSignUp} onPress={() => navigation.goBack()}>
           Back
         </Text>
       </View>
       <View style={styles.formRow}>
-        <Text style={styles.formSignUp} onPress={NavigateToRegistration}>
+        <Text
+          style={styles.formSignUp}
+          onPress={() => navigation.navigate('Registration')}
+        >
           Sign Up
         </Text>
         <Ionicons
