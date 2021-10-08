@@ -93,21 +93,15 @@ const home: React.FC = () => {
       });
   }, [urlPagination]);
 
-  /*    style={styles.whichLoteriaIsVar === item.type ? 'active' : ''} */
-
   const getGames = getallTheGames.map((item: any) => (
     <TouchableOpacity>
       <HomeGame
         id={item.id}
         key={item.id}
         onPress={changeGameFilter.bind(null, item.id, item.type)}
-        backgroundColor={
-          String(whichLoteriaIsVar) === item.type ? item.color : item.color
-        }
-        borderColor={
-          String(whichLoteriaIsVar) === item.type ? item.color : item.color
-        }
-        color={String(whichLoteriaIsVar) === item.type ? '#FFF' : '#FFF'}
+        backgroundColor={whichLoteriaIsVar === item.type ? '#FFF' : item.color}
+        borderColor={whichLoteriaIsVar === item.type ? item.color : item.color}
+        color={whichLoteriaIsVar === item.type ? item.color : '#FFF'}
       >
         {item.type}
       </HomeGame>

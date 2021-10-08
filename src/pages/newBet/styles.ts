@@ -166,15 +166,6 @@ const createStyles = () => {
       fontSize: sm,
       marginLeft: baseMargin,
     },
-    newBetNumbers: {
-      color: white,
-      backgroundColor: almostGray,
-      borderRadius: 50,
-      fontSize: lg,
-      fontWeight: 'bold',
-      padding: basePadding * 2,
-      margin: baseMargin * 0.6,
-    },
     newBetNumbersNumber: {
       color: white,
       fontWeight: 'bold',
@@ -344,9 +335,14 @@ const createStyles = () => {
 
 export default createStyles;
 
-export const HomeGame = styled.Text<{ color: string; id: number }>`
-  background-color: ${white};
-  color: ${(props) => props.color || '#000'};
+export const HomeGame = styled.Text<{
+  color: string;
+  id: number;
+  borderColor: string;
+  backgroundColor: string;
+}>`
+  background-color: ${(props) => props.color || '#000'};
+  color: ${(props) => props.backgroundColor || '#000'};
   flex-grow: 3;
   font-weight: bold;
   font-style: italic;
@@ -359,10 +355,23 @@ export const HomeGame = styled.Text<{ color: string; id: number }>`
   border-radius: 15px;
   text-align: center;
   border-width: 1px;
-  border-color: ${(props) => props.color || '#000'};
+  border-color: ${(props) => props.borderColor || '#000'};
 `;
 
 export const HomeGamesRow = styled.ScrollView`
   flex-direction: row;
   margin-bottom: ${baseMargin}px;
+`;
+
+export const NewBetNumbers = styled.Text<{
+  id: string;
+  backgroundColor: string;
+}>`
+  color: ${white};
+  background-color: ${(props) => props.backgroundColor || '#ADC0C4'};
+  border-radius: 50px;
+  font-size: ${lg}px;
+  font-weight: bold;
+  padding: ${basePadding * 2}px;
+  margin: ${baseMargin * 0.6}px;
 `;

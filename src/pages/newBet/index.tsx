@@ -12,6 +12,7 @@ import { HomeGame, HomeGamesRow } from './styles';
 import { types as gamesJson } from '../../database/games.json';
 import { formatNumber, formatNumberCartTotal } from '../../utils/index';
 import CartBet from '../../components/CartBet/index';
+import { NewBetNumbers } from './styles';
 
 const newBet: React.FC = ({ navigation }: any) => {
   const styles = createStyles();
@@ -47,8 +48,9 @@ const newBet: React.FC = ({ navigation }: any) => {
   const [getFor, setGetFor] = useState(gamesJson[whichLoteriaIsVar].type);
   const [range, setRange] = useState(gamesJson[whichLoteriaIsVar].range);
   const numbersList = Array.from(Array(range).keys()).map((num) => num + 1);
-  const changeGameColor = (event: any) => {
-    const newGame = event.target.id;
+
+  const changeGameColor = (id_game: any) => {
+    const newGame = id_game - 1;
     setWhichLoteriaIsVar(newGame);
     setGetDescription(gamesJson[newGame].description);
     setGetFor(gamesJson[newGame].type);
@@ -74,17 +76,27 @@ const newBet: React.FC = ({ navigation }: any) => {
   }, []);
   const [getallTheGames, setallTheGames]: any = useState([]);
 
-  /*    style={styles.whichLoteriaIsVar === item.type ? 'active' : ''} */
-
-  const getGames: any = getallTheGames.map((item: any, index: any) => (
-    <HomeGame
-      id={index}
-      key={item.type}
-      onPress={changeGameColor}
-      color={item.color}
-    >
-      {item.type}
-    </HomeGame>
+  const getGames = getallTheGames.map((item: any) => (
+    <TouchableOpacity>
+      <HomeGame
+        id={item.id}
+        key={item.id}
+        onPress={changeGameColor.bind(null, item.id)}
+        backgroundColor={
+          gamesJson[whichLoteriaIsVar].type === item.type ? '#FFF' : item.color
+        }
+        borderColor={
+          gamesJson[whichLoteriaIsVar].type === item.type
+            ? item.color
+            : item.color
+        }
+        color={
+          gamesJson[whichLoteriaIsVar].type === item.type ? item.color : '#FFF'
+        }
+      >
+        {item.type}
+      </HomeGame>
+    </TouchableOpacity>
   ));
 
   const completeGame = () => {
@@ -162,21 +174,18 @@ const newBet: React.FC = ({ navigation }: any) => {
   };
 
   const [totalNumbers, setTotalNumbers] = useState([] as Number[]);
-  const changeButtonColor = (event: any) => {
+  const changeButtonColor = (id_game: any) => {
     if (
       totalNumbers.length === gamesJson[whichLoteriaIsVar]['max-number'] &&
-      totalNumbers.indexOf(Number(event.currentTarget.id)) === -1
+      totalNumbers.indexOf(Number(id_game)) === -1
     ) {
       return alert('This is the limit of numbers you can choose.');
     }
-    if (totalNumbers.indexOf(Number(event.currentTarget.id)) === -1) {
-      totalNumbers.push(Number(event.currentTarget.id));
+    if (totalNumbers.indexOf(Number(id_game)) === -1) {
+      totalNumbers.push(Number(id_game));
       setTotalNumbers([...totalNumbers]);
     } else {
-      totalNumbers.splice(
-        totalNumbers.indexOf(Number(event.currentTarget.id)),
-        1
-      );
+      totalNumbers.splice(totalNumbers.indexOf(Number(id_game)), 1);
       setTotalNumbers([...totalNumbers]);
     }
   };
@@ -212,7 +221,10 @@ const newBet: React.FC = ({ navigation }: any) => {
         </Text>
         <Text style={styles.drawerCartTotalTextBoldCartPrice}>r$ 7,50</Text>
       </View>
-      <View style={styles.drawerBottomSaveContainer}>
+      <TouchableOpacity
+        onPress={saveCart}
+        style={styles.drawerBottomSaveContainer}
+      >
         <Text style={styles.drawerBottomSave}>Save</Text>
         <Ionicons
           style={styles.drawerBottomSaveArrow}
@@ -220,7 +232,7 @@ const newBet: React.FC = ({ navigation }: any) => {
           name='arrow-forward-outline'
           size={35}
         />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 
@@ -293,18 +305,18 @@ const newBet: React.FC = ({ navigation }: any) => {
             </View>
             <View style={styles.newBetRowNumbers}>
               {numbersList.map((num: any) => (
-                <TouchableOpacity onPress={changeButtonColor}>
-                  <Text
-                    style={styles.newBetNumbers}
-                    /*                     id={num.toString()} */
-                    /*                     className={
-                      totalNumbers.indexOf(num) === -1 ? 'desactive' : 'active'
-                    } */
-                    /*                     color={color} */
+                <TouchableOpacity
+                  onPress={changeButtonColor.bind(null, num.id)}
+                >
+                  <NewBetNumbers
+                    backgroundColor={
+                      totalNumbers.indexOf(num) === -1 ? num.color : color
+                    }
+                    id={num.toString()}
                     key={num}
                   >
                     {formatNumber(num)}
-                  </Text>
+                  </NewBetNumbers>
                 </TouchableOpacity>
               ))}
             </View>
