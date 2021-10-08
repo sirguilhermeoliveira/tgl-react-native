@@ -7,7 +7,7 @@ import {
   HomeSideBar,
 } from './styles';
 import React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -15,12 +15,13 @@ import { cartActions } from '../../store/cart';
 import type { AppDispatch, RootState } from '../../store';
 import { Ionicons } from '@expo/vector-icons';
 import useTheme from '../../theme/index';
+import { formatNumberCart, formatNumberCartTotal } from '../../utils/index';
 
 const CartBet: React.FC = () => {
   const cartGame = useSelector((state: RootState) => state.cart.games);
   const dispatch = useDispatch<AppDispatch>();
-  const deleteItem = (event: React.MouseEvent<HTMLElement>) => {
-    const gameId = +event.currentTarget.id;
+  const deleteItem = (game_id: number) => {
+    const gameId = +game_id;
     const filter = cartGame.filter((game) => {
       return game.id !== gameId;
     });
@@ -58,16 +59,25 @@ const CartBet: React.FC = () => {
   if (cartGame.length > 0) {
     games = cartGame.map((game: GameObject) => {
       return (
-        <HomeSideBar>
+        <HomeSideBar color={game.color} key={game.id}>
           <HomeListGameNumbers>
-            01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21, 22, 23, 24, 25, 27, 28,
-            29, 31, 36, 37, 38, 40, 42, 43, 44, 45, 46, 48, 50
+            {formatNumberCart(game.bet)}
           </HomeListGameNumbers>
           <NewBetRow>
-            <HomeListGameData>28/11/2020 - (R$ 2,50)</HomeListGameData>
-            <Ionicons color={gray} name='trash-outline' size={15} />
+            <HomeListGameData>
+              {String(new Intl.DateTimeFormat('pt-BR').format(new Date()))} - (
+              {formatNumberCartTotal(game.price)})
+            </HomeListGameData>
+            <TouchableOpacity>
+              <Ionicons
+                onPress={deleteItem.bind(null, game.id)}
+                color={gray}
+                name='trash-outline'
+                size={15}
+              />
+            </TouchableOpacity>
           </NewBetRow>
-          <HomeListGame>Lotomania</HomeListGame>
+          <HomeListGame color={game.color}>Lotomania</HomeListGame>
         </HomeSideBar>
       );
     });

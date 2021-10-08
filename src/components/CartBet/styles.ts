@@ -37,15 +37,22 @@ export const HomeListGameNumbers = styled.Text`
   margin-bottom: ${baseMargin}px;
 `;
 
-export const HomeSideBar = styled.View`
+export const HomeSideBar = styled.View<{ color: string }>`
   border-left-width: 7px;
-  border-left-color: ${black};
+  border-color: ${(props) => props.color || '#000'};
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   padding-left: ${basePadding}px;
   margin-bottom: ${baseMargin * 2}px;
+`;
+
+export const HomeListGame = styled.Text<{ color: string }>`
+  font-size: ${md}px;
+  font-weight: bold;
+  font-style: italic;
+  color: ${(props) => props.color || '#000'};
 `;
 
 export const NewBetRow = styled.View`
@@ -56,12 +63,6 @@ export const NewBetRow = styled.View`
 export const HomeListGameData = styled.Text`
   font-size: ${xs}px;
   color: ${silverWhite};
-`;
-
-export const HomeListGame = styled.Text`
-  font-size: ${md}px;
-  font-weight: bold;
-  font-style: italic;
 `;
 
 export const EmptyCart = styled.Text`

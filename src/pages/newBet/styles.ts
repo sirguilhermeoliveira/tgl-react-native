@@ -26,8 +26,8 @@ const createStyles = () => {
       backgroundColor: lightGray,
     },
     newBetTitle: {
-      marginTop: baseMargin * 2,
-      marginBottom: baseMargin * 2,
+      marginTop: baseMargin,
+      marginBottom: baseMargin,
       color: gray,
       fontSize: xl,
       textTransform: 'uppercase',
@@ -97,13 +97,14 @@ const createStyles = () => {
       fontSize: lg,
       fontWeight: 'bold',
       fontStyle: 'italic',
-      marginTop: baseMargin * 2,
+      marginTop: baseMargin * 0.5,
     },
     newBetFillDescription: {
       color: silverWhite,
       fontSize: sm,
       fontStyle: 'italic',
       paddingRight: basePadding * 5,
+      marginBottom: baseMargin,
     },
     newBetFillDescriptionBold: {
       color: gray,
@@ -122,7 +123,6 @@ const createStyles = () => {
     },
     newBetBottomLineCenter: {
       alignItems: 'center',
-      marginTop: 10,
       marginBottom: 10,
     },
     newBetRowNumbers: {
@@ -166,26 +166,10 @@ const createStyles = () => {
       fontSize: sm,
       marginLeft: baseMargin,
     },
-    newBetNumbersNumber: {
-      color: white,
-      fontWeight: 'bold',
-    },
     newBetX: {
-      margin: -6,
-    },
-    newBetNumbersMin: {
       color: white,
-      backgroundColor: almostGray,
-      borderRadius: 50,
-      fontSize: sm,
-      fontWeight: 'bold',
-      marginBottom: baseMargin,
-      marginRight: baseMargin,
-      paddingLeft: basePadding * 1.3,
-      paddingRight: basePadding * 1.3,
-      paddingTop: basePadding,
-      paddingBottom: basePadding,
-      flexDirection: 'row',
+      position: 'absolute',
+      marginLeft: baseMargin * 1.9,
     },
     newBetGames: {
       backgroundColor: white,
@@ -374,4 +358,22 @@ export const NewBetNumbers = styled.Text<{
   font-weight: bold;
   padding: ${basePadding * 2}px;
   margin: ${baseMargin * 0.6}px;
+`;
+
+export const NewBetNumbersMin = styled.Text<{
+  id: string;
+  backgroundColor: string;
+}>`
+  color: ${white};
+  background-color: ${(props) => props.backgroundColor || '#ADC0C4'};
+  border-radius: 50px;
+  font-size: ${sm}px;
+  font-weight: bold;
+  margin-bottom: ${baseMargin}px;
+  margin-right: ${baseMargin}px;
+  padding-left: ${basePadding * 1.2}px;
+  padding-right: ${basePadding * 1.2}px;
+  padding-top: ${basePadding}px;
+  padding-bottom: ${basePadding}px;
+  flex-direction: row;
 `;

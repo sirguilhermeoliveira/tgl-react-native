@@ -12,7 +12,7 @@ import { HomeGame, HomeGamesRow } from './styles';
 import { types as gamesJson } from '../../database/games.json';
 import { formatNumber, formatNumberCartTotal } from '../../utils/index';
 import CartBet from '../../components/CartBet/index';
-import { NewBetNumbers } from './styles';
+import { NewBetNumbers, NewBetNumbersMin } from './styles';
 
 const newBet: React.FC = ({ navigation }: any) => {
   const styles = createStyles();
@@ -40,11 +40,9 @@ const newBet: React.FC = ({ navigation }: any) => {
   const dispatch = useDispatch<AppDispatch>();
   const [whichLoteriaIsVar, setWhichLoteriaIsVar] = useState<any>(0);
   const user_id = useSelector((state: RootState) => state.auth.user_id);
-  const color = gamesJson[whichLoteriaIsVar].color;
   const [getDescription, setGetDescription] = useState(
     gamesJson[whichLoteriaIsVar].description
   );
-
   const [getFor, setGetFor] = useState(gamesJson[whichLoteriaIsVar].type);
   const [range, setRange] = useState(gamesJson[whichLoteriaIsVar].range);
   const numbersList = Array.from(Array(range).keys()).map((num) => num + 1);
@@ -142,7 +140,8 @@ const newBet: React.FC = ({ navigation }: any) => {
   };
 
   function saveCart() {
-    console.log(allBets[0].game_id);
+    console.log(totalPrice);
+    console.log(typeof totalPrice);
     let bets: any = [];
     for (let i = 0; i < allBets.length; i++) {
       bets.push({
@@ -152,6 +151,7 @@ const newBet: React.FC = ({ navigation }: any) => {
     }
     if (totalPrice < 30) {
       alert('The minimum in cart has to be R$ 30,00');
+      return;
     } else {
       let url = 'http://192.168.56.1:3333/users/' + user_id + '/bets';
       axios
@@ -172,17 +172,17 @@ const newBet: React.FC = ({ navigation }: any) => {
   const clearGame = () => {
     setTotalNumbers([]);
   };
-
+  //Modifiquei de lugar o Drawer Layout e tirei Number() do id_game no changeButtonColor
   const [totalNumbers, setTotalNumbers] = useState([] as Number[]);
-  const changeButtonColor = (id_game: any) => {
+  const changeButtonColor = (id_game: number) => {
     if (
       totalNumbers.length === gamesJson[whichLoteriaIsVar]['max-number'] &&
-      totalNumbers.indexOf(Number(id_game)) === -1
+      totalNumbers.indexOf(id_game) === -1
     ) {
       return alert('This is the limit of numbers you can choose.');
     }
-    if (totalNumbers.indexOf(Number(id_game)) === -1) {
-      totalNumbers.push(Number(id_game));
+    if (totalNumbers.indexOf(id_game) === -1) {
+      totalNumbers.push(id_game);
       setTotalNumbers([...totalNumbers]);
     } else {
       totalNumbers.splice(totalNumbers.indexOf(Number(id_game)), 1);
@@ -219,7 +219,9 @@ const newBet: React.FC = ({ navigation }: any) => {
         <Text style={styles.drawerCartTotalText}>
           <Text style={styles.drawerCartTotalTextBoldCart}>cart</Text> total:{' '}
         </Text>
-        <Text style={styles.drawerCartTotalTextBoldCartPrice}>r$ 7,50</Text>
+        <Text style={styles.drawerCartTotalTextBoldCartPrice}>
+          r$ {formatNumberCartTotal(totalPrice)}
+        </Text>
       </View>
       <TouchableOpacity
         onPress={saveCart}
@@ -243,39 +245,52 @@ const newBet: React.FC = ({ navigation }: any) => {
       drawerPosition='right'
       renderNavigationView={navigationView}
     >
-      <View style={styles.homeRow}>
-        <Text style={styles.homeTitle}>TGL</Text>
-        <View style={styles.homeRowIcons}>
-          <TouchableOpacity onPress={() => drawer.current!.openDrawer()}>
-            <Ionicons color={greenYellow} name='cart-outline' size={35} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Ionicons
-              onPress={() => navigation.replace('Login')}
-              style={styles.homeArrow}
-              color={ghostGray}
-              name='arrow-forward'
-              size={35}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
       <ScrollView>
         <View style={styles.container}>
+          <View style={styles.homeRow}>
+            <Text style={styles.homeTitle}>TGL</Text>
+            <View style={styles.homeRowIcons}>
+              <TouchableOpacity onPress={() => drawer.current!.openDrawer()}>
+                <Ionicons color={greenYellow} name='cart-outline' size={35} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Ionicons
+                  onPress={() => navigation.replace('Login')}
+                  style={styles.homeArrow}
+                  color={ghostGray}
+                  name='arrow-forward'
+                  size={35}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
           <View style={styles.newBetPadding}>
-            <Text style={styles.newBetTitle}>new bet for {getFor}</Text>
+            {whichLoteriaIsVar === -1 ? null : (
+              <Text style={styles.newBetTitle}>new bet for {getFor}</Text>
+            )}
             <Text style={styles.newBetChooseGame}>Choose a game</Text>
             <HomeGamesRow horizontal={true}>{getGames}</HomeGamesRow>
             <View style={styles.newBetRowNumbers}>
-              <TouchableOpacity style={styles.newBetNumbersMin}>
-                <Text style={styles.newBetNumbersNumber}>01</Text>
-                <Ionicons
-                  style={styles.newBetX}
-                  color={white}
-                  name='close-outline'
-                  size={12}
-                />
-              </TouchableOpacity>
+              {totalNumbers.map((num: any) => (
+                <View>
+                  <NewBetNumbersMin
+                    id={num.id}
+                    backgroundColor={gamesJson[whichLoteriaIsVar].color}
+                  >
+                    {formatNumber(num)}
+                  </NewBetNumbersMin>
+                  <Ionicons
+                    style={styles.newBetX}
+                    color={white}
+                    name='close-outline'
+                    size={12}
+                  />
+                </View>
+              ))}
+            </View>
+            <View>
+              <Text style={styles.newBetFill}>Fill your bet</Text>
+              <Text style={styles.newBetFillDescription}>{getDescription}</Text>
             </View>
             <View style={styles.newBetButtonsContainer}>
               <TouchableOpacity
@@ -297,29 +312,29 @@ const newBet: React.FC = ({ navigation }: any) => {
                 </View>
               </TouchableOpacity>
             </View>
-            <Text style={styles.newBetFill}>Fill your bet</Text>
-            <Text style={styles.newBetFillDescription}>{getDescription}</Text>
-
             <View style={styles.newBetBottomLineCenter}>
               <View style={styles.newBetBottomLine}></View>
             </View>
-            <View style={styles.newBetRowNumbers}>
-              {numbersList.map((num: any) => (
-                <TouchableOpacity
-                  onPress={changeButtonColor.bind(null, num.id)}
-                >
-                  <NewBetNumbers
-                    backgroundColor={
-                      totalNumbers.indexOf(num) === -1 ? num.color : color
-                    }
-                    id={num.toString()}
-                    key={num}
-                  >
-                    {formatNumber(num)}
-                  </NewBetNumbers>
-                </TouchableOpacity>
-              ))}
-            </View>
+            {whichLoteriaIsVar === -1 ? null : (
+              <View style={styles.newBetRowNumbers}>
+                {numbersList.map((num: any) => (
+                  <TouchableOpacity>
+                    <NewBetNumbers
+                      onPress={changeButtonColor.bind(null, num)}
+                      backgroundColor={
+                        totalNumbers.indexOf(num) === -1
+                          ? num.color
+                          : gamesJson[whichLoteriaIsVar].color
+                      }
+                      id={num.id}
+                      key={num.id}
+                    >
+                      {formatNumber(num)}
+                    </NewBetNumbers>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
           </View>
         </View>
       </ScrollView>
