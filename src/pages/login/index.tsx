@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   Platform,
   KeyboardAvoidingView,
-  ActivityIndicator,
   ScrollView,
 } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 import { Formik } from 'formik';
 import createStyles from './styles';
 import Header from '../../components/Header/index';
@@ -28,7 +28,7 @@ const login: React.FC = ({ navigation }: any) => {
   const dispatch = useDispatch<AppDispatch>();
   const [loading, SetLoading]: any = useState(false);
   const {
-    colors: { gray, greenYellow },
+    colors: { gray, greenYellow, borderGray },
   } = useTheme();
 
   const schema = Yup.object().shape({
@@ -57,15 +57,18 @@ const login: React.FC = ({ navigation }: any) => {
         dispatch(authActions.login(res.data.token));
         dispatch(authActions.loginEmail(res.data.user_id));
         setTimeout(() => {
-          navigation.navigate('LoggedStack');
           alert('Logged in with sucess!');
+        }, 500);
+        setTimeout(() => {
+          navigation.navigate('LoggedStack');
           SetLoading(false);
-        }, 1000);
+        }, 500);
       })
       .catch((err: any) => {
         alert(err);
       });
   };
+  const [hidePassword, setHidePassword] = useState(true);
 
   return (
     <KeyboardAvoidingView
@@ -96,19 +99,31 @@ const login: React.FC = ({ navigation }: any) => {
                   value={values.email}
                   placeholder='Email'
                 />
-                <TextInput
-                  style={styles.formInput}
-                  onChangeText={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  value={values.password}
-                  placeholder='Password'
-                />
-                {errors.email ? (
-                  <Text style={styles.formErrors}>{errors.email}</Text>
-                ) : null}
-                {errors.password ? (
-                  <Text style={styles.formErrors}>{errors.password}</Text>
-                ) : null}
+                <View style={styles.formInput}>
+                  <TextInput
+                    style={styles.formInputText}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                    placeholder='Password'
+                  />
+                  <View>
+                    <Ionicons
+                      style={styles.formInputPassword}
+                      name='eye-outline'
+                      color={borderGray}
+                      size={30}
+                    />
+                  </View>
+                </View>
+                <View style={styles.formErrorsContainer}>
+                  {errors.email ? (
+                    <Text style={styles.formErrors}>{errors.email}</Text>
+                  ) : null}
+                  {errors.password ? (
+                    <Text style={styles.formErrors}>{errors.password}</Text>
+                  ) : null}
+                </View>
                 <Text
                   style={styles.formForgetPassword}
                   onPress={() => navigation.navigate('ResetPassword')}
@@ -127,13 +142,11 @@ const login: React.FC = ({ navigation }: any) => {
               </View>
             )}
           </Formik>
-          <TouchableOpacity style={styles.formRow}>
-            <Text
-              style={styles.formSignUp}
-              onPress={() => navigation.navigate('Registration')}
-            >
-              Sign Up
-            </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Registration')}
+            style={styles.formRow}
+          >
+            <Text style={styles.formSignUp}>Sign Up</Text>
             <Ionicons
               style={styles.formArrowRight}
               name='arrow-forward'
@@ -145,7 +158,11 @@ const login: React.FC = ({ navigation }: any) => {
         </View>
       ) : (
         <View style={styles.containerLoading}>
-          <ActivityIndicator size='large' color={greenYellow} />
+          <ActivityIndicator
+            animating={true}
+            size='large'
+            color={greenYellow}
+          />
         </View>
       )}
     </KeyboardAvoidingView>

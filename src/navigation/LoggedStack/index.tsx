@@ -11,50 +11,55 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Tab = createBottomTabNavigator();
 const styles = createStyles();
 const {
-  colors: { greenYellow, gray },
+  colors: { greenYellow, black, almostGray },
 } = useTheme();
 
 function LoggedStack() {
   return (
     <Tab.Navigator
-      initialRouteName='Home'
+      initialRouteName='NewBet'
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: greenYellow,
-        tabBarStyle: {
-          borderTopRightRadius: 50,
-          borderTopLeftRadius: 50,
-        },
+        tabBarActiveTintColor: black,
       }}
     >
       <Tab.Screen
-        name='Home'
         options={{
           tabBarLabel: 'Home',
           unmountOnBlur: true,
           tabBarHideOnKeyboard: true,
           tabBarStyle: {
-            borderTopRightRadius: 50,
-            borderTopLeftRadius: 50,
+            borderTopRightRadius: 15,
+            borderTopLeftRadius: 15,
+          },
+          tabBarLabelStyle: {
+            fontStyle: 'italic',
+            fontSize: 14,
           },
           tabBarIcon: () => (
             <Ionicons color={greenYellow} name='home-outline' size={25} />
           ),
         }}
+        name='Home'
         component={Home}
       />
       <Tab.Screen
         name='NewBet'
         options={{
           tabBarLabel: '',
-          unmountOnBlur: true,
           tabBarHideOnKeyboard: true,
+          tabBarStyle: {
+            borderTopRightRadius: 15,
+            borderTopLeftRadius: 15,
+          },
           tabBarIcon: () => (
             <View style={styles.ImageNewBetCircle}>
-              <Image
-                style={styles.ImageNewBet}
-                source={require('../../assets/icons/newbeticon.png')}
-              />
+              <View style={styles.ImageNewBetCircleGreenYellow}>
+                <Image
+                  style={styles.ImageNewBet}
+                  source={require('../../assets/icons/newbeticon.png')}
+                />
+              </View>
             </View>
           ),
         }}
@@ -66,8 +71,12 @@ function LoggedStack() {
           unmountOnBlur: true,
           tabBarHideOnKeyboard: true,
           tabBarStyle: {
-            borderTopLeftRadius: 50,
-            borderTopRightRadius: 50,
+            borderTopRightRadius: 15,
+            borderTopLeftRadius: 15,
+          },
+          tabBarLabelStyle: {
+            fontStyle: 'italic',
+            fontSize: 14,
           },
           tabBarIcon: () => (
             <Ionicons color={greenYellow} name='person-outline' size={25} />

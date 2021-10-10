@@ -9,12 +9,15 @@ const createStyles = () => {
   } = useTheme();
 
   return StyleSheet.create({
-    footer: {
-      position: 'absolute',
-      bottom: 0,
+    footerContainer: {
+      marginTop: 70,
       color: gray,
       fontSize: md,
       marginBottom: baseMargin * 2,
+    },
+    footer: {
+      color: gray,
+      fontSize: md,
     },
   });
 };

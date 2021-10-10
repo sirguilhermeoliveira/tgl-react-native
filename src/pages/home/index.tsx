@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  FlatList,
+} from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 import {
   Container,
   HomeGamesRow,
@@ -18,6 +25,7 @@ import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../store';
 import { gameActions } from '../../store/games';
 import { useSelector } from 'react-redux';
+import useTheme from '../../theme/index';
 
 interface IGame {
   id: string;
@@ -26,6 +34,9 @@ interface IGame {
 }
 
 const home: React.FC = () => {
+  const {
+    colors: { greenYellow },
+  } = useTheme();
   const getallTheGames: any = useSelector(
     (state: RootState) => state.games.games
   );
@@ -35,6 +46,7 @@ const home: React.FC = () => {
   const [filter, setFilter]: any = useState(0);
   const dispatch = useDispatch<AppDispatch>();
   const [getHelperPagination, setHelperPagination]: any = useState([]);
+  const [loading, setLoading] = useState(false);
   const [urlPagination, setUrlPagination]: any = useState(
     BASE_URL +
       '/users/' +
@@ -78,7 +90,24 @@ const home: React.FC = () => {
         }
       })
       .catch((err: any) => {
-        console.log(err);
+        alert(err);
+      });
+  }
+
+  function getMoreBets() {
+    setHelperPagination(getHelperPagination + 1);
+    setLoading(true);
+    axios
+      .get(url_pagination)
+      .then((res: any) => {
+        if (res.status === 200) {
+          setHelperPagination(res.data.meta);
+          setLoading(false);
+          return;
+        }
+      })
+      .catch((err: any) => {
+        alert(err);
       });
   }
 
@@ -93,7 +122,7 @@ const home: React.FC = () => {
         }
       })
       .catch((err: any) => {
-        console.log(err);
+        alert(err);
       });
 
     getOldBets();
@@ -103,7 +132,7 @@ const home: React.FC = () => {
     <TouchableOpacity>
       <HomeGame
         id={item.id}
-        key={item.id}
+        key={Math.random()}
         onPress={changeGameFilter.bind(null, item.id, item.type)}
         backgroundColor={whichLoteriaIsVar === item.type ? '#FFF' : item.color}
         borderColor={whichLoteriaIsVar === item.type ? item.color : item.color}
@@ -114,6 +143,17 @@ const home: React.FC = () => {
     </TouchableOpacity>
   ));
 
+  const [data, setData] = useState([{ id: 1, full_name: 'Sujeito' }]);
+
+  function FooterList({ Load }: any) {
+    if (!Load) return null;
+    return (
+      <View>
+        <ActivityIndicator animating={true} size={25} color={greenYellow} />
+      </View>
+    );
+  }
+
   return (
     <Container>
       <View>
@@ -122,8 +162,17 @@ const home: React.FC = () => {
           <HomeRecentGames>recent games</HomeRecentGames>
           <HomeFilterTitle>Filters</HomeFilterTitle>
           <HomeGamesRow horizontal={true}>{getGames}</HomeGamesRow>
-          <ScrollView>
-            <CartRecentGames url_bets={url_pagination} />
+          <ScrollView horizontal={true}>
+            <FlatList
+              data={data}
+              keyExtractor={(item) => String(Math.random())}
+              renderItem={({ item }: any) => (
+                <CartRecentGames url_bets={url_pagination} />
+              )}
+              onEndReached={getMoreBets}
+              onEndReachedThreshold={0.1}
+              ListFooterComponent={<FooterList Load={loading} />}
+            />
           </ScrollView>
         </HomePadding>
       </View>

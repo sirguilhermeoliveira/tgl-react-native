@@ -27,4 +27,8 @@ export const formatDate = (date: string) => {
   return `${dd}/${mm}/${yy}`;
 };
 
+export const formatLineBreak = (text: string) => {
+  return text.replace(/\. /g, '.\n');
+};
+
 export const BASE_URL = 'http://192.168.56.1:3333';

@@ -33,7 +33,7 @@ const createStyles = () => {
     formContainer: {
       backgroundColor: white,
       width: 300,
-      height: 300,
+      minHeight: 300,
       borderRadius: 15,
       borderColor: borderGray,
       borderWidth: 1,
@@ -62,7 +62,7 @@ const createStyles = () => {
       marginTop: basePadding * 2,
     },
     formErrors: {
-      justifyContent: 'center',
+      alignSelf: 'center',
       fontSize: 15,
       color: red,
       marginTop: baseMargin,
@@ -73,6 +73,7 @@ const createStyles = () => {
       fontSize: xxl,
       fontWeight: 'bold',
       fontStyle: 'italic',
+      marginBottom: baseMargin * 2,
     },
     formSignUp: {
       color: gray,

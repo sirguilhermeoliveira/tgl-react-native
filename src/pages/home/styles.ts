@@ -21,7 +21,6 @@ export const Container = styled.ScrollView`
   flex: 1;
   background-color: ${lightGray};
 `;
-
 export const HomeGamesRow = styled.ScrollView`
   flex-direction: row;
 `;
@@ -58,10 +57,10 @@ export const HomeGame = styled.Text<{
   margin-right: ${baseMargin}px;
   padding-left: ${basePadding * 1.7}px;
   padding-right: ${basePadding * 1.7}px;
-  padding-top: ${basePadding * 0.5}px;
-  padding-bottom: ${basePadding * 0.5}px;
+  padding-top: ${basePadding * 0.3}px;
+  padding-bottom: ${basePadding * 0.3}px;
   border-radius: 15px;
   text-align: center;
-  border-width: 1px;
+  border-width: 1.7px;
   border-color: ${(props) => props.borderColor || '#000'};
 `;

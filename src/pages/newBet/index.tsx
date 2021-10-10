@@ -3,14 +3,18 @@ import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { DrawerLayoutAndroid } from 'react-native';
 import createStyles from './styles';
 import useTheme from '../../theme/index';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import type { AppDispatch, RootState } from '../../store';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { cartActions } from '../../store/cart';
 import { HomeGame, HomeGamesRow } from './styles';
 import { types as gamesJson } from '../../database/games.json';
-import { formatNumber, formatNumberCartTotal } from '../../utils/index';
+import {
+  formatNumber,
+  formatNumberCartTotal,
+  formatLineBreak,
+} from '../../utils/index';
 import CartBet from '../../components/CartBet/index';
 import { NewBetNumbers, NewBetNumbersMin } from './styles';
 
@@ -80,7 +84,7 @@ const newBet: React.FC = ({ navigation }: any) => {
     <TouchableOpacity>
       <HomeGame
         id={item.id}
-        key={item.id}
+        key={Math.random()}
         onPress={changeGameColor.bind(null, item.id)}
         backgroundColor={
           gamesJson[whichLoteriaIsVar].type === item.type ? '#FFF' : item.color
@@ -171,6 +175,12 @@ const newBet: React.FC = ({ navigation }: any) => {
     alert('Bet Saved!!');
   }
 
+  function Loggout() {
+    alert('Congratulations, Loggout with sucess');
+    navigation.navigate('Login');
+    /*     dispatch(authActions.logout('')); */
+  }
+
   const clearGame = () => {
     setTotalNumbers([]);
   };
@@ -201,14 +211,14 @@ const newBet: React.FC = ({ navigation }: any) => {
         <Ionicons
           style={styles.drawerXToEnd}
           color={greenYellow}
-          name='close-outline'
+          name='close'
           size={30}
         />
       </TouchableOpacity>
       <View style={styles.drawerRow}>
         <Ionicons
-          style={styles.newBetX}
           color={greenYellow}
+          style={styles.cartCart}
           name='cart-outline'
           size={35}
         />
@@ -217,11 +227,12 @@ const newBet: React.FC = ({ navigation }: any) => {
       <ScrollView>
         <CartBet />
       </ScrollView>
-      <View style={styles.drawerCartTotalBottom}>
-        <Text style={styles.drawerCartTotalText}>
-          <Text style={styles.drawerCartTotalTextBoldCart}>cart</Text> total:{' '}
-        </Text>
-        <Text style={styles.drawerCartTotalTextBoldCartPrice}>
+      <View style={styles.drawerContainerPrice}>
+        <View style={styles.drawerContainerRow}>
+          <Text style={styles.drawerPriceLeft}>cart</Text>
+          <Text style={styles.drawerPriceLeftRight}> total:</Text>
+        </View>
+        <Text style={styles.drawerPriceRight}>
           r$ {formatNumberCartTotal(totalPrice)}
         </Text>
       </View>
@@ -247,7 +258,7 @@ const newBet: React.FC = ({ navigation }: any) => {
       drawerPosition='right'
       renderNavigationView={navigationView}
     >
-      <ScrollView>
+      <ScrollView style={styles.drawerContainerNumbersBackgroundColor}>
         <View style={styles.container}>
           <View style={styles.homeRow}>
             <Text style={styles.homeTitle}>TGL</Text>
@@ -256,25 +267,23 @@ const newBet: React.FC = ({ navigation }: any) => {
                 <Ionicons color={greenYellow} name='cart-outline' size={35} />
               </TouchableOpacity>
               <TouchableOpacity>
-                <Ionicons
-                  onPress={() => navigation.replace('Login')}
+                <MaterialIcons
+                  onPress={Loggout}
                   style={styles.homeArrow}
                   color={ghostGray}
-                  name='arrow-forward'
+                  name='logout'
                   size={35}
                 />
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.newBetPadding}>
-            {whichLoteriaIsVar === -1 ? null : (
-              <Text style={styles.newBetTitle}>new bet for {getFor}</Text>
-            )}
+            <Text style={styles.newBetTitle}>new bet for {getFor}</Text>
             <Text style={styles.newBetChooseGame}>Choose a game</Text>
             <HomeGamesRow horizontal={true}>{getGames}</HomeGamesRow>
             <View style={styles.newBetRowNumbers}>
               {totalNumbers.map((num: any) => (
-                <View>
+                <View key={Math.random()}>
                   <NewBetNumbersMin
                     id={num.id}
                     backgroundColor={gamesJson[whichLoteriaIsVar].color}
@@ -292,7 +301,9 @@ const newBet: React.FC = ({ navigation }: any) => {
             </View>
             <View>
               <Text style={styles.newBetFill}>Fill your bet</Text>
-              <Text style={styles.newBetFillDescription}>{getDescription}</Text>
+              <Text style={styles.newBetFillDescription}>
+                {formatLineBreak(getDescription)}
+              </Text>
             </View>
             <View style={styles.newBetButtonsContainer}>
               <TouchableOpacity
@@ -320,7 +331,7 @@ const newBet: React.FC = ({ navigation }: any) => {
             {whichLoteriaIsVar === -1 ? null : (
               <View style={styles.newBetRowNumbers}>
                 {numbersList.map((num: any) => (
-                  <TouchableOpacity>
+                  <TouchableOpacity key={Math.random()}>
                     <NewBetNumbers
                       onPress={changeButtonColor.bind(null, num)}
                       backgroundColor={
@@ -329,7 +340,6 @@ const newBet: React.FC = ({ navigation }: any) => {
                           : gamesJson[whichLoteriaIsVar].color
                       }
                       id={num.id}
-                      key={num.id}
                     >
                       {formatNumber(num)}
                     </NewBetNumbers>

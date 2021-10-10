@@ -15,6 +15,7 @@ import useTheme from '../../theme/index';
 import Footer from '../../components/Footer/index';
 import axios from 'axios';
 import { BASE_URL } from '../../utils/index';
+import * as Yup from 'yup';
 
 const resetPassword: React.FC = ({ navigation }: any) => {
   const styles = createStyles();
@@ -40,6 +41,13 @@ const resetPassword: React.FC = ({ navigation }: any) => {
       });
   };
 
+  const schema = Yup.object().shape({
+    email: Yup.string()
+      .max(50, 'Email Too Long')
+      .email('Invalid email')
+      .required('Email Required'),
+  });
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -48,6 +56,7 @@ const resetPassword: React.FC = ({ navigation }: any) => {
       <Header />
       <Text style={styles.formTitle}>Reset password</Text>
       <Formik
+        validationSchema={schema}
         initialValues={{ email: '' }}
         onSubmit={(values) => submitHandler(values)}
       >
@@ -75,31 +84,30 @@ const resetPassword: React.FC = ({ navigation }: any) => {
           </View>
         )}
       </Formik>
-      <View style={styles.formRow}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.formRow}
+      >
         <Ionicons
           style={styles.formArrowRight}
           name='arrow-back'
           color={gray}
           size={35}
         />
-        <Text style={styles.formSignUp} onPress={() => navigation.goBack()}>
-          Back
-        </Text>
-      </View>
-      <View style={styles.formRow}>
-        <Text
-          style={styles.formSignUp}
-          onPress={() => navigation.navigate('Registration')}
-        >
-          Sign Up
-        </Text>
+        <Text style={styles.formSignUp}>Back</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Registration')}
+        style={styles.formRow}
+      >
+        <Text style={styles.formSignUp}>Sign Up</Text>
         <Ionicons
           style={styles.formArrowRight}
           name='arrow-forward'
           color={gray}
           size={35}
         />
-      </View>
+      </TouchableOpacity>
       <Footer />
     </KeyboardAvoidingView>
   );

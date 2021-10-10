@@ -5,6 +5,7 @@ import {
   EmptyCart,
   NewBetRow,
   HomeSideBar,
+  HomeCartThrashCan,
 } from './styles';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
@@ -59,7 +60,7 @@ const CartBet: React.FC = () => {
   if (cartGame.length > 0) {
     games = cartGame.map((game: GameObject) => {
       return (
-        <HomeSideBar color={game.color} key={game.id}>
+        <HomeSideBar id={game.id} color={game.color} key={Math.random()}>
           <HomeListGameNumbers>
             {formatNumberCart(game.bet)}
           </HomeListGameNumbers>
@@ -68,14 +69,14 @@ const CartBet: React.FC = () => {
               {String(new Intl.DateTimeFormat('pt-BR').format(new Date()))} - (
               {formatNumberCartTotal(game.price)})
             </HomeListGameData>
-            <TouchableOpacity>
+            <HomeCartThrashCan>
               <Ionicons
                 onPress={deleteItem.bind(null, game.id)}
                 color={gray}
                 name='trash-outline'
                 size={15}
               />
-            </TouchableOpacity>
+            </HomeCartThrashCan>
           </NewBetRow>
           <HomeListGame color={game.color}>Lotomania</HomeListGame>
         </HomeSideBar>

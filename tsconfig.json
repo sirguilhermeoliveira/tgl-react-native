@@ -4,5 +4,10 @@
   "compilerOptions": {
     "strict": true
   },
+  "splash": {
+    "image": "./assets/splash.png",
+    "resizeMode": "contain",
+    "backgroundColor": "#ffffff"
+  },
   "esModuleInterop": true
 }

@@ -34,10 +34,10 @@ export const HomeListGameNumbers = styled.Text`
   font-size: ${xs}px;
   font-weight: bold;
   font-style: italic;
-  margin-bottom: ${baseMargin}px;
+  margin-bottom: ${baseMargin * 0.5}px;
 `;
 
-export const HomeSideBar = styled.View<{ color: string }>`
+export const HomeSideBar = styled.View<{ color: string; id: number }>`
   border-left-width: 7px;
   border-color: ${(props) => props.color || '#000'};
   border-top-left-radius: 4px;
@@ -57,7 +57,11 @@ export const HomeListGame = styled.Text<{ color: string }>`
 
 export const NewBetRow = styled.View`
   flex-direction: row;
-  margin-bottom: ${baseMargin}px;
+`;
+
+export const HomeCartThrashCan = styled.TouchableOpacity`
+  flex: 1;
+  align-items: flex-end;
 `;
 
 export const HomeListGameData = styled.Text`

@@ -37,12 +37,14 @@ const createStyles = () => {
     formContainer: {
       backgroundColor: white,
       width: 300,
-      height: 300,
+      minHeight: 300,
       borderRadius: 15,
       borderColor: borderGray,
       borderWidth: 1,
     },
     formInput: {
+      display: 'flex',
+      flexDirection: 'row',
       color: smoothGray,
       padding: basePadding * 2,
       paddingLeft: basePadding * 2,
@@ -52,6 +54,17 @@ const createStyles = () => {
       borderBottomWidth: 1,
       borderBottomColor: borderGray,
     },
+    formInputText: {
+      color: smoothGray,
+      fontSize: md,
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+      flex: 1,
+    },
+
+    formInputPassword: {
+      flex: 1,
+    },
     formForgetPassword: {
       fontSize: sm,
       fontStyle: 'italic',
@@ -60,9 +73,12 @@ const createStyles = () => {
       marginTop: baseMargin * 2,
       marginRight: baseMargin * 2,
     },
+    formErrorsContainer: {
+      alignItems: 'center',
+    },
     formErrors: {
       justifyContent: 'center',
-      fontSize: 15,
+      fontSize: 10,
       color: red,
       marginTop: baseMargin,
       marginLeft: baseMargin,
@@ -70,13 +86,14 @@ const createStyles = () => {
     formRow: {
       flexDirection: 'row',
       justifyContent: 'center',
-      marginTop: basePadding * 1,
+      marginTop: basePadding * 2,
     },
     formLogIn: {
       color: greenYellow,
       fontSize: xxl,
       fontWeight: 'bold',
       fontStyle: 'italic',
+      marginBottom: baseMargin * 2,
     },
     formSignUp: {
       color: gray,

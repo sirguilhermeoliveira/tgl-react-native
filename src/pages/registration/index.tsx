@@ -20,7 +20,7 @@ import { BASE_URL } from '../../utils/index';
 const registration: React.FC = ({ navigation }: any) => {
   const styles = createStyles();
   const {
-    colors: { gray, greenYellow },
+    colors: { gray, greenYellow, borderGray },
   } = useTheme();
 
   const submitHandler = async (event: any) => {
@@ -44,10 +44,6 @@ const registration: React.FC = ({ navigation }: any) => {
         alert(err);
       });
   };
-
-  function NavigateToLogin() {
-    navigation.goBack();
-  }
 
   const schema = Yup.object().shape({
     name: Yup.string()
@@ -92,22 +88,34 @@ const registration: React.FC = ({ navigation }: any) => {
               value={values.email}
               placeholder='Email'
             />
-            <TextInput
-              style={styles.formInput}
-              onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
-              value={values.password}
-              placeholder='Password'
-            />
-            {errors.name ? (
-              <Text style={styles.formErrors}>{errors.name}</Text>
-            ) : null}
-            {errors.email ? (
-              <Text style={styles.formErrors}>{errors.email}</Text>
-            ) : null}
-            {errors.password ? (
-              <Text style={styles.formErrors}>{errors.password}</Text>
-            ) : null}
+            <View style={styles.formInputContainer}>
+              <TextInput
+                style={styles.formInputText}
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
+                value={values.password}
+                placeholder='Password'
+              />
+              <View>
+                <Ionicons
+                  style={styles.formInputPassword}
+                  name='eye-outline'
+                  color={borderGray}
+                  size={30}
+                />
+              </View>
+            </View>
+            <View style={styles.formErrorsContainer}>
+              {errors.name ? (
+                <Text style={styles.formErrors}>{errors.name}</Text>
+              ) : null}
+              {errors.email ? (
+                <Text style={styles.formErrors}>{errors.email}</Text>
+              ) : null}
+              {errors.password ? (
+                <Text style={styles.formErrors}>{errors.password}</Text>
+              ) : null}
+            </View>
             <TouchableOpacity style={styles.formRow} onPress={handleSubmit}>
               <Text style={styles.formLogIn}>Register</Text>
               <Ionicons
@@ -121,7 +129,7 @@ const registration: React.FC = ({ navigation }: any) => {
         )}
       </Formik>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Login')}
+        onPress={() => navigation.goBack()}
         style={styles.formRow}
       >
         <Ionicons
@@ -130,9 +138,7 @@ const registration: React.FC = ({ navigation }: any) => {
           color={gray}
           size={35}
         />
-        <Text style={styles.formSignUp} onPress={() => navigation.goBack()}>
-          Back
-        </Text>
+        <Text style={styles.formSignUp}>Back</Text>
       </TouchableOpacity>
       <Footer />
     </KeyboardAvoidingView>

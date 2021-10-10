@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import createStyles from './styles';
 import useTheme from '../../theme/index';
 import { authActions } from '../../store/auth';
@@ -18,18 +18,18 @@ const HeaderAuth: React.FC = ({ navigation }: any) => {
 
   function Loggout() {
     alert('Congratulations, Loggout with sucess');
-    dispatch(authActions.logout(''));
+    navigation.navigate('Login');
+    /*     dispatch(authActions.logout('')); */
   }
 
   return (
     <View style={styles.homeRow}>
       <Text style={styles.homeTitle}>TGL</Text>
       <TouchableOpacity onPress={Loggout} style={styles.homeRowIcons}>
-        <Ionicons
-          onPress={() => navigation.replace('Login')}
+        <MaterialIcons
           style={styles.homeArrow}
           color={ghostGray}
-          name='arrow-forward'
+          name='logout'
           size={35}
         />
       </TouchableOpacity>

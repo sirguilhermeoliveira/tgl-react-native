@@ -3,7 +3,7 @@ import useTheme from '../../theme/index';
 
 const createStyles = () => {
   const {
-    colors: { gray, white, black, lightGray },
+    colors: { white, greenYellow, lightGray },
     fontSizes: { md },
     margins: { baseMargin },
   } = useTheme();
@@ -20,6 +20,14 @@ const createStyles = () => {
       padding: 3,
       elevation: 5,
       marginBottom: baseMargin * 1.5,
+    },
+    ImageNewBetCircleGreenYellow: {
+      backgroundColor: greenYellow,
+      borderWidth: 1,
+      borderColor: greenYellow,
+      borderRadius: 50,
+      padding: 10,
+      elevation: 5,
     },
   });
 };

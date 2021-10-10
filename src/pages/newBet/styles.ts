@@ -9,11 +9,9 @@ const {
     greenYellow,
     white,
     black,
-    borderGray,
     smoothGray,
     silverWhite,
     ghostGray,
-    almostGray,
   },
   fontSizes: { xxs, xs, sm, md, lg, xg, xl, xxg, xxl, lxs, hg, hl },
   margins: { baseMargin },
@@ -33,6 +31,7 @@ const createStyles = () => {
       textTransform: 'uppercase',
       fontWeight: 'bold',
       fontStyle: 'italic',
+      fontFamily: 'Helvetica',
     },
     newBetPadding: {
       padding: basePadding * 2,
@@ -51,33 +50,49 @@ const createStyles = () => {
       marginTop: 1,
       marginLeft: 5,
     },
-    drawerCartTotalBottom: {
-      marginBottom: baseMargin * 9,
+    drawerContainerPrice: {
+      marginBottom: baseMargin * 10,
       flexDirection: 'row',
       paddingTop: baseMargin * 2,
+      flex: 1,
+      alignItems: 'flex-end',
     },
-    drawerCartTotalText: {
+    drawerPriceLeft: {
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      fontSize: md,
+      color: gray,
+      fontStyle: 'italic',
+    },
+    drawerPriceLeftRight: {
+      color: silverWhite,
+      fontSize: md,
+      flex: 1,
+      textTransform: 'uppercase',
+      alignItems: 'flex-end',
+    },
+    drawerPriceRight: {
+      fontWeight: 'bold',
       textTransform: 'uppercase',
       color: silverWhite,
       fontSize: md,
+      marginLeft: baseMargin * -6,
     },
-    drawerCartTotalTextBoldCart: {
-      fontWeight: 'bold',
-      fontStyle: 'italic',
+    drawerContainerRow: {
+      flexDirection: 'row',
     },
-    drawerCartTotalTextBoldCartPrice: {
-      fontWeight: 'bold',
-      fontStyle: 'italic',
-      textTransform: 'uppercase',
-      color: gray,
-      fontSize: md,
+    cartCart: {
+      marginTop: -7,
+    },
+    flexOne: {
+      flex: 1,
     },
     drawerBottomSaveContainer: {
       bottom: 0,
       flexDirection: 'row',
       position: 'absolute',
       backgroundColor: lightGray,
-      width: 200,
+      width: 300,
       justifyContent: 'center',
     },
     drawerBottomSave: {
@@ -105,6 +120,7 @@ const createStyles = () => {
       fontStyle: 'italic',
       paddingRight: basePadding * 5,
       marginBottom: baseMargin,
+      marginTop: baseMargin * 0.5,
     },
     newBetFillDescriptionBold: {
       color: gray,
@@ -128,6 +144,10 @@ const createStyles = () => {
     newBetRowNumbers: {
       flexDirection: 'row',
       flexWrap: 'wrap',
+      justifyContent: 'center',
+    },
+    drawerContainerNumbersBackgroundColor: {
+      backgroundColor: lightGray,
     },
     newBetButtonsContainer: {
       flexDirection: 'row',
@@ -225,18 +245,6 @@ const createStyles = () => {
       fontSize: 21,
       color: 'white',
     },
-    rectButton: {
-      height: 60,
-      padding: 10,
-      alignSelf: 'stretch',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 20,
-      backgroundColor: 'white',
-    },
-    rectButtonText: {
-      backgroundColor: 'transparent',
-    },
     drawerRowXToEnd: {
       alignItems: 'flex-end',
     },
@@ -264,15 +272,6 @@ const createStyles = () => {
       flex: 1,
       padding: basePadding * 1.5,
       backgroundColor: white,
-    },
-    pageInput: {
-      height: 60,
-      padding: 10,
-      alignSelf: 'stretch',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 20,
-      backgroundColor: '#eee',
     },
     drawerText: {
       margin: 10,
@@ -334,11 +333,11 @@ export const HomeGame = styled.Text<{
   margin-right: ${baseMargin}px;
   padding-left: ${basePadding * 1.7}px;
   padding-right: ${basePadding * 1.7}px;
-  padding-top: ${basePadding * 0.5}px;
-  padding-bottom: ${basePadding * 0.5}px;
+  padding-top: ${basePadding * 0.3}px;
+  padding-bottom: ${basePadding * 0.3}px;
   border-radius: 15px;
   text-align: center;
-  border-width: 1px;
+  border-width: 1.7px;
   border-color: ${(props) => props.borderColor || '#000'};
 `;
 
