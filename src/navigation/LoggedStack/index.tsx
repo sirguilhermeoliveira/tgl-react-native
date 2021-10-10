@@ -7,6 +7,7 @@ import { Image, View } from 'react-native';
 import createStyles, { HouseTopBar } from './styles';
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 
 function LoggedStack() {
   const Tab = createBottomTabNavigator();
@@ -20,10 +21,6 @@ function LoggedStack() {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: black,
-        tabBarStyle: {
-          height: 500,
-          padding: 500,
-        },
       }}
     >
       <Tab.Screen
@@ -34,19 +31,23 @@ function LoggedStack() {
           tabBarStyle: {
             borderTopRightRadius: 15,
             borderTopLeftRadius: 15,
+            height: 70,
+            paddingBottom: 10,
           },
           tabBarLabelStyle: {
             fontStyle: 'italic',
             fontSize: 14,
           },
           tabBarIcon: ({ focused }) => (
-            <HouseTopBar color={focused ? greenYellow : ghostGray}>
+            <View style={styles.HouseTopBarContainer}>
+              <HouseTopBar color={focused ? greenYellow : ghostGray} />
               <Ionicons
+                style={styles.HouseTopBarIcon}
                 color={focused ? greenYellow : ghostGray}
                 name='home-outline'
                 size={25}
               />
-            </HouseTopBar>
+            </View>
           ),
         }}
         name='Home'
@@ -60,6 +61,8 @@ function LoggedStack() {
           tabBarStyle: {
             borderTopRightRadius: 15,
             borderTopLeftRadius: 15,
+            height: 70,
+            paddingBottom: 10,
           },
           tabBarIcon: () => (
             <View style={styles.ImageNewBetCircle}>
@@ -82,6 +85,8 @@ function LoggedStack() {
           tabBarStyle: {
             borderTopRightRadius: 15,
             borderTopLeftRadius: 15,
+            height: 70,
+            paddingBottom: 10,
           },
           tabBarLabelStyle: {
             fontStyle: 'italic',

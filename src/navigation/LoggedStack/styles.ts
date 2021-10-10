@@ -18,8 +18,8 @@ const createStyles = () => {
       borderWidth: 1,
       borderColor: lightGray,
       borderRadius: 50,
-      padding: 3,
-      elevation: 5,
+      padding: 5,
+
       marginBottom: baseMargin * 1.5,
     },
     ImageNewBetCircleGreenYellow: {
@@ -28,20 +28,23 @@ const createStyles = () => {
       borderColor: greenYellow,
       borderRadius: 50,
       padding: 10,
-      elevation: 5,
+    },
+    HouseTopBarContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    HouseTopBarIcon: {
+      marginBottom: 1,
+      marginTop: 8,
     },
   });
 };
 
 export const HouseTopBar = styled.View<{ color: string }>`
-  border-top-width: 4px;
+  border-width: 2px;
   border-color: ${(props) => props.color || '#000'};
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
+  border-radius: 2px;
+  padding-left: 35px;
 `;
 
 export default createStyles;

@@ -23,7 +23,10 @@ const HeaderAuth: React.FC = ({ navigation }: any) => {
 
   return (
     <View style={styles.homeRow}>
-      <Text style={styles.homeTitle}>TGL</Text>
+      <View style={styles.homeTitleContainer}>
+        <Text style={styles.homeTitle}>TGL</Text>
+        <View style={styles.homeTitleBottomBar} />
+      </View>
       <TouchableOpacity onPress={Loggout} style={styles.homeRowIcons}>
         <MaterialIcons
           style={styles.homeArrow}

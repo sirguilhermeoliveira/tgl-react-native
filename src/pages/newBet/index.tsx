@@ -260,7 +260,10 @@ const newBet: React.FC = ({ navigation }: any) => {
       <ScrollView style={styles.drawerContainerNumbersBackgroundColor}>
         <View style={styles.container}>
           <View style={styles.homeRow}>
-            <Text style={styles.homeTitle}>TGL</Text>
+            <View style={styles.homeTitleContainer}>
+              <Text style={styles.homeTitle}>TGL</Text>
+              <View style={styles.homeTitleBar} />
+            </View>
             <View style={styles.homeRowIcons}>
               <TouchableOpacity onPress={() => drawer.current!.openDrawer()}>
                 <Ionicons color={greenYellow} name='cart-outline' size={35} />

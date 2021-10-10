@@ -33,7 +33,7 @@ const createStyles = () => {
     formContainer: {
       backgroundColor: white,
       width: 300,
-      minHeight: 300,
+
       borderRadius: 15,
       borderColor: borderGray,
       borderWidth: 1,
@@ -59,7 +59,7 @@ const createStyles = () => {
     formRow: {
       flexDirection: 'row',
       justifyContent: 'center',
-      marginTop: basePadding * 2,
+      marginTop: basePadding * 4,
     },
     formErrors: {
       alignSelf: 'center',

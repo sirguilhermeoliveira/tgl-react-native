@@ -10,7 +10,8 @@ const createStyles = () => {
 
   return StyleSheet.create({
     footerContainer: {
-      marginTop: 70,
+      bottom: 0,
+      position: 'absolute',
       color: gray,
       fontSize: md,
       marginBottom: baseMargin * 2,

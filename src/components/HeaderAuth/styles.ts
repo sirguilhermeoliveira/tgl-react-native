@@ -24,21 +24,22 @@ const createStyles = () => {
     homeArrow: {
       marginLeft: 20,
     },
+    homeTitleContainer: {
+      margin: baseMargin,
+    },
     homeTitle: {
       color: gray,
       fontSize: xxl,
       fontStyle: 'italic',
       fontWeight: 'bold',
-      borderBottomWidth: 6,
-      borderBottomColor: greenYellow,
-      borderTopLeftRadius: 4,
-      borderTopRightRadius: 4,
-      borderBottomLeftRadius: 4,
-      borderBottomRightRadius: 4,
       top: 0,
-      paddingLeft: basePadding,
-      paddingRight: basePadding,
-      margin: baseMargin,
+      paddingLeft: 10,
+      paddingRight: 10,
+    },
+    homeTitleBottomBar: {
+      borderWidth: 3,
+      borderColor: greenYellow,
+      borderRadius: 2,
     },
   });
 };

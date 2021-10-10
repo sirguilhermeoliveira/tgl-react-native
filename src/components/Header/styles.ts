@@ -10,17 +10,22 @@ const createStyles = () => {
   } = useTheme();
 
   return StyleSheet.create({
+    containerHeader: {
+      alignItems: 'center',
+      marginBottom: baseMargin,
+    },
+    barHeader: {
+      borderWidth: 3,
+      borderColor: greenYellow,
+      borderRadius: 2,
+      paddingLeft: basePadding * 5,
+      paddingRight: basePadding * 5,
+    },
     header: {
       color: gray,
       fontSize: hl,
       fontStyle: 'italic',
       fontWeight: 'bold',
-      borderBottomWidth: 6,
-      borderBottomColor: greenYellow,
-      borderTopLeftRadius: 4,
-      borderTopRightRadius: 4,
-      borderBottomLeftRadius: 4,
-      borderBottomRightRadius: 4,
       marginTop: baseMargin * 3,
       top: 0,
       paddingLeft: basePadding * 1.5,
