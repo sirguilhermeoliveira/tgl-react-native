@@ -31,7 +31,6 @@ const createStyles = () => {
       textTransform: 'uppercase',
       fontWeight: 'bold',
       fontStyle: 'italic',
-      fontFamily: 'Helvetica',
     },
     newBetPadding: {
       padding: basePadding * 2,

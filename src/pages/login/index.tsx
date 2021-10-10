@@ -54,7 +54,6 @@ const login: React.FC = ({ navigation }: any) => {
         password: passwordInput,
       })
       .then((res: any) => {
-        dispatch(authActions.login(res.data.token));
         dispatch(authActions.loginEmail(res.data.user_id));
         setTimeout(() => {
           alert('Logged in with sucess!');

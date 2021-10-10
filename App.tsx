@@ -1,3 +1,3 @@
-import MyStack from './src/navigation/index';
+import MyStack from './src/index';
 
 export default MyStack;

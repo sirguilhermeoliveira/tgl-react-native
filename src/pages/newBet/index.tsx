@@ -10,6 +10,7 @@ import axios from 'axios';
 import { cartActions } from '../../store/cart';
 import { HomeGame, HomeGamesRow } from './styles';
 import { types as gamesJson } from '../../database/games.json';
+import { authActions } from '../../store/auth';
 import {
   formatNumber,
   formatNumberCartTotal,
@@ -81,10 +82,9 @@ const newBet: React.FC = ({ navigation }: any) => {
   const [getallTheGames, setallTheGames]: any = useState([]);
 
   const getGames = getallTheGames.map((item: any) => (
-    <TouchableOpacity>
+    <TouchableOpacity key={Math.random()}>
       <HomeGame
         id={item.id}
-        key={Math.random()}
         onPress={changeGameColor.bind(null, item.id)}
         backgroundColor={
           gamesJson[whichLoteriaIsVar].type === item.type ? '#FFF' : item.color
@@ -177,8 +177,7 @@ const newBet: React.FC = ({ navigation }: any) => {
 
   function Loggout() {
     alert('Congratulations, Loggout with sucess');
-    navigation.navigate('Login');
-    /*     dispatch(authActions.logout('')); */
+    navigation.push('Login');
   }
 
   const clearGame = () => {

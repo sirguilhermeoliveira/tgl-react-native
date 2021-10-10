@@ -18,8 +18,7 @@ const HeaderAuth: React.FC = ({ navigation }: any) => {
 
   function Loggout() {
     alert('Congratulations, Loggout with sucess');
-    navigation.navigate('Login');
-    /*     dispatch(authActions.logout('')); */
+    navigation.push('Login');
   }
 
   return (

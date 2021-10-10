@@ -4,23 +4,26 @@ import Home from '../../pages/home/index';
 import NewBet from '../../pages/newBet/index';
 import useTheme from '../../theme/index';
 import { Image, View } from 'react-native';
-import createStyles from './styles';
+import createStyles, { HouseTopBar } from './styles';
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const Tab = createBottomTabNavigator();
-const styles = createStyles();
-const {
-  colors: { greenYellow, black, almostGray },
-} = useTheme();
-
 function LoggedStack() {
+  const Tab = createBottomTabNavigator();
+  const styles = createStyles();
+  const {
+    colors: { greenYellow, black, ghostGray },
+  } = useTheme();
   return (
     <Tab.Navigator
       initialRouteName='NewBet'
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: black,
+        tabBarStyle: {
+          height: 500,
+          padding: 500,
+        },
       }}
     >
       <Tab.Screen
@@ -36,8 +39,14 @@ function LoggedStack() {
             fontStyle: 'italic',
             fontSize: 14,
           },
-          tabBarIcon: () => (
-            <Ionicons color={greenYellow} name='home-outline' size={25} />
+          tabBarIcon: ({ focused }) => (
+            <HouseTopBar color={focused ? greenYellow : ghostGray}>
+              <Ionicons
+                color={focused ? greenYellow : ghostGray}
+                name='home-outline'
+                size={25}
+              />
+            </HouseTopBar>
           ),
         }}
         name='Home'
@@ -78,8 +87,12 @@ function LoggedStack() {
             fontStyle: 'italic',
             fontSize: 14,
           },
-          tabBarIcon: () => (
-            <Ionicons color={greenYellow} name='person-outline' size={25} />
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              color={focused ? greenYellow : ghostGray}
+              name='person-outline'
+              size={25}
+            />
           ),
         }}
         name='Account'

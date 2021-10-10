@@ -1,16 +1,6 @@
 import useTheme from '../../theme/index';
 import styled from 'styled-components/native';
 
-/* border-left-width: 7,
-border-left-color: ${(props: any) => props.color},
-border-top-left-radius: 4,
-borderTopRightRadius: 4,
-borderBottomLeftRadius: 4,
-borderBottomRightRadius: 4,
-paddingLeft: basePadding * 2,
-marginTop: baseMargin * 3,
-marginBottom: baseMargin * 3, */
-
 const {
   fontSizes: { xxs, xs, sm, md, lg, xg, xl, xxg, xxl, lxs, hg, hl },
   margins: { baseMargin },

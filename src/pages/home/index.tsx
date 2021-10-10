@@ -129,10 +129,9 @@ const home: React.FC = () => {
   }, []);
 
   const getGames = getallTheGames.map((item: any) => (
-    <TouchableOpacity>
+    <TouchableOpacity key={Math.random()}>
       <HomeGame
         id={item.id}
-        key={Math.random()}
         onPress={changeGameFilter.bind(null, item.id, item.type)}
         backgroundColor={whichLoteriaIsVar === item.type ? '#FFF' : item.color}
         borderColor={whichLoteriaIsVar === item.type ? item.color : item.color}
