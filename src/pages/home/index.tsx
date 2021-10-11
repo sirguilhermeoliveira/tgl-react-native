@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
   View,
-  Text,
   TouchableOpacity,
-  ScrollView,
+  SafeAreaView,
   FlatList,
+  Text,
 } from 'react-native';
+import {} from './styles';
 import { ActivityIndicator } from 'react-native-paper';
 import {
   Container,
@@ -14,8 +15,16 @@ import {
   HomePadding,
   HomeFilterTitle,
   HomeGame,
+  HomeListGameData,
+  HomeListGameNumbers,
+  HomeListGame,
+  HomeSideBar,
 } from './styles';
-
+import {
+  formatNumberCart,
+  formatNumberCartTotal,
+  formatDate,
+} from '../../utils/index';
 import HeaderAuth from '../../components/HeaderAuth/index';
 import { BASE_URL } from '../../utils/index';
 import type { RootState } from '../../store';
@@ -45,17 +54,7 @@ const home: React.FC = () => {
   const [page, setPage]: any = useState(1);
   const [filter, setFilter]: any = useState(0);
   const dispatch = useDispatch<AppDispatch>();
-  const [getHelperPagination, setHelperPagination]: any = useState([]);
   const [loading, setLoading] = useState(false);
-  const [urlPagination, setUrlPagination]: any = useState(
-    BASE_URL +
-      '/users/' +
-      Number(user_id) +
-      '/bets?page=' +
-      page +
-      '&filter=' +
-      filter
-  );
 
   const url_pagination =
     BASE_URL +
@@ -70,9 +69,9 @@ const home: React.FC = () => {
     let helper = 0;
     helper = id_game;
     if (whichLoteriaIsVar === type_game) {
-      setFilter(0);
-      setWhichLoteriaIsVar('');
       getOldBets();
+      setWhichLoteriaIsVar('');
+      setFilter(0);
       return;
     }
     setFilter(helper);
@@ -85,7 +84,6 @@ const home: React.FC = () => {
       .get(url_pagination)
       .then((res: any) => {
         if (res.status === 200) {
-          setHelperPagination(res.data.meta);
           return;
         }
       })
@@ -95,14 +93,11 @@ const home: React.FC = () => {
   }
 
   function getMoreBets() {
-    setHelperPagination(getHelperPagination + 1);
-    setLoading(true);
+    setPage(page + 1);
     axios
       .get(url_pagination)
       .then((res: any) => {
         if (res.status === 200) {
-          setHelperPagination(res.data.meta);
-          setLoading(false);
           return;
         }
       })
@@ -110,6 +105,34 @@ const home: React.FC = () => {
         alert(err);
       });
   }
+
+  useEffect(() => {
+    axios
+      .get(url_pagination)
+      .then((res: any) => {
+        if (res.status === 200) {
+          setData(res.data.data);
+          return;
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  }, [url_pagination]);
+
+  const renderItem = ({ item }: any) => (
+    <HomeSideBar color={item.game.color} key={Math.random()}>
+      <HomeListGameNumbers color={item.game.color}>
+        {formatNumberCart(item.game_numbers)}
+      </HomeListGameNumbers>
+      <HomeListGameData>
+        {' '}
+        {formatDate(item.created_at)} - (R${' '}
+        {formatNumberCartTotal(Number(item.game.price))})
+      </HomeListGameData>
+      <HomeListGame color={item.game.color}>{item.game.type}</HomeListGame>
+    </HomeSideBar>
+  );
 
   useEffect(() => {
     let url = BASE_URL + '/games';
@@ -125,8 +148,17 @@ const home: React.FC = () => {
         alert(err);
       });
 
-    getOldBets();
-  }, []);
+    axios
+      .get(url_pagination)
+      .then((res: any) => {
+        if (res.status === 200) {
+          return;
+        }
+      })
+      .catch((err: any) => {
+        alert(err);
+      });
+  }, [url_pagination]);
 
   const getGames = getallTheGames.map((item: any) => (
     <TouchableOpacity key={Math.random()}>
@@ -142,7 +174,7 @@ const home: React.FC = () => {
     </TouchableOpacity>
   ));
 
-  const [data, setData] = useState([{ id: 1, full_name: 'Sujeito' }]);
+  const [data, setData] = useState([]);
 
   function FooterList({ Load }: any) {
     if (!Load) return null;
@@ -161,18 +193,16 @@ const home: React.FC = () => {
           <HomeRecentGames>recent games</HomeRecentGames>
           <HomeFilterTitle>Filters</HomeFilterTitle>
           <HomeGamesRow horizontal={true}>{getGames}</HomeGamesRow>
-          <ScrollView horizontal={true}>
+          <SafeAreaView>
             <FlatList
-              data={data}
-              keyExtractor={(item) => String(Math.random())}
-              renderItem={({ item }: any) => (
-                <CartRecentGames url_bets={url_pagination} />
-              )}
               onEndReached={getMoreBets}
-              onEndReachedThreshold={0.1}
+              onEndReachedThreshold={0}
+              data={data}
+              keyExtractor={(item, index): any => String(Math.random())}
+              renderItem={renderItem}
               ListFooterComponent={<FooterList Load={loading} />}
             />
-          </ScrollView>
+          </SafeAreaView>
         </HomePadding>
       </View>
     </Container>

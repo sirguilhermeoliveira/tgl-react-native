@@ -14,6 +14,11 @@ const createStyles = () => {
       alignItems: 'center',
       marginBottom: baseMargin,
     },
+    containerHeaderBlack: {
+      alignItems: 'center',
+      marginBottom: baseMargin,
+      opacity: 0.1,
+    },
     barHeader: {
       borderWidth: 3,
       borderColor: greenYellow,

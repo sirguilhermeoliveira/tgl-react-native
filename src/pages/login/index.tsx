@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import Logo from '../../assets/icons/Splash.png';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   View,
   Text,
@@ -6,7 +8,9 @@ import {
   TouchableOpacity,
   Platform,
   KeyboardAvoidingView,
-  ScrollView,
+  Image,
+  Animated,
+  Dimensions,
 } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import { Formik } from 'formik';
@@ -30,6 +34,41 @@ const login: React.FC = ({ navigation }: any) => {
   const {
     colors: { gray, greenYellow, borderGray },
   } = useTheme();
+
+  const edges = useSafeAreaInsets();
+  const startAnimation = useRef(new Animated.Value(0)).current; // sobe até tal ponto
+  const middleAnimation = useRef(new Animated.Value(0)).current; // parou e volta um pouco
+  const finalAnimation = useRef(new Animated.Value(0)).current; // vai direto e inicia o app
+  const [animation, SetAnimation] = useState<any>(false);
+  useEffect(() => {
+    animationLogin();
+    setTimeout(() => {
+      SetAnimation(false);
+    }, 3000);
+  }, []);
+
+  function animationLogin() {
+    SetAnimation(true);
+    setTimeout(() => {
+      Animated.sequence([
+        Animated.delay(500),
+        Animated.timing(startAnimation, {
+          toValue: -Dimensions.get('window').height + (edges.bottom + 270),
+          useNativeDriver: true,
+        }),
+        Animated.delay(1000),
+        Animated.timing(middleAnimation, {
+          toValue: -Dimensions.get('window').height + (edges.bottom + 290),
+          useNativeDriver: true,
+        }),
+        Animated.delay(500),
+        Animated.timing(finalAnimation, {
+          toValue: -Dimensions.get('window').height + (edges.bottom + -845),
+          useNativeDriver: true,
+        }),
+      ]).start();
+    }, 1000);
+  }
 
   const schema = Yup.object().shape({
     email: Yup.string()
@@ -72,12 +111,43 @@ const login: React.FC = ({ navigation }: any) => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
+      style={animation ? styles.containerBlack : styles.container}
     >
+      {animation ? (
+        <View
+          style={{
+            position: 'absolute',
+            top: 845,
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        >
+          <Animated.View
+            style={{
+              flex: 1,
+              zIndex: 1,
+              transform: [{ translateY: startAnimation }],
+            }}
+          >
+            <Animated.View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Image source={Logo}></Image>
+            </Animated.View>
+          </Animated.View>
+        </View>
+      ) : null}
       {!loading ? (
-        <View style={styles.container}>
-          <Header />
-          <Text style={styles.formTitle}>Authentication</Text>
+        <View style={animation ? styles.containerBlack : styles.container}>
+          <Header animation={animation} />
+          <Text style={animation ? styles.formTitleBlack : styles.formTitle}>
+            Authentication
+          </Text>
           <Formik
             validationSchema={schema}
             initialValues={{ email: '', password: '' }}
@@ -90,7 +160,11 @@ const login: React.FC = ({ navigation }: any) => {
               values,
               errors,
             }: any) => (
-              <View style={styles.formContainer}>
+              <View
+                style={
+                  animation ? styles.formContainerBlack : styles.formContainer
+                }
+              >
                 <TextInput
                   style={styles.formInput}
                   onChangeText={handleChange('email')}

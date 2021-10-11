@@ -23,9 +23,14 @@ const createStyles = () => {
       alignItems: 'center',
       backgroundColor: lightGray,
     },
+    containerBlack: {
+      flex: 1,
+      alignItems: 'center',
+      backgroundColor: 'transparent',
+    },
     containerLoading: {
       flex: 1,
-      justifyContent: 'center',
+      opacity: 0.1,
     },
     formTitle: {
       color: gray,
@@ -34,6 +39,14 @@ const createStyles = () => {
       fontWeight: 'bold',
       fontStyle: 'italic',
     },
+    formTitleBlack: {
+      color: gray,
+      fontSize: lxs,
+      margin: baseMargin * 2,
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+      opacity: 0.1,
+    },
     formContainer: {
       backgroundColor: white,
       width: 300,
@@ -41,6 +54,15 @@ const createStyles = () => {
       borderRadius: 15,
       borderColor: borderGray,
       borderWidth: 1,
+    },
+    formContainerBlack: {
+      backgroundColor: white,
+      width: 300,
+      minHeight: 300,
+      borderRadius: 15,
+      borderColor: borderGray,
+      borderWidth: 1,
+      opacity: 0.1,
     },
     formInput: {
       display: 'flex',
