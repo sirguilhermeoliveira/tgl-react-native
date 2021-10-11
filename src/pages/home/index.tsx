@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   TouchableOpacity,
-  SafeAreaView,
+  ScrollView,
   FlatList,
   Text,
 } from 'react-native';
@@ -29,17 +29,23 @@ import HeaderAuth from '../../components/HeaderAuth/index';
 import { BASE_URL } from '../../utils/index';
 import type { RootState } from '../../store';
 import axios from 'axios';
-import CartRecentGames from '../../components/CartRecentGames/index';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../store';
 import { gameActions } from '../../store/games';
 import { useSelector } from 'react-redux';
 import useTheme from '../../theme/index';
 
-interface IGame {
-  id: string;
+interface GameObject {
+  id: number;
   type: string;
+  description: string;
+  range: number;
+  price: string;
   color: string;
+  max_number: number;
+  min_cart_value: number;
+  created_at: string;
+  updated_at: string;
 }
 
 const home: React.FC = () => {
@@ -49,6 +55,7 @@ const home: React.FC = () => {
   const getallTheGames: any = useSelector(
     (state: RootState) => state.games.games
   );
+  const [data, setData] = useState<GameObject | any>([]);
   const [whichLoteriaIsVar, setWhichLoteriaIsVar] = useState('');
   const user_id = useSelector((state: RootState) => state.auth.user_id);
   const [page, setPage]: any = useState(1);
@@ -66,6 +73,7 @@ const home: React.FC = () => {
     filter;
 
   function changeGameFilter(id_game: any, type_game: any) {
+    setPage(1);
     let helper = 0;
     helper = id_game;
     if (whichLoteriaIsVar === type_game) {
@@ -80,10 +88,14 @@ const home: React.FC = () => {
   }
 
   function getOldBets() {
+    setLoading(true);
     axios
       .get(url_pagination)
       .then((res: any) => {
         if (res.status === 200) {
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
           return;
         }
       })
@@ -93,11 +105,23 @@ const home: React.FC = () => {
   }
 
   function getMoreBets() {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
     setPage(page + 1);
     axios
       .get(url_pagination)
       .then((res: any) => {
         if (res.status === 200) {
+          console.log('GET MORE BETS');
+          console.log(data);
+          data.push(...res.data.data);
+          console.log(data);
+          setData(data);
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
           return;
         }
       })
@@ -105,13 +129,16 @@ const home: React.FC = () => {
         alert(err);
       });
   }
-
   useEffect(() => {
+    setLoading(true);
     axios
       .get(url_pagination)
       .then((res: any) => {
         if (res.status === 200) {
           setData(res.data.data);
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
           return;
         }
       })
@@ -174,8 +201,6 @@ const home: React.FC = () => {
     </TouchableOpacity>
   ));
 
-  const [data, setData] = useState([]);
-
   function FooterList({ Load }: any) {
     if (!Load) return null;
     return (
@@ -187,24 +212,23 @@ const home: React.FC = () => {
 
   return (
     <Container>
-      <View>
-        <HeaderAuth />
-        <HomePadding>
+      <HeaderAuth />
+      <HomePadding>
+        <View>
           <HomeRecentGames>recent games</HomeRecentGames>
           <HomeFilterTitle>Filters</HomeFilterTitle>
           <HomeGamesRow horizontal={true}>{getGames}</HomeGamesRow>
-          <SafeAreaView>
-            <FlatList
-              onEndReached={getMoreBets}
-              onEndReachedThreshold={0}
-              data={data}
-              keyExtractor={(item, index): any => String(Math.random())}
-              renderItem={renderItem}
-              ListFooterComponent={<FooterList Load={loading} />}
-            />
-          </SafeAreaView>
-        </HomePadding>
-      </View>
+        </View>
+        <FlatList
+          style={{ marginBottom: 210 }}
+          onEndReached={getMoreBets}
+          onEndReachedThreshold={0.8}
+          data={data}
+          keyExtractor={(e) => String(e.id)}
+          renderItem={renderItem}
+          ListFooterComponent={<FooterList Load={loading} />}
+        />
+      </HomePadding>
     </Container>
   );
 };

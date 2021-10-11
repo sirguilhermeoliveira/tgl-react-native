@@ -12,13 +12,16 @@ const createStyles = () => {
     footerContainer: {
       bottom: 0,
       position: 'absolute',
-      color: gray,
-      fontSize: md,
       marginBottom: baseMargin * 2,
     },
     footer: {
       color: gray,
       fontSize: md,
+    },
+    footerBlack: {
+      color: gray,
+      fontSize: md,
+      opacity: 0.1,
     },
   });
 };

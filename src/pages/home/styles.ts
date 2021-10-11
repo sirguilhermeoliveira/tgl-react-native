@@ -17,7 +17,7 @@ const {
   paddings: { basePadding },
 } = useTheme();
 
-export const Container = styled.ScrollView`
+export const Container = styled.View`
   flex: 1;
   background-color: ${lightGray};
 `;

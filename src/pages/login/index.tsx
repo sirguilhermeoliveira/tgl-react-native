@@ -44,30 +44,34 @@ const login: React.FC = ({ navigation }: any) => {
     animationLogin();
     setTimeout(() => {
       SetAnimation(false);
-    }, 3000);
+    }, 3500);
   }, []);
 
   function animationLogin() {
     SetAnimation(true);
-    setTimeout(() => {
-      Animated.sequence([
-        Animated.delay(500),
+    Animated.sequence([
+      Animated.timing(startAnimation, {
+        toValue: -400,
+        duration: 1500,
+        useNativeDriver: true,
+      }),
+    ]).start(({ finished: done }) => {
+      if (done) {
         Animated.timing(startAnimation, {
-          toValue: -Dimensions.get('window').height + (edges.bottom + 270),
+          toValue: -380,
+          duration: 1000,
           useNativeDriver: true,
-        }),
-        Animated.delay(1000),
-        Animated.timing(middleAnimation, {
-          toValue: -Dimensions.get('window').height + (edges.bottom + 290),
-          useNativeDriver: true,
-        }),
-        Animated.delay(500),
-        Animated.timing(finalAnimation, {
-          toValue: -Dimensions.get('window').height + (edges.bottom + -845),
-          useNativeDriver: true,
-        }),
-      ]).start();
-    }, 1000);
+        }).start(({ finished: done }) => {
+          if (done) {
+            Animated.timing(startAnimation, {
+              toValue: -2000,
+              duration: 1500,
+              useNativeDriver: true,
+            }).start();
+          }
+        });
+      }
+    });
   }
 
   const schema = Yup.object().shape({
@@ -219,15 +223,21 @@ const login: React.FC = ({ navigation }: any) => {
             onPress={() => navigation.navigate('Registration')}
             style={styles.formRow}
           >
-            <Text style={styles.formSignUp}>Sign Up</Text>
+            <Text
+              style={animation ? styles.formSignUpBlack : styles.formSignUp}
+            >
+              Sign Up
+            </Text>
             <Ionicons
-              style={styles.formArrowRight}
+              style={
+                animation ? styles.formArrowRightBlack : styles.formArrowRight
+              }
               name='arrow-forward'
               color={gray}
               size={35}
             />
           </TouchableOpacity>
-          <Footer />
+          <Footer animation={animation} />
         </View>
       ) : (
         <View style={styles.containerLoading}>

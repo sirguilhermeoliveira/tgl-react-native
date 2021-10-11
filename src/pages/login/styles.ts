@@ -30,7 +30,7 @@ const createStyles = () => {
     },
     containerLoading: {
       flex: 1,
-      opacity: 0.1,
+      justifyContent: 'center',
     },
     formTitle: {
       color: gray,
@@ -123,9 +123,21 @@ const createStyles = () => {
       fontWeight: 'bold',
       fontStyle: 'italic',
     },
+    formSignUpBlack: {
+      color: gray,
+      fontSize: xxl,
+      fontWeight: 'bold',
+      fontStyle: 'italic',
+      opacity: 0.1,
+    },
     formArrowRight: {
       marginLeft: baseMargin,
       marginTop: baseMargin * 0.4,
+    },
+    formArrowRightBlack: {
+      marginLeft: baseMargin,
+      marginTop: baseMargin * 0.4,
+      opacity: 0.1,
     },
     footer: {
       position: 'absolute',
