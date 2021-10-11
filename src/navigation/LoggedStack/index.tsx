@@ -17,7 +17,7 @@ function LoggedStack() {
   } = useTheme();
   return (
     <Tab.Navigator
-      initialRouteName='Home'
+      initialRouteName='NewBet'
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: black,

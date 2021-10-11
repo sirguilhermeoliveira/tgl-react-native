@@ -31,8 +31,8 @@ function MyStack() {
         initialRouteName='Login'
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen name='LoggedStack' component={LoggedStack} />
         <Stack.Screen name='Login' component={Login} />
+        <Stack.Screen name='LoggedStack' component={LoggedStack} />
         <Stack.Screen name='ResetPassword' component={ResetPassword} />
         <Stack.Screen name='Registration' component={Registration} />
       </Stack.Navigator>

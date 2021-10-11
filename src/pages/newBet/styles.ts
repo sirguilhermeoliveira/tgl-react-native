@@ -143,7 +143,7 @@ const createStyles = () => {
     newBetRowNumbers: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
     },
     drawerContainerNumbersBackgroundColor: {
       backgroundColor: lightGray,
