@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { DrawerLayoutAndroid } from 'react-native';
 import createStyles from './styles';
+import { ActivityIndicator } from 'react-native-paper';
 import useTheme from '../../theme/index';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import type { AppDispatch, RootState } from '../../store';
@@ -28,9 +29,10 @@ const newBet: React.FC = ({ navigation }: any) => {
   const [getallTheGames, setallTheGames]: any = useState([]);
   const [gamesJson, setGamesJson]: any = useState([]);
   const [whichLoteriaIsVar, setWhichLoteriaIsVar] = useState<any>();
-  const [getDescription, setGetDescription] = useState('ue');
+  const [getDescription, setGetDescription] = useState('');
   const [getFor, setGetFor] = useState();
   const [range, setRange] = useState();
+  const [loading, setLoading] = useState(false);
   const numbersList = Array.from(Array(range).keys()).map((num) => num + 1);
   const {
     colors: { greenYellow, white, ghostGray },
@@ -53,20 +55,25 @@ const newBet: React.FC = ({ navigation }: any) => {
   };
 
   useEffect(() => {
+    setLoading(true);
     let url = 'http://192.168.56.1:3333/games';
     axios
       .get(url)
       .then((res: any) => {
-        if (res.status === 200) {
-          const gamesHelper = res.data;
-          setGamesJson(gamesHelper);
-          setallTheGames(gamesHelper.reverse());
-          changeGameColor(Number(gamesJson.length) - 1);
-          return;
-        }
+        const gamesHelper = res.data;
+        setGamesJson(gamesHelper);
+        setallTheGames(gamesHelper.reverse());
+        const newGame = gamesHelper.length;
+        setWhichLoteriaIsVar(newGame);
+        setGetDescription(gamesHelper[newGame - 1].description);
+        setGetFor(gamesHelper[newGame - 1].type);
+        setRange(gamesHelper[newGame - 1].range);
+        setTotalNumbers([]);
+        setLoading(false);
       })
       .catch((err: any) => {
         console.log(err);
+        return;
       });
   }, []);
 
@@ -93,7 +100,7 @@ const newBet: React.FC = ({ navigation }: any) => {
           bets,
         })
         .then((res: any) => {
-          console.log(res);
+          alert('Bet saved with sucess!');
         })
         .catch((err: any) => {
           alert('Something is Wrong:' + err);
@@ -105,28 +112,24 @@ const newBet: React.FC = ({ navigation }: any) => {
 
   const completeGame = () => {
     let randomNumber = 1;
-    let maxNumberJSON = gamesJson[whichLoteriaIsVar - 1]['max-number'];
+    let maxNumberJSON = gamesJson[whichLoteriaIsVar - 1].max_number;
     let helperTotalNumbers = totalNumbers;
     if (maxNumberJSON === helperTotalNumbers.length) {
       helperTotalNumbers = [];
     }
     for (let i = 1; helperTotalNumbers.length <= maxNumberJSON - 1; i++) {
       do {
-        console.log('C');
         randomNumber = Math.floor(
-          Math.floor(
-            Math.random() * (gamesJson[whichLoteriaIsVar].range - 1 + 1)
-          ) + 1
+          Math.floor(Math.random() * gamesJson[whichLoteriaIsVar - 1].range) + 1
         );
       } while (helperTotalNumbers.indexOf(randomNumber) !== -1);
       helperTotalNumbers.push(randomNumber);
-      console.log('D');
       setTotalNumbers([...helperTotalNumbers]);
     }
   };
 
   const addCart = () => {
-    if (totalNumbers.length !== gamesJson[whichLoteriaIsVar].max_number) {
+    if (totalNumbers.length !== gamesJson[whichLoteriaIsVar - 1].max_number) {
       alert(
         'Error, you cant add to cart without all ' +
           gamesJson[whichLoteriaIsVar].max_number +
@@ -138,10 +141,10 @@ const newBet: React.FC = ({ navigation }: any) => {
       cartActions.addGame({
         id: Math.random(),
         bet: totalNumbers,
-        game: gamesJson[whichLoteriaIsVar].type,
-        game_id: Number(whichLoteriaIsVar) + 1,
-        price: gamesJson[whichLoteriaIsVar].price,
-        color: gamesJson[whichLoteriaIsVar].color,
+        game: gamesJson[whichLoteriaIsVar - 1].type,
+        game_id: Number(whichLoteriaIsVar) - 1,
+        price: gamesJson[whichLoteriaIsVar - 1].price,
+        color: gamesJson[whichLoteriaIsVar - 1].color,
         date: new Intl.DateTimeFormat('pt-BR').format(new Date()),
       })
     );
@@ -153,10 +156,8 @@ const newBet: React.FC = ({ navigation }: any) => {
     setTotalNumbers([]);
   };
 
-  const changeGameColor = (id_game: any) => {
+  const changeGameColor = (id_game: number) => {
     const newGame = id_game - 1;
-    console.log(gamesJson[newGame].description);
-    console.log(typeof gamesJson[newGame].description);
     setWhichLoteriaIsVar(newGame + 1);
     setGetDescription(gamesJson[newGame].description);
     setGetFor(gamesJson[newGame].type);
@@ -234,101 +235,111 @@ const newBet: React.FC = ({ navigation }: any) => {
       drawerPosition='right'
       renderNavigationView={navigationView}
     >
-      <ScrollView style={styles.drawerContainerNumbersBackgroundColor}>
-        <View style={styles.container}>
-          <View style={styles.homeRow}>
-            <View style={styles.homeTitleContainer}>
-              <Text style={styles.homeTitle}>TGL</Text>
-              <View style={styles.homeTitleBar} />
-            </View>
-            <View style={styles.homeRowIcons}>
-              <TouchableOpacity onPress={() => drawer.current!.openDrawer()}>
-                <Ionicons color={greenYellow} name='cart-outline' size={35} />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <MaterialIcons
-                  onPress={Loggout}
-                  style={styles.homeArrow}
-                  color={ghostGray}
-                  name='logout'
-                  size={35}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.newBetPadding}>
-            <Text style={styles.newBetTitle}>new bet for {getFor}</Text>
-            <Text style={styles.newBetChooseGame}>Choose a game</Text>
-            <HomeGamesRow horizontal={true}>{getGames}</HomeGamesRow>
-            <View style={styles.newBetRowNumbers}>
-              {totalNumbers.map((num: any) => (
-                <View key={Math.random()}>
-                  <NewBetNumbersMin
-                    id={num.id}
-                    backgroundColor={gamesJson[whichLoteriaIsVar - 1].color}
-                  >
-                    {formatNumber(num)}
-                  </NewBetNumbersMin>
-                  <Ionicons
-                    style={styles.newBetX}
-                    color={white}
-                    name='close-outline'
-                    size={12}
+      {!loading ? (
+        <ScrollView style={styles.drawerContainerNumbersBackgroundColor}>
+          <View style={styles.container}>
+            <View style={styles.homeRow}>
+              <View style={styles.homeTitleContainer}>
+                <Text style={styles.homeTitle}>TGL</Text>
+                <View style={styles.homeTitleBar} />
+              </View>
+              <View style={styles.homeRowIcons}>
+                <TouchableOpacity onPress={() => drawer.current!.openDrawer()}>
+                  <Ionicons color={greenYellow} name='cart-outline' size={35} />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <MaterialIcons
+                    onPress={Loggout}
+                    style={styles.homeArrow}
+                    color={ghostGray}
+                    name='logout'
+                    size={35}
                   />
-                </View>
-              ))}
+                </TouchableOpacity>
+              </View>
             </View>
-            <View>
-              <Text style={styles.newBetFill}>Fill your bet</Text>
-              <Text style={styles.newBetFillDescription}>
-                {formatLineBreak(getDescription)}
-              </Text>
-            </View>
-            <View style={styles.newBetButtonsContainer}>
-              <TouchableOpacity
-                onPress={completeGame}
-                style={styles.newBetButtonsLeft}
-              >
-                <Text style={styles.newBetButtons}>Complete game</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={clearGame}
-                style={styles.newBetButtonsLeft}
-              >
-                <Text style={styles.newBetButtons}>Clear game</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={addCart}>
-                <View style={styles.newBetButtonsCart}>
-                  <Ionicons color={white} name='cart-outline' size={18} />
-                  <Text style={styles.newBetButtonsAddCart}>Add to cart</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.newBetBottomLineCenter}>
-              <View style={styles.newBetBottomLine}></View>
-            </View>
-            {whichLoteriaIsVar === -1 ? null : (
+            <View style={styles.newBetPadding}>
+              <Text style={styles.newBetTitle}>new bet for {getFor}</Text>
+              <Text style={styles.newBetChooseGame}>Choose a game</Text>
+              <HomeGamesRow horizontal={true}>{getGames}</HomeGamesRow>
               <View style={styles.newBetRowNumbers}>
-                {numbersList.map((num: any) => (
-                  <TouchableOpacity key={Math.random()}>
-                    <NewBetNumbers
-                      onPress={changeButtonColor.bind(null, num)}
-                      backgroundColor={
-                        totalNumbers.indexOf(num) === -1
-                          ? num.color
-                          : gamesJson[whichLoteriaIsVar - 1].color
-                      }
+                {totalNumbers.map((num: any) => (
+                  <View key={Math.random()}>
+                    <NewBetNumbersMin
                       id={num.id}
+                      backgroundColor={gamesJson[whichLoteriaIsVar - 1].color}
                     >
                       {formatNumber(num)}
-                    </NewBetNumbers>
-                  </TouchableOpacity>
+                    </NewBetNumbersMin>
+                    <Ionicons
+                      style={styles.newBetX}
+                      color={white}
+                      name='close-outline'
+                      size={12}
+                    />
+                  </View>
                 ))}
               </View>
-            )}
+              <View>
+                <Text style={styles.newBetFill}>Fill your bet</Text>
+                <Text style={styles.newBetFillDescription}>
+                  {formatLineBreak(getDescription)}
+                </Text>
+              </View>
+              <View style={styles.newBetButtonsContainer}>
+                <TouchableOpacity
+                  onPress={completeGame}
+                  style={styles.newBetButtonsLeft}
+                >
+                  <Text style={styles.newBetButtons}>Complete game</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={clearGame}
+                  style={styles.newBetButtonsLeft}
+                >
+                  <Text style={styles.newBetButtons}>Clear game</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={addCart}>
+                  <View style={styles.newBetButtonsCart}>
+                    <Ionicons color={white} name='cart-outline' size={18} />
+                    <Text style={styles.newBetButtonsAddCart}>Add to cart</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.newBetBottomLineCenter}>
+                <View style={styles.newBetBottomLine}></View>
+              </View>
+              {whichLoteriaIsVar === -1 ? null : (
+                <View style={styles.newBetRowNumbers}>
+                  {numbersList.map((num: any, index: any) => (
+                    <TouchableOpacity key={Math.random()}>
+                      <NewBetNumbers
+                        onPress={changeButtonColor.bind(null, num)}
+                        backgroundColor={
+                          totalNumbers.indexOf(num) === -1
+                            ? num.color
+                            : gamesJson[whichLoteriaIsVar - 1].color
+                        }
+                        id={num.id}
+                      >
+                        {formatNumber(num)}
+                      </NewBetNumbers>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )}
+            </View>
           </View>
+        </ScrollView>
+      ) : (
+        <View style={styles.containerLoading}>
+          <ActivityIndicator
+            animating={true}
+            size='large'
+            color={greenYellow}
+          />
         </View>
-      </ScrollView>
+      )}
     </DrawerLayoutAndroid>
   );
 };

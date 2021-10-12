@@ -66,7 +66,6 @@ const Account: React.FC = () => {
 
   const submitPasswordHandler = (event: any) => {
     let url = BASE_URL + '/users/' + userId;
-
     axios
       .put(url, {
         username: event.name,

@@ -61,6 +61,10 @@ const createStyles = () => {
       justifyContent: 'center',
       marginTop: basePadding * 2.5,
     },
+    containerLoading: {
+      flex: 1,
+      justifyContent: 'center',
+    },
     formLogIn: {
       color: greenYellow,
       fontSize: xxl,
@@ -78,6 +82,10 @@ const createStyles = () => {
       marginLeft: baseMargin,
       marginTop: baseMargin * 0.4,
     },
+    footerContainer: {
+      bottom: 0,
+      justifyContent: 'center',
+    },
     footer: {
       position: 'absolute',
       bottom: 0,
@@ -87,7 +95,7 @@ const createStyles = () => {
     },
     formErrorsContainer: {
       justifyContent: 'center',
-      alignItems: 'center',
+      flexDirection: 'row',
     },
     formErrors: {
       justifyContent: 'center',

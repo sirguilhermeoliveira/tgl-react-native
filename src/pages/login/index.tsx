@@ -10,7 +10,6 @@ import {
   KeyboardAvoidingView,
   Image,
   Animated,
-  Dimensions,
 } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import { Formik } from 'formik';
@@ -98,9 +97,7 @@ const login: React.FC = ({ navigation }: any) => {
       })
       .then((res: any) => {
         dispatch(authActions.loginEmail(res.data.user_id));
-        setTimeout(() => {
-          alert('Logged in with sucess!');
-        }, 500);
+        alert('Logged in with sucess!');
         setTimeout(() => {
           navigation.navigate('LoggedStack');
           SetLoading(false);
@@ -108,9 +105,9 @@ const login: React.FC = ({ navigation }: any) => {
       })
       .catch((err: any) => {
         alert(err);
+        SetLoading(false);
       });
   };
-  const [hidePassword, setHidePassword] = useState(true);
 
   return (
     <KeyboardAvoidingView
@@ -201,12 +198,14 @@ const login: React.FC = ({ navigation }: any) => {
                     <Text style={styles.formErrors}>{errors.password}</Text>
                   ) : null}
                 </View>
-                <Text
-                  style={styles.formForgetPassword}
-                  onPress={() => navigation.navigate('ResetPassword')}
-                >
-                  I forget my password
-                </Text>
+                <TouchableOpacity>
+                  <Text
+                    style={styles.formForgetPassword}
+                    onPress={() => navigation.navigate('ResetPassword')}
+                  >
+                    I forget my password
+                  </Text>
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.formRow} onPress={handleSubmit}>
                   <Text style={styles.formLogIn}>Log In</Text>
                   <Ionicons

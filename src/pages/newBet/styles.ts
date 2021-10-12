@@ -140,6 +140,12 @@ const createStyles = () => {
       alignItems: 'center',
       marginBottom: 10,
     },
+    containerLoading: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'center',
+    },
     newBetRowNumbers: {
       flexDirection: 'row',
       flexWrap: 'wrap',

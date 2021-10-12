@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, KeyboardAvoidingView, Platform } from 'react-native';
 import createStyles from './styles';
 
-function Footer({ animation }: any) {
+function Footer({ animation, loading }: any) {
   const styles = createStyles();
   return (
     <KeyboardAvoidingView
@@ -10,9 +10,11 @@ function Footer({ animation }: any) {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.footerContainer}
     >
-      <Text style={animation ? styles.footerBlack : styles.footer}>
-        Copyright 2021 Luby Software
-      </Text>
+      {!loading ? (
+        <Text style={animation ? styles.footerBlack : styles.footer}>
+          Copyright 2021 Luby Software
+        </Text>
+      ) : null}
     </KeyboardAvoidingView>
   );
 }
