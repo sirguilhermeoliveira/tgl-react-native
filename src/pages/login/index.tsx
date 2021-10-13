@@ -34,10 +34,7 @@ const login: React.FC = ({ navigation }: any) => {
     colors: { gray, greenYellow, borderGray },
   } = useTheme();
 
-  const edges = useSafeAreaInsets();
-  const startAnimation = useRef(new Animated.Value(0)).current; // sobe até tal ponto
-  const middleAnimation = useRef(new Animated.Value(0)).current; // parou e volta um pouco
-  const finalAnimation = useRef(new Animated.Value(0)).current; // vai direto e inicia o app
+  const startAnimation = useRef(new Animated.Value(0)).current;
   const [animation, SetAnimation] = useState<any>(false);
   useEffect(() => {
     animationLogin();

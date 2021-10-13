@@ -56,6 +56,10 @@ const createStyles = () => {
       marginTop: baseMargin * 2,
       marginRight: baseMargin * 2,
     },
+    containerLoading: {
+      flex: 1,
+      justifyContent: 'center',
+    },
     formRow: {
       flexDirection: 'row',
       justifyContent: 'center',

@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import createStyles from './styles';
+import { ActivityIndicator } from 'react-native-paper';
 import HeaderAuth from '../../components/HeaderAuth/index';
 import useTheme from '../../theme/index';
 import axios from 'axios';
@@ -24,6 +25,7 @@ const Account: React.FC = () => {
   const userId = useSelector((state: RootState) => state.auth.user_id);
   const [modalVisible, setModalVisible] = useState(false);
   const [whichUpdate, setWhichUpdate] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
     colors: { greenYellow },
@@ -46,8 +48,8 @@ const Account: React.FC = () => {
   }
 
   const submitNameHandler = (event: any) => {
+    setLoading(true);
     let url = BASE_URL + userId;
-
     axios
       .put(url, {
         username: event.name,
@@ -55,16 +57,19 @@ const Account: React.FC = () => {
       .then((res: any) => {
         if (res.status === 200) {
           alert('Username changed with sucess!!');
+          setLoading(false);
           setModalVisible(false);
           return;
         }
       })
       .catch((err: any) => {
         alert('Something is wrong.');
+        setLoading(false);
       });
   };
 
   const submitPasswordHandler = (event: any) => {
+    setLoading(true);
     let url = BASE_URL + '/users/' + userId;
     axios
       .put(url, {
@@ -73,12 +78,14 @@ const Account: React.FC = () => {
       .then((res: any) => {
         if (res.status === 200) {
           alert('Username changed with sucess!!');
+          setLoading(false);
           setModalVisible(false);
           return;
         }
       })
       .catch((err: any) => {
         alert('Something is wrong.');
+        setLoading(false);
       });
   };
 
@@ -109,33 +116,43 @@ const Account: React.FC = () => {
               errors,
             }: any) => (
               <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text style={styles.textStyle}>X</Text>
-                  </Pressable>
-                  <TextInput
-                    onChangeText={handleChange('name')}
-                    onBlur={handleBlur('name')}
-                    value={values.name}
-                    style={styles.modalText}
-                    placeholder='New Username'
-                    placeholderTextColor={greenYellow}
-                  />
-                  {errors.name ? (
-                    <Text style={styles.formErrors}>{errors.name}</Text>
-                  ) : null}
-                  <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <TouchableOpacity onPress={handleSubmit}>
-                      <Text style={styles.textStyle}>Send New Username</Text>
-                    </TouchableOpacity>
-                  </Pressable>
-                </View>
+                {!loading ? (
+                  <View style={styles.modalView}>
+                    <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={() => setModalVisible(!modalVisible)}
+                    >
+                      <Text style={styles.textStyle}>X</Text>
+                    </Pressable>
+                    <TextInput
+                      onChangeText={handleChange('name')}
+                      onBlur={handleBlur('name')}
+                      value={values.name}
+                      style={styles.modalText}
+                      placeholder='New Username'
+                      placeholderTextColor={greenYellow}
+                    />
+                    {errors.name ? (
+                      <Text style={styles.formErrors}>{errors.name}</Text>
+                    ) : null}
+                    <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={() => setModalVisible(!modalVisible)}
+                    >
+                      <TouchableOpacity onPress={handleSubmit}>
+                        <Text style={styles.textStyle}>Send New Username</Text>
+                      </TouchableOpacity>
+                    </Pressable>
+                  </View>
+                ) : (
+                  <View style={styles.containerLoading}>
+                    <ActivityIndicator
+                      animating={true}
+                      size='large'
+                      color={greenYellow}
+                    />
+                  </View>
+                )}
               </View>
             )}
           </Formik>
@@ -153,33 +170,43 @@ const Account: React.FC = () => {
               errors,
             }: any) => (
               <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text style={styles.textStyle}>X</Text>
-                  </Pressable>
-                  <TextInput
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    value={values.password}
-                    style={styles.modalText}
-                    placeholder='New Password'
-                    placeholderTextColor={greenYellow}
-                  />
-                  {errors.password ? (
-                    <Text style={styles.formErrors}>{errors.password}</Text>
-                  ) : null}
-                  <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <TouchableOpacity onPress={handleSubmit}>
-                      <Text style={styles.textStyle}>Send New Password</Text>
-                    </TouchableOpacity>
-                  </Pressable>
-                </View>
+                {loading ? (
+                  <View style={styles.modalView}>
+                    <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={() => setModalVisible(!modalVisible)}
+                    >
+                      <Text style={styles.textStyle}>X</Text>
+                    </Pressable>
+                    <TextInput
+                      onChangeText={handleChange('password')}
+                      onBlur={handleBlur('password')}
+                      value={values.password}
+                      style={styles.modalText}
+                      placeholder='New Password'
+                      placeholderTextColor={greenYellow}
+                    />
+                    {errors.password ? (
+                      <Text style={styles.formErrors}>{errors.password}</Text>
+                    ) : null}
+                    <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={() => setModalVisible(!modalVisible)}
+                    >
+                      <TouchableOpacity onPress={handleSubmit}>
+                        <Text style={styles.textStyle}>Send New Password</Text>
+                      </TouchableOpacity>
+                    </Pressable>
+                  </View>
+                ) : (
+                  <View style={styles.containerLoading}>
+                    <ActivityIndicator
+                      animating={true}
+                      size='large'
+                      color={greenYellow}
+                    />
+                  </View>
+                )}
               </View>
             )}
           </Formik>

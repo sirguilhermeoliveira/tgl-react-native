@@ -25,6 +25,10 @@ const createStyles = () => {
       flex: 1,
       alignItems: 'center',
     },
+    containerLoading: {
+      flex: 1,
+      justifyContent: 'center',
+    },
     containerBackgroundBlack: {
       flex: 1,
       alignItems: 'center',
