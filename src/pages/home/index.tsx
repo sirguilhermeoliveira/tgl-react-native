@@ -19,6 +19,7 @@ import {
   HomeListGameNumbers,
   HomeListGame,
   HomeSideBar,
+  EmptyCart,
 } from './styles';
 import {
   formatNumberCart,
@@ -62,6 +63,7 @@ const home: React.FC = () => {
   const [filter, setFilter]: any = useState(0);
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
+  const [emptyCart, setEmptyCart] = useState(false);
 
   const url_pagination =
     BASE_URL +
@@ -73,6 +75,7 @@ const home: React.FC = () => {
     filter;
 
   function changeGameFilter(id_game: any, type_game: any) {
+    console.log(data);
     setPage(1);
     let helper = 0;
     helper = id_game;
@@ -129,23 +132,6 @@ const home: React.FC = () => {
         alert(err);
       });
   }
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(url_pagination)
-      .then((res: any) => {
-        if (res.status === 200) {
-          setData(res.data.data);
-          setTimeout(() => {
-            setLoading(false);
-          }, 1000);
-          return;
-        }
-      })
-      .catch((err: any) => {
-        console.log(err);
-      });
-  }, [url_pagination]);
 
   const renderItem = ({ item }: any) => (
     <HomeSideBar color={item.game.color} key={Math.random()}>
@@ -178,8 +164,8 @@ const home: React.FC = () => {
     axios
       .get(url_pagination)
       .then((res: any) => {
-        if (res.status === 200) {
-          return;
+        if (res.data.data.length === 0) {
+          setEmptyCart(true);
         }
       })
       .catch((err: any) => {
@@ -219,15 +205,19 @@ const home: React.FC = () => {
           <HomeFilterTitle>Filters</HomeFilterTitle>
           <HomeGamesRow horizontal={true}>{getGames}</HomeGamesRow>
         </View>
-        <FlatList
-          style={{ marginBottom: 210 }}
-          onEndReached={getMoreBets}
-          onEndReachedThreshold={0.8}
-          data={data}
-          keyExtractor={(e) => String(e.id)}
-          renderItem={renderItem}
-          ListFooterComponent={<FooterList Load={loading} />}
-        />
+        {!emptyCart ? (
+          <FlatList
+            style={{ marginBottom: 210 }}
+            onEndReached={getMoreBets}
+            onEndReachedThreshold={0.8}
+            data={data}
+            keyExtractor={(item) => item.id}
+            renderItem={renderItem}
+            ListFooterComponent={<FooterList Load={loading} />}
+          />
+        ) : (
+          <EmptyCart>Empty Cart</EmptyCart>
+        )}
       </HomePadding>
     </Container>
   );

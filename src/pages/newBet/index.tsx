@@ -90,7 +90,7 @@ const newBet: React.FC = ({ navigation }: any) => {
         game_numbers: allBets[i].bet.toString(),
       });
     }
-    if (totalPrice < 30) {
+    if (totalPrice < 2) {
       alert('The minimum in cart has to be R$ 30,00');
       return;
     } else {
@@ -101,6 +101,7 @@ const newBet: React.FC = ({ navigation }: any) => {
         })
         .then((res: any) => {
           alert('Bet saved with sucess!');
+          return;
         })
         .catch((err: any) => {
           alert('Something is Wrong:' + err);
@@ -143,7 +144,7 @@ const newBet: React.FC = ({ navigation }: any) => {
         bet: totalNumbers,
         game: gamesJson[whichLoteriaIsVar - 1].type,
         game_id: Number(whichLoteriaIsVar) - 1,
-        price: gamesJson[whichLoteriaIsVar - 1].price,
+        price: Number(gamesJson[whichLoteriaIsVar - 1].price),
         color: gamesJson[whichLoteriaIsVar - 1].color,
         date: new Intl.DateTimeFormat('pt-BR').format(new Date()),
       })

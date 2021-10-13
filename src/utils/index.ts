@@ -1,5 +1,5 @@
 export const formatNumberCartTotal = (number: number) => {
-  return number.toFixed(2).replace('.', ',');
+  return Number(number).toFixed(2).replace('.', ',');
 };
 
 export const formatNumberCart = (number: number) => {

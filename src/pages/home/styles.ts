@@ -10,6 +10,7 @@ const {
     black,
     borderGray,
     smoothGray,
+    red,
     silverWhite,
   },
   fontSizes: { xxs, xs, sm, md, lg, xg, xl, xxg, xxl, lxs, hg, hl },
@@ -23,6 +24,10 @@ export const Container = styled.View`
 `;
 export const HomeGamesRow = styled.ScrollView`
   flex-direction: row;
+`;
+export const ContainerLoading = styled.View`
+  flex: 1;
+  justify-content: center;
 `;
 
 export const HomeRecentGames = styled.Text`
