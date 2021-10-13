@@ -99,6 +99,7 @@ const login: React.FC = ({ navigation }: any) => {
           navigation.navigate('LoggedStack');
           SetLoading(false);
         }, 500);
+        return;
       })
       .catch((err: any) => {
         alert(err);

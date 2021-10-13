@@ -28,7 +28,7 @@ function MyStack() {
     <NavigationContainer>
       <StatusBar barStyle='dark-content' backgroundColor='white' />
       <Stack.Navigator
-        initialRouteName='LoggedStack'
+        initialRouteName='Login'
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name='Login' component={Login} />

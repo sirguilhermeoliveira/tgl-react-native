@@ -78,7 +78,7 @@ const CartBet: React.FC = () => {
               />
             </HomeCartThrashCan>
           </NewBetRow>
-          <HomeListGame color={game.color}>Lotomania</HomeListGame>
+          <HomeListGame color={game.color}>{game.game}</HomeListGame>
         </HomeSideBar>
       );
     });

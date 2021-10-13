@@ -86,11 +86,11 @@ const newBet: React.FC = ({ navigation }: any) => {
     let bets: any = [];
     for (let i = 0; i < allBets.length; i++) {
       bets.push({
-        game_id: allBets[i].game_id,
+        game_id: allBets[i].game_id + 1,
         game_numbers: allBets[i].bet.toString(),
       });
     }
-    if (totalPrice < 2) {
+    if (totalPrice < 1) {
       alert('The minimum in cart has to be R$ 30,00');
       return;
     } else {
@@ -100,15 +100,15 @@ const newBet: React.FC = ({ navigation }: any) => {
           bets,
         })
         .then((res: any) => {
-          alert('Bet saved with sucess!');
-          return;
+          console.log(bets);
         })
         .catch((err: any) => {
           alert('Something is Wrong:' + err);
+          return;
         });
     }
     dispatch(cartActions.removeAllGames([]));
-    alert('Bet Saved!!');
+    alert('Bet saved with sucess!');
   }
 
   const completeGame = () => {
@@ -138,6 +138,8 @@ const newBet: React.FC = ({ navigation }: any) => {
       );
       return;
     }
+    console.log(gamesJson[whichLoteriaIsVar - 1].type);
+    console.log(Number(whichLoteriaIsVar) - 1);
     dispatch(
       cartActions.addGame({
         id: Math.random(),

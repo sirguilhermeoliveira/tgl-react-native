@@ -59,7 +59,7 @@ const resetPassword: React.FC = ({ navigation }: any) => {
     >
       <Header />
       <Text style={styles.formTitle}>Reset password</Text>
-      {loading ? (
+      {!loading ? (
         <Formik
           validationSchema={schema}
           initialValues={{ email: '' }}
@@ -104,31 +104,35 @@ const resetPassword: React.FC = ({ navigation }: any) => {
           />
         </View>
       )}
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={styles.formRow}
-      >
-        <Ionicons
-          style={styles.formArrowRight}
-          name='arrow-back'
-          color={gray}
-          size={35}
-        />
-        <Text style={styles.formSignUp}>Back</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Registration')}
-        style={styles.formRow}
-      >
-        <Text style={styles.formSignUp}>Sign Up</Text>
-        <Ionicons
-          style={styles.formArrowRight}
-          name='arrow-forward'
-          color={gray}
-          size={35}
-        />
-      </TouchableOpacity>
-      <Footer />
+      {!loading ? (
+        <View>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.formRow}
+          >
+            <Ionicons
+              style={styles.formArrowRight}
+              name='arrow-back'
+              color={gray}
+              size={35}
+            />
+            <Text style={styles.formSignUp}>Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Registration')}
+            style={styles.formRow}
+          >
+            <Text style={styles.formSignUp}>Sign Up</Text>
+            <Ionicons
+              style={styles.formArrowRight}
+              name='arrow-forward'
+              color={gray}
+              size={35}
+            />
+          </TouchableOpacity>
+        </View>
+      ) : null}
+      <Footer loading={loading} />
     </KeyboardAvoidingView>
   );
 };

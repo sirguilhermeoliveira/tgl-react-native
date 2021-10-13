@@ -36,6 +36,11 @@ const Account: React.FC = () => {
       .min(4, 'Name Too Short')
       .required('Name Required'),
   });
+  const schemaPassword = Yup.object().shape({
+    password: Yup.string()
+      .min(6, 'Password Too Short')
+      .required('Name Required'),
+  });
 
   function openModalFunctionName() {
     setWhichUpdate(true);
@@ -49,7 +54,7 @@ const Account: React.FC = () => {
 
   const submitNameHandler = (event: any) => {
     setLoading(true);
-    let url = BASE_URL + userId;
+    let url = BASE_URL + '/users/' + userId;
     axios
       .put(url, {
         username: event.name,
@@ -69,11 +74,12 @@ const Account: React.FC = () => {
   };
 
   const submitPasswordHandler = (event: any) => {
+    console.log('SUBMITEI MESMO');
     setLoading(true);
     let url = BASE_URL + '/users/' + userId;
     axios
       .put(url, {
-        username: event.name,
+        password: event.password,
       })
       .then((res: any) => {
         if (res.status === 200) {
@@ -158,7 +164,7 @@ const Account: React.FC = () => {
           </Formik>
         ) : (
           <Formik
-            validationSchema={schema}
+            validationSchema={schemaPassword}
             initialValues={{ password: '' }}
             onSubmit={(values) => submitPasswordHandler(values)}
           >
@@ -170,7 +176,7 @@ const Account: React.FC = () => {
               errors,
             }: any) => (
               <View style={styles.centeredView}>
-                {loading ? (
+                {!loading ? (
                   <View style={styles.modalView}>
                     <Pressable
                       style={[styles.button, styles.buttonClose]}

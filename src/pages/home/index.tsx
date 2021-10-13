@@ -63,7 +63,6 @@ const home: React.FC = () => {
   const [filter, setFilter]: any = useState(0);
   const dispatch = useDispatch<AppDispatch>();
   const [loading, setLoading] = useState(false);
-  const [emptyCart, setEmptyCart] = useState(false);
 
   const url_pagination =
     BASE_URL +
@@ -75,19 +74,18 @@ const home: React.FC = () => {
     filter;
 
   function changeGameFilter(id_game: any, type_game: any) {
-    console.log(data);
-    setPage(1);
-    let helper = 0;
-    helper = id_game;
-    if (whichLoteriaIsVar === type_game) {
+    if (String(whichLoteriaIsVar) === type_game) {
       getOldBets();
-      setWhichLoteriaIsVar('');
       setFilter(0);
+      setWhichLoteriaIsVar('');
       return;
+    } else {
+      console.log(id_game);
+      console.log(type_game);
+      setFilter(id_game);
+      setWhichLoteriaIsVar(type_game);
+      getOldBets();
     }
-    setFilter(helper);
-    setWhichLoteriaIsVar(type_game);
-    getOldBets();
   }
 
   function getOldBets() {
@@ -108,23 +106,15 @@ const home: React.FC = () => {
   }
 
   function getMoreBets() {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    setPage(page + 1);
     axios
       .get(url_pagination)
       .then((res: any) => {
+        if (data.indexOf(res.data.data) === -1) {
+          return;
+        }
         if (res.status === 200) {
-          console.log('GET MORE BETS');
-          console.log(data);
           data.push(...res.data.data);
-          console.log(data);
           setData(data);
-          setTimeout(() => {
-            setLoading(false);
-          }, 1000);
           return;
         }
       })
@@ -164,8 +154,9 @@ const home: React.FC = () => {
     axios
       .get(url_pagination)
       .then((res: any) => {
-        if (res.data.data.length === 0) {
-          setEmptyCart(true);
+        if (res.status === 200) {
+          setData(res.data.data);
+          return;
         }
       })
       .catch((err: any) => {
@@ -205,7 +196,7 @@ const home: React.FC = () => {
           <HomeFilterTitle>Filters</HomeFilterTitle>
           <HomeGamesRow horizontal={true}>{getGames}</HomeGamesRow>
         </View>
-        {!emptyCart ? (
+        {data.length ? (
           <FlatList
             style={{ marginBottom: 210 }}
             onEndReached={getMoreBets}
@@ -216,7 +207,7 @@ const home: React.FC = () => {
             ListFooterComponent={<FooterList Load={loading} />}
           />
         ) : (
-          <EmptyCart>Empty Cart</EmptyCart>
+          <EmptyCart>Empt Cart</EmptyCart>
         )}
       </HomePadding>
     </Container>
