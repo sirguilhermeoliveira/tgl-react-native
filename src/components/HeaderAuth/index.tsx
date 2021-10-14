@@ -8,7 +8,7 @@ import type { AppDispatch } from '../../store';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
-const HeaderAuth: React.FC = ({ navigation }: any) => {
+const HeaderAuth: React.FC = ({ beforeNavigation }: any) => {
   const styles = createStyles();
   const dispatch = useDispatch<AppDispatch>();
   const {
@@ -18,7 +18,7 @@ const HeaderAuth: React.FC = ({ navigation }: any) => {
 
   function Loggout() {
     alert('Congratulations, Loggout with sucess');
-    navigation.push('Login');
+    beforeNavigation.push('Login');
   }
 
   return (

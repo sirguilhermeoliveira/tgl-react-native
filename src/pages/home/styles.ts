@@ -93,12 +93,37 @@ export const HomeListGame = styled.Text<{ color: string }>`
   color: ${(props: any) => props.color || '#000'};
 `;
 
-export const EmptyCart = styled.Text`
-  font-size: ${md}px;
-  font-weight: bold;
+export const HomeRow = styled.View`
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  background-color: ${white};
+  padding: ${basePadding}px;
+`;
+
+export const HomeTitleContainer = styled.View`
+  margin: ${baseMargin}px;
+`;
+
+export const HomeTitle = styled.Text`
+  color: ${gray};
+  font-size: ${xxl}px;
   font-style: italic;
-  color: #ff0000;
-  margin-top: 20px;
+  font-weight: bold;
+  top: 0px;
+  padding-left: ${basePadding}px;
+  padding-right: ${basePadding}px;
+`;
+
+export const HomeTitleBottomBar = styled.View`
+  border-width: ${3}px;
+  border-color: ${greenYellow};
+  border-radius: ${2}px;
+`;
+
+export const HomeRowIcons = styled.TouchableOpacity`
+  flex-direction: row;
 `;
 
 export const HomeSideBar = styled.View<{ color: string }>`
@@ -110,4 +135,12 @@ export const HomeSideBar = styled.View<{ color: string }>`
   border-top-right-radius: 4px;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
+`;
+
+export const EmptyCart = styled.Text`
+  font-size: ${md}px;
+  font-weight: bold;
+  font-style: italic;
+  color: #ff0000;
+  margin-top: 20px;
 `;

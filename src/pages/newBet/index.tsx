@@ -138,8 +138,6 @@ const newBet: React.FC = ({ navigation }: any) => {
       );
       return;
     }
-    console.log(gamesJson[whichLoteriaIsVar - 1].type);
-    console.log(Number(whichLoteriaIsVar) - 1);
     dispatch(
       cartActions.addGame({
         id: Math.random(),
@@ -148,7 +146,8 @@ const newBet: React.FC = ({ navigation }: any) => {
         game_id: Number(whichLoteriaIsVar) - 1,
         price: Number(gamesJson[whichLoteriaIsVar - 1].price),
         color: gamesJson[whichLoteriaIsVar - 1].color,
-        date: new Intl.DateTimeFormat('pt-BR').format(new Date()),
+        /*         date: new Intl.DateTimeFormat('pt-BR').format(new Date()), */
+        date: '13/10/2021',
       })
     );
     clearGame();
@@ -232,15 +231,15 @@ const newBet: React.FC = ({ navigation }: any) => {
   );
 
   return (
-    <DrawerLayoutAndroid
-      ref={drawer}
-      drawerWidth={300}
-      drawerPosition='right'
-      renderNavigationView={navigationView}
-    >
+    <View style={styles.container}>
       {!loading ? (
-        <ScrollView style={styles.drawerContainerNumbersBackgroundColor}>
-          <View style={styles.container}>
+        <DrawerLayoutAndroid
+          ref={drawer}
+          drawerWidth={300}
+          drawerPosition='right'
+          renderNavigationView={navigationView}
+        >
+          <ScrollView style={styles.drawerContainerNumbersBackgroundColor}>
             <View style={styles.homeRow}>
               <View style={styles.homeTitleContainer}>
                 <Text style={styles.homeTitle}>TGL</Text>
@@ -332,8 +331,8 @@ const newBet: React.FC = ({ navigation }: any) => {
                 </View>
               )}
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </DrawerLayoutAndroid>
       ) : (
         <View style={styles.containerLoading}>
           <ActivityIndicator
@@ -343,7 +342,7 @@ const newBet: React.FC = ({ navigation }: any) => {
           />
         </View>
       )}
-    </DrawerLayoutAndroid>
+    </View>
   );
 };
 

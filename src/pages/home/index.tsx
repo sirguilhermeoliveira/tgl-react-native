@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {} from './styles';
 import { ActivityIndicator } from 'react-native-paper';
+import { MaterialIcons } from '@expo/vector-icons';
 import {
   Container,
   HomeGamesRow,
@@ -20,6 +21,11 @@ import {
   HomeListGame,
   HomeSideBar,
   EmptyCart,
+  HomeRow,
+  HomeTitle,
+  HomeTitleBottomBar,
+  HomeTitleContainer,
+  HomeRowIcons,
 } from './styles';
 import {
   formatNumberCart,
@@ -49,9 +55,9 @@ interface GameObject {
   updated_at: string;
 }
 
-const home: React.FC = () => {
+const home: React.FC = ({ navigation }: any) => {
   const {
-    colors: { greenYellow },
+    colors: { greenYellow, ghostGray },
   } = useTheme();
   const getallTheGames: any = useSelector(
     (state: RootState) => state.games.games
@@ -103,6 +109,11 @@ const home: React.FC = () => {
       .catch((err: any) => {
         alert(err);
       });
+  }
+
+  function Loggout() {
+    alert('Congratulations, Loggout with sucess');
+    navigation.push('Login');
   }
 
   function getMoreBets() {
@@ -189,7 +200,20 @@ const home: React.FC = () => {
 
   return (
     <Container>
-      <HeaderAuth />
+      <HomeRow>
+        <HomeTitleContainer>
+          <HomeTitle>TGL</HomeTitle>
+          <HomeTitleBottomBar />
+        </HomeTitleContainer>
+        <HomeRowIcons onPress={Loggout}>
+          <MaterialIcons
+            styles={{ color: { ghostGray } }}
+            color={ghostGray}
+            name='logout'
+            size={35}
+          />
+        </HomeRowIcons>
+      </HomeRow>
       <HomePadding>
         <View>
           <HomeRecentGames>recent games</HomeRecentGames>
@@ -202,7 +226,7 @@ const home: React.FC = () => {
             onEndReached={getMoreBets}
             onEndReachedThreshold={0.8}
             data={data}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => String(item.id)}
             renderItem={renderItem}
             ListFooterComponent={<FooterList Load={loading} />}
           />

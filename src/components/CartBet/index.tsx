@@ -65,9 +65,9 @@ const CartBet: React.FC = () => {
             {formatNumberCart(game.bet)}
           </HomeListGameNumbers>
           <NewBetRow>
+            {/*           {new Intl.DateTimeFormat('pt-BR').format(new Date())} */}
             <HomeListGameData>
-              {String(new Intl.DateTimeFormat('pt-BR').format(new Date()))} - (
-              {formatNumberCartTotal(game.price)})
+              13/10/2021 - ({formatNumberCartTotal(game.price)})
             </HomeListGameData>
             <HomeCartThrashCan>
               <Ionicons

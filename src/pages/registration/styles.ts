@@ -29,6 +29,7 @@ const createStyles = () => {
       margin: baseMargin * 2,
       fontWeight: 'bold',
       fontStyle: 'italic',
+      alignSelf: 'center',
     },
     formContainer: {
       backgroundColor: white,
