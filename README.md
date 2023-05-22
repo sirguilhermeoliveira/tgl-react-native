@@ -31,3 +31,23 @@
      RF09. Create filter for listing and creating games.
 
      RF10. Integrate the application with the API developed in the Adonis module!
+
+# 📋 Requirements for running project without Docker
+
+Node 14.18.0+
+
+Clone the repository
+
+In terminal use: yarn && yarn start
+
+# ✔️ Running with Docker
+
+Install docker
+
+docker build -t tgl-react-native
+
+docker run -p 3000:19000 -d tgl-react-native
+
+docker-compose up -d
+
+After that process you can use only "docker-compose up" to open the project.
